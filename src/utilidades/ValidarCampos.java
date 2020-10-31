@@ -10,6 +10,7 @@ import javax.swing.JTextField;
  *  @author Ulises Guzmán
  */
 public class ValidarCampos {
+    
     public ValidarCampos() {
     }
 
@@ -18,7 +19,7 @@ public class ValidarCampos {
      *
      * @param evt
      */
-    public void numbersOnly(KeyEvent evt) {
+    public void soloNumeros(KeyEvent evt) {
         if (!Character.isDigit(evt.getKeyChar())) {
             evt.consume();
         }
@@ -28,7 +29,7 @@ public class ValidarCampos {
      *
      * @param evt
      */
-    public void wordsOnly(KeyEvent evt) {
+    public void soloLetras(KeyEvent evt) {
         if (!Character.isLetter(evt.getKeyChar()) && evt.getKeyChar() != KeyEvent.VK_SPACE) {
             evt.consume();
         }
@@ -38,7 +39,7 @@ public class ValidarCampos {
      *
      * @param evt
      */
-    public void numbersAndPoint(KeyEvent evt,JTextField textField) {
+    public void numerosYPunto(KeyEvent evt,JTextField textField) {
         if (!Character.isDigit(evt.getKeyChar()) && evt.getKeyChar() != '.') {
             evt.consume();
         }

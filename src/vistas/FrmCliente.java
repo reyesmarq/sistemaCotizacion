@@ -9,12 +9,12 @@ package vistas;
  *
  * @author Ulises
  */
-public class frmCliente extends javax.swing.JInternalFrame {
+public class FrmCliente extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form frmClientes
      */
-    public frmCliente() {
+    public FrmCliente() {
         initComponents();
     }
 

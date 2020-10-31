@@ -19,6 +19,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
      */
     
     private FrmAcercaDe acercade=null;
+    private FrmCategoria categoria = null;
+    private FrmPresentacion presentacion = null;
+    private FrmArticulos articulo = null;
+    private FrmIngreso ingreso = null;
+    private FrmProveedor proveedor = null;
+    private FrmVenta venta = null;
+    private FrmCliente cliente = null;
+    private FrmTrabajador trabajador = null;
+    
     int nivel;
     public FrmPrincipal() {
         initComponents();
@@ -33,7 +42,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        desktopPane = new javax.swing.JDesktopPane();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         menuBar = new javax.swing.JMenuBar();
         sistemaMenu = new javax.swing.JMenu();
@@ -61,15 +69,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1020, Short.MAX_VALUE)
+            .addGap(0, 1017, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 560, Short.MAX_VALUE)
+            .addGap(0, 556, Short.MAX_VALUE)
         );
-
-        desktopPane.add(jDesktopPane1);
-        jDesktopPane1.setBounds(0, 0, 1020, 560);
 
         sistemaMenu.setMnemonic('f');
         sistemaMenu.setText("Sistema");
@@ -98,6 +103,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         articulosMenuItem.setMnemonic('t');
         articulosMenuItem.setText("Articulos");
+        articulosMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                articulosMenuItemActionPerformed(evt);
+            }
+        });
         Almacen.add(articulosMenuItem);
 
         categoriaMenuItem.setMnemonic('y');
@@ -111,19 +121,39 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         presentacionMenuItem.setMnemonic('p');
         presentacionMenuItem.setText("Presentacion");
+        presentacionMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                presentacionMenuItemActionPerformed(evt);
+            }
+        });
         Almacen.add(presentacionMenuItem);
 
         menuBar.add(Almacen);
 
         comprasMenu.setMnemonic('h');
         comprasMenu.setText("Compras");
+        comprasMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comprasMenuActionPerformed(evt);
+            }
+        });
 
         ingresosMenuItem.setMnemonic('c');
         ingresosMenuItem.setText("Ingresos");
+        ingresosMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ingresosMenuItemActionPerformed(evt);
+            }
+        });
         comprasMenu.add(ingresosMenuItem);
 
         preevodoresMenuItem.setMnemonic('a');
         preevodoresMenuItem.setText("Proveedores");
+        preevodoresMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                preevodoresMenuItemActionPerformed(evt);
+            }
+        });
         comprasMenu.add(preevodoresMenuItem);
 
         menuBar.add(comprasMenu);
@@ -134,16 +164,31 @@ public class FrmPrincipal extends javax.swing.JFrame {
         ventasMenu.add(ventasMenuItem);
 
         clientesMenuItem.setText("Clientes");
+        clientesMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clientesMenuItemActionPerformed(evt);
+            }
+        });
         ventasMenu.add(clientesMenuItem);
 
         menuBar.add(ventasMenu);
 
         cotizacionesMenu.setText("Cotizaciones");
+        cotizacionesMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cotizacionesMenuActionPerformed(evt);
+            }
+        });
         menuBar.add(cotizacionesMenu);
 
         mantenimientoMenu.setText("Mantenimiento");
 
         trabajadoresMenuItem.setText("Trabajadores");
+        trabajadoresMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                trabajadoresMenuItemActionPerformed(evt);
+            }
+        });
         mantenimientoMenu.add(trabajadoresMenuItem);
 
         menuBar.add(mantenimientoMenu);
@@ -151,6 +196,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         consultasMenu.setText("Consultas");
 
         stockMenuItem.setText("Stock articulos");
+        stockMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stockMenuItemActionPerformed(evt);
+            }
+        });
         consultasMenu.add(stockMenuItem);
 
         menuBar.add(consultasMenu);
@@ -161,18 +211,28 @@ public class FrmPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1017, Short.MAX_VALUE)
+            .addComponent(jDesktopPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE)
+            .addComponent(jDesktopPane1)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void categoriaMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoriaMenuItemActionPerformed
-        // TODO add your handling code here:
+        if (categoria==null || categoria.isClosed()) {
+            try {
+                if(categoria==null || categoria.isClosed()){
+                    categoria=new FrmCategoria();
+                    this.jDesktopPane1.add(categoria);
+                }
+                categoria.setVisible(true);
+            } catch (Exception ex) {
+                Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_categoriaMenuItemActionPerformed
 
     private void sistemaMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sistemaMenuActionPerformed
@@ -181,20 +241,73 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     private void acercaDeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acercaDeMenuItemActionPerformed
         if (acercade==null || acercade.isClosed()) {
-            
             try {
                 if(acercade==null || acercade.isClosed()){
                     acercade=new FrmAcercaDe();
                     this.jDesktopPane1.add(acercade);
                 }
                 acercade.setVisible(true);
-                
             } catch (Exception ex) {
                 Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
         }
     }//GEN-LAST:event_acercaDeMenuItemActionPerformed
+
+    private void articulosMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_articulosMenuItemActionPerformed
+        if (articulo==null || articulo.isClosed()) {
+            try {
+                if(articulo==null || articulo.isClosed()){
+                    articulo=new FrmArticulos();
+                    this.jDesktopPane1.add(articulo);
+                }
+                articulo.setVisible(true);
+            } catch (Exception ex) {
+                Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_articulosMenuItemActionPerformed
+
+    private void presentacionMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_presentacionMenuItemActionPerformed
+        if (presentacion==null || presentacion.isClosed()) {
+            try {
+                if(presentacion==null || presentacion.isClosed()){
+                    presentacion=new FrmPresentacion();
+                    this.jDesktopPane1.add(presentacion);
+                }
+                presentacion.setVisible(true);
+            } catch (Exception ex) {
+                Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_presentacionMenuItemActionPerformed
+
+    private void ingresosMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresosMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ingresosMenuItemActionPerformed
+
+    private void comprasMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comprasMenuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comprasMenuActionPerformed
+
+    private void preevodoresMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_preevodoresMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_preevodoresMenuItemActionPerformed
+
+    private void clientesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientesMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_clientesMenuItemActionPerformed
+
+    private void cotizacionesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cotizacionesMenuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cotizacionesMenuActionPerformed
+
+    private void trabajadoresMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trabajadoresMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_trabajadoresMenuItemActionPerformed
+
+    private void stockMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stockMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_stockMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -240,7 +353,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu comprasMenu;
     private javax.swing.JMenu consultasMenu;
     private javax.swing.JMenu cotizacionesMenu;
-    private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenuItem ingresosMenuItem;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenu mantenimientoMenu;

@@ -13,6 +13,6 @@ package modelo;
  *  CopyRight: Ulises Guzmán
  *  @author Ulises Guzmán
  */
-public class DaoAuditoria {
+public class Auditoria {
     
 }
