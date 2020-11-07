@@ -32,7 +32,4 @@ public class ComboItem {
     public String toString() {
         return label;
     }
-
-   
-    
 }
