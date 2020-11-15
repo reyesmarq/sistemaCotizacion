@@ -33,7 +33,6 @@ public class FrmVenta extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        Eliminar = new java.awt.Checkbox();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblListado = new javax.swing.JTable();
         lblTotal = new javax.swing.JLabel();
@@ -41,6 +40,7 @@ public class FrmVenta extends javax.swing.JInternalFrame {
         dtFechaFinal = new com.toedter.calendar.JDateChooser();
         jLabel3 = new javax.swing.JLabel();
         btnComprobante = new javax.swing.JButton();
+        chkEliminar = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -94,8 +94,6 @@ public class FrmVenta extends javax.swing.JInternalFrame {
 
         btnEliminar.setText("Eliminar");
 
-        Eliminar.setLabel("Eliminar");
-
         tblListado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -114,6 +112,13 @@ public class FrmVenta extends javax.swing.JInternalFrame {
         jLabel3.setText("Fecha final:");
 
         btnComprobante.setText("Comprobante");
+
+        chkEliminar.setText("Eliminar");
+        chkEliminar.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                chkEliminarStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -141,11 +146,15 @@ public class FrmVenta extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(294, 294, 294)
+                                .addGap(366, 366, 366)
                                 .addComponent(lblTotal))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 904, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(458, 458, 458)
+                    .addComponent(chkEliminar)
+                    .addContainerGap(458, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,12 +174,16 @@ public class FrmVenta extends javax.swing.JInternalFrame {
                             .addComponent(dtFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTotal))
+                .addGap(4, 4, 4)
+                .addComponent(lblTotal)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(249, 249, 249)
+                    .addComponent(chkEliminar)
+                    .addContainerGap(249, Short.MAX_VALUE)))
         );
 
         jTabbedPane4.addTab("Listado", jPanel1);
@@ -443,9 +456,12 @@ public class FrmVenta extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void chkEliminarStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkEliminarStateChanged
+        
+    }//GEN-LAST:event_chkEliminarStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Checkbox Eliminar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnBuscarArticulo;
     private javax.swing.JButton btnBuscarProveedor;
@@ -454,6 +470,7 @@ public class FrmVenta extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JCheckBox chkEliminar;
     private javax.swing.JComboBox<String> cmbComprobante;
     private com.toedter.calendar.JDateChooser dtFecha;
     private com.toedter.calendar.JDateChooser dtFechaFinal;

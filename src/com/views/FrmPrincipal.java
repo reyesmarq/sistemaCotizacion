@@ -27,6 +27,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private FrmVenta venta = null;
     private FrmCliente cliente = null;
     private FrmTrabajador trabajador = null;
+    private FrmIngreso ingresos = null;
     
     int nivel;
     public FrmPrincipal() {
@@ -282,7 +283,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_presentacionMenuItemActionPerformed
 
     private void ingresosMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresosMenuItemActionPerformed
-        // TODO add your handling code here:
+        try {
+            if(ingresos==null || ingresos.isClosed()){
+                ingresos=new FrmIngreso();
+                this.jDesktopPane1.add(ingresos);
+            }
+            ingresos.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_ingresosMenuItemActionPerformed
 
     private void comprasMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comprasMenuActionPerformed
@@ -290,7 +299,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_comprasMenuActionPerformed
 
     private void preevodoresMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_preevodoresMenuItemActionPerformed
-        // TODO add your handling code here:
+        try {
+            if(proveedor==null || proveedor.isClosed()){
+                proveedor=new FrmProveedor();
+                this.jDesktopPane1.add(proveedor);
+            }
+            proveedor.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_preevodoresMenuItemActionPerformed
 
     private void clientesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientesMenuItemActionPerformed

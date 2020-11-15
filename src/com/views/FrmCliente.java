@@ -7,6 +7,8 @@ package com.views;
 
 import com.controller.ClienteJpaController;
 import com.entities.Cliente;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -50,7 +52,17 @@ public class FrmCliente extends javax.swing.JInternalFrame {
         this.txtNombre.setText(String.valueOf(this.tblCliente.getValueAt(fila, 1)));
         this.cmbSexo.setSelectedItem(String.valueOf(this.tblCliente.getValueAt(fila, 2)));
         //Buscar como pasar datos al elemento de fecha desde la tabla
-        this.dtFechaNacimiento.setDate((Date) this.tblCliente.getValueAt(fila, 3));
+        
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            String strFecha = this.tblCliente.getValueAt(fila, 3).toString();
+            Date fechas;
+            fechas=sdf.parse(strFecha);
+            this.dtFechaNacimiento.setDate(fechas);
+        } catch (ParseException e) {
+            
+        }
+        
         this.cmbTipoDocumento.setSelectedItem(String.valueOf(this.tblCliente.getValueAt(fila, 4)));
         this.txtTipoDocumento.setText(String.valueOf(this.tblCliente.getValueAt(fila, 5)));
         this.txtTelefono.setText(String.valueOf(this.tblCliente.getValueAt(fila, 6)));
@@ -96,7 +108,6 @@ public class FrmCliente extends javax.swing.JInternalFrame {
     }
     
     public void habilitar(boolean valor){
-        this.txtIdCliente.setEnabled(valor);
         this.txtNombre.setEnabled(valor);
         this.cmbSexo.setEnabled(valor);
         this.dtFechaNacimiento.setEnabled(valor);
@@ -190,8 +201,12 @@ public class FrmCliente extends javax.swing.JInternalFrame {
         txtCorreo = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtDireccion = new javax.swing.JTextArea();
-        txtNombre1 = new javax.swing.JTextField();
         txtTipoDocumento = new javax.swing.JTextField();
+
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 30)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 0, 0));
@@ -293,6 +308,7 @@ public class FrmCliente extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Nombre:");
 
+        txtIdCliente.setEditable(false);
         txtIdCliente.setEnabled(false);
 
         btnNuevo.setText("Nuevo");
@@ -326,6 +342,8 @@ public class FrmCliente extends javax.swing.JInternalFrame {
         cmbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Femenino" }));
 
         jLabel10.setText("Genero:");
+
+        dtFechaNacimiento.setDateFormatString("dd-MM-yyyy");
 
         jLabel11.setText("Fecha de nacimiento:");
 
@@ -366,13 +384,13 @@ public class FrmCliente extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(cmbTipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addComponent(cmbTipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtTipoDocumento))
-                            .addComponent(cmbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(dtFechaNacimiento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -398,11 +416,6 @@ public class FrmCliente extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnCancelar)))
                 .addContainerGap(14, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(txtNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -447,16 +460,9 @@ public class FrmCliente extends javax.swing.JInternalFrame {
                             .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(38, 38, 38))
+                            .addComponent(jLabel5)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(txtNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         jTabbedPane4.addTab("Mantenimiento", jPanel2);
@@ -491,7 +497,7 @@ public class FrmCliente extends javax.swing.JInternalFrame {
         try {
             Utilidades utilidades = new Utilidades();
             for (int i = 0; i < tblCliente.getRowCount(); i++) {
-                if (utilidades.isSelected(i, 6, tblCliente)) {
+                if (utilidades.isSelected(i, 9, tblCliente)) {
                     jpaCliente.destroy(Integer.parseInt(tblCliente.getValueAt(i, 0).toString()));
                 }
             }
@@ -537,7 +543,9 @@ public class FrmCliente extends javax.swing.JInternalFrame {
                     cliente.setDireccion(this.txtDireccion.getText());
                     cliente.setTelefono(this.txtTelefono.getText());
                     cliente.setEmail(this.txtCorreo.getText());
-                    cliente.setFechaNacimiento(this.dtFechaNacimiento.getDateFormatString());
+                    Date date = dtFechaNacimiento.getDate();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
+                    cliente.setFechaNacimiento(sdf.format(date));
                     cliente.setTipoDocumento(this.cmbTipoDocumento.getSelectedItem().toString());
                     cliente.setNumeroDocumento(this.txtTipoDocumento.getText());
                     jpaCliente.create(cliente);
@@ -546,13 +554,20 @@ public class FrmCliente extends javax.swing.JInternalFrame {
                     //Codigo de edicion (Al no ser un dato nuevo quiere decir es un dato a editar)
                     cliente.setIdCliente(Integer.parseInt(this.txtIdCliente.getText()));
                     cliente.setNombre(this.txtNombre.getText());
-                    cliente.setSexo(this.cmbSexo.getSelectedItem().toString());
+                    temp=this.cmbSexo.getSelectedItem().toString();
+                    if(temp.equals("masculino")){
+                        cliente.setSexo("m");
+                    }else{
+                        cliente.setSexo("f");
+                    }
                     cliente.setDireccion(this.txtDireccion.getText());
                     cliente.setTelefono(this.txtTelefono.getText());
                     cliente.setEmail(this.txtCorreo.getText());
-                    cliente.setFechaNacimiento(this.dtFechaNacimiento.getDateFormatString());
+                    Date date = dtFechaNacimiento.getDate();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
+                    cliente.setFechaNacimiento(sdf.format(date));
                     cliente.setTipoDocumento(this.cmbTipoDocumento.getSelectedItem().toString());
-                    cliente.setNumeroDocumento(this.txtTipoDocumento.toString());
+                    cliente.setNumeroDocumento(this.txtTipoDocumento.getText());
                     jpaCliente.edit(cliente);
                     respuesta = "Ok";
                 }
@@ -629,7 +644,6 @@ public class FrmCliente extends javax.swing.JInternalFrame {
     private javax.swing.JTextArea txtDireccion;
     private javax.swing.JTextField txtIdCliente;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtNombre1;
     private javax.swing.JFormattedTextField txtTelefono;
     private javax.swing.JTextField txtTipoDocumento;
     // End of variables declaration//GEN-END:variables
