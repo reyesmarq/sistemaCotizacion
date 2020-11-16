@@ -28,6 +28,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private FrmCliente cliente = null;
     private FrmTrabajador trabajador = null;
     private FrmIngreso ingresos = null;
+    private FrmCotizacion cotizacion = null;
     
     int nivel;
     public FrmPrincipal() {
@@ -162,6 +163,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         ventasMenu.setText("Ventas");
 
         ventasMenuItem.setText("Ventas");
+        ventasMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ventasMenuItemActionPerformed(evt);
+            }
+        });
         ventasMenu.add(ventasMenuItem);
 
         clientesMenuItem.setText("Clientes");
@@ -311,21 +317,27 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_preevodoresMenuItemActionPerformed
 
     private void clientesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientesMenuItemActionPerformed
-        if (cliente==null || cliente.isClosed()) {
-            try {
-                if(cliente==null || cliente.isClosed()){
-                    cliente=new FrmCliente();
-                    this.jDesktopPane1.add(cliente);
-                }
-                cliente.setVisible(true);
-            } catch (Exception ex) {
-                Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            if(cliente==null || cliente.isClosed()){
+                cliente=new FrmCliente();
+                this.jDesktopPane1.add(cliente);
             }
+            cliente.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_clientesMenuItemActionPerformed
 
     private void cotizacionesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cotizacionesMenuActionPerformed
-        // TODO add your handling code here:
+        try {
+            if(cotizacion==null || cotizacion.isClosed()){
+                cotizacion=new FrmCotizacion();
+                this.jDesktopPane1.add(cotizacion);
+            }
+            cotizacion.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_cotizacionesMenuActionPerformed
 
     private void trabajadoresMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trabajadoresMenuItemActionPerformed
@@ -335,6 +347,18 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void stockMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stockMenuItemActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_stockMenuItemActionPerformed
+
+    private void ventasMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ventasMenuItemActionPerformed
+        try {
+            if(venta==null || venta.isClosed()){
+                venta=new FrmVenta();
+                this.jDesktopPane1.add(venta);
+            }
+            venta.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_ventasMenuItemActionPerformed
 
     /**
      * @param args the command line arguments

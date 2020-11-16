@@ -56,6 +56,10 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
         
     }
     
+    public void mostrar(){
+        
+    }
+    
     /**
      * Creates new form FrmIngreso
      */
@@ -127,6 +131,10 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
         jLabel16 = new javax.swing.JLabel();
         txtCesc = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
+
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 30)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 0, 0));
@@ -583,11 +591,11 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtDai;
     private javax.swing.JTextField txtIdArticulo;
     private javax.swing.JTextField txtIdIngreso;
-    private javax.swing.JTextField txtIdProveedor;
+    public static javax.swing.JTextField txtIdProveedor;
     private javax.swing.JTextField txtIva;
     private javax.swing.JTextField txtPrecioCompra;
     private javax.swing.JTextField txtPrecioVenta;
-    private javax.swing.JTextField txtProveedor;
+    public static javax.swing.JTextField txtProveedor;
     private javax.swing.JTextField txtSerie;
     private javax.swing.JTextField txtStockInicial;
     // End of variables declaration//GEN-END:variables

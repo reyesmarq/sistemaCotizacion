@@ -154,6 +154,7 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
     
     public void buscarNombre(){
         //Buscar como hacer Querys con JPA
+        
     }
     
     

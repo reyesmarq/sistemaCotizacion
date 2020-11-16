@@ -171,10 +171,10 @@ public class FrmVistaProveedor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarMouseClicked
 
     private void tblProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProveedorMouseClicked
-//        ingreso.txtIdProveedor.setText(this.txtIdProveedor.getText());
-//        vistaProveedor.setRazonSocial(this.txtRazonSocial.getText());
-//        vistaProveedor.setTelefono(this.txtTelefono.getText());
-//        vistaProveedor.setSectorComercial(this.cmbSectorComercial.getSelectedItem().toString());
+        int fila = this.tblProveedor.getSelectedRow();
+        FrmIngreso.txtIdProveedor.setText(String.valueOf(this.tblProveedor.getValueAt(fila, 0)));
+        FrmIngreso.txtProveedor.setText(String.valueOf(this.tblProveedor.getValueAt(fila, 1)));
+        this.dispose();
     }//GEN-LAST:event_tblProveedorMouseClicked
 
     /**
@@ -220,7 +220,7 @@ public class FrmVistaProveedor extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane4;
-    private javax.swing.JTable tblProveedor;
+    public static javax.swing.JTable tblProveedor;
     private javax.swing.JTextPane txtBuscar;
     // End of variables declaration//GEN-END:variables
 
