@@ -5,6 +5,7 @@
  */
 package com.views;
 
+import com.views.FrmPrincipal;
 import com.controller.ArticuloJpaController;
 import com.controller.DetalleingresoJpaController;
 import com.controller.IngresoJpaController;

@@ -22,7 +22,7 @@ import javax.persistence.Persistence;
 
 /**
  *  Nombre de la clase: ClienteJpaController
- *  Fecha: 11-04-2020 (m/d/a)
+ *  Fecha: 11-17-2020 (m/d/a)
  *  Versión: 1.0
  *  CopyRight: Ulises Guzmán
  *  @author Ulises Guzmán
@@ -33,8 +33,10 @@ public class ClienteJpaController implements Serializable {
         this.emf = emf;
     }
     public ClienteJpaController() {
-        this.emf = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
+        this.emf = this.emf = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
     }
+    
+    
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {

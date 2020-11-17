@@ -24,7 +24,7 @@ import javax.persistence.Persistence;
 
 /**
  *  Nombre de la clase: ArticuloJpaController
- *  Fecha: 11-04-2020 (m/d/a)
+ *  Fecha: 11-17-2020 (m/d/a)
  *  Versión: 1.0
  *  CopyRight: Ulises Guzmán
  *  @author Ulises Guzmán
@@ -34,11 +34,9 @@ public class ArticuloJpaController implements Serializable {
     public ArticuloJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    
     public ArticuloJpaController() {
         this.emf = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
     }
-    
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {

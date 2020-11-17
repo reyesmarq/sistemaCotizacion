@@ -1,13 +1,12 @@
 /*
- * Nombre de Controlador: RolusuarioJpaController
- * Fecha: 16/11/2020
- * @author Diego Guevara
- * Version: 1.0
- * CopyRight: Diego Guevara
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
+
 package com.controller;
 
-import com.controllers.exceptions.NonexistentEntityException;
+import com.controller.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -22,17 +21,19 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 /**
- *
- * @author dguevara
+ *  Nombre de la clase: RolusuarioJpaController
+ *  Fecha: 11-17-2020 (m/d/a)
+ *  Versión: 1.0
+ *  CopyRight: Ulises Guzmán
+ *  @author Ulises Guzmán
  */
 public class RolusuarioJpaController implements Serializable {
 
     public RolusuarioJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    
     public RolusuarioJpaController() {
-        this.emf = Persistence.createEntityManagerFactory("LoginProyectoPersistenciaFullBasePU");
+        this.emf = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
     }
     private EntityManagerFactory emf = null;
 
@@ -48,21 +49,21 @@ public class RolusuarioJpaController implements Serializable {
             Rol codigoRol = rolusuario.getCodigoRol();
             if (codigoRol != null) {
                 codigoRol = em.getReference(codigoRol.getClass(), codigoRol.getCodigoRol());
-                //rolusuario.setCodigoRol(codigoRol);
+                rolusuario.setCodigoRol(codigoRol);
             }
             Usuario codigoUsuario = rolusuario.getCodigoUsuario();
             if (codigoUsuario != null) {
-                //codigoUsuario = em.getReference(codigoUsuario.getClass(), codigoUsuario.getCodigoUsuario());
-                //rolusuario.setCodigoUsuario(codigoUsuario);
+                codigoUsuario = em.getReference(codigoUsuario.getClass(), codigoUsuario.getCodigoUsuario());
+                rolusuario.setCodigoUsuario(codigoUsuario);
             }
             em.persist(rolusuario);
             if (codigoRol != null) {
-                //codigoRol.getRolusuarioList().add(rolusuario);
-                //codigoRol = em.merge(codigoRol);
+                codigoRol.getRolusuarioList().add(rolusuario);
+                codigoRol = em.merge(codigoRol);
             }
             if (codigoUsuario != null) {
-                //codigoUsuario.getRolusuarioList().add(rolusuario);
-                //codigoUsuario = em.merge(codigoUsuario);
+                codigoUsuario.getRolusuarioList().add(rolusuario);
+                codigoUsuario = em.merge(codigoUsuario);
             }
             em.getTransaction().commit();
         } finally {
@@ -82,7 +83,7 @@ public class RolusuarioJpaController implements Serializable {
             Rol codigoRolNew = rolusuario.getCodigoRol();
             Usuario codigoUsuarioOld = persistentRolusuario.getCodigoUsuario();
             Usuario codigoUsuarioNew = rolusuario.getCodigoUsuario();
-            /*if (codigoRolNew != null) {
+            if (codigoRolNew != null) {
                 codigoRolNew = em.getReference(codigoRolNew.getClass(), codigoRolNew.getCodigoRol());
                 rolusuario.setCodigoRol(codigoRolNew);
             }
@@ -106,7 +107,7 @@ public class RolusuarioJpaController implements Serializable {
             if (codigoUsuarioNew != null && !codigoUsuarioNew.equals(codigoUsuarioOld)) {
                 codigoUsuarioNew.getRolusuarioList().add(rolusuario);
                 codigoUsuarioNew = em.merge(codigoUsuarioNew);
-            }*/
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();

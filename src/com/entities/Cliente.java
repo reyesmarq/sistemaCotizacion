@@ -18,13 +18,12 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.swing.JTextField;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *  Nombre de la clase: Cliente
- *  Fecha: 11-04-2020 (m/d/a)
+ *  Fecha: 11-17-2020 (m/d/a)
  *  Versión: 1.0
  *  CopyRight: Ulises Guzmán
  *  @author Ulises Guzmán
@@ -191,10 +190,6 @@ public class Cliente implements Serializable {
     @Override
     public String toString() {
         return "com.entities.Cliente[ idCliente=" + idCliente + " ]";
-    }
-
-    public void setNumeroDocumento(JTextField txtTipoDocumento) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

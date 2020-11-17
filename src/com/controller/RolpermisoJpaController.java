@@ -1,13 +1,12 @@
 /*
- * Nombre de Controlador: RolpermisoJpaController
- * Fecha: 16/11/2020
- * @author Diego Guevara
- * Version: 1.0
- * CopyRight: Diego Guevara
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
+
 package com.controller;
 
-import com.controllers.exceptions.NonexistentEntityException;
+import com.controller.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -22,8 +21,11 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 /**
- *
- * @author dguevara
+ *  Nombre de la clase: RolpermisoJpaController
+ *  Fecha: 11-17-2020 (m/d/a)
+ *  Versión: 1.0
+ *  CopyRight: Ulises Guzmán
+ *  @author Ulises Guzmán
  */
 public class RolpermisoJpaController implements Serializable {
 
@@ -32,7 +34,7 @@ public class RolpermisoJpaController implements Serializable {
     }
     
     public RolpermisoJpaController() {
-        this.emf = Persistence.createEntityManagerFactory("LoginProyectoPersistenciaFullBasePU");
+        this.emf = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
     }
     private EntityManagerFactory emf = null;
 
@@ -47,23 +49,23 @@ public class RolpermisoJpaController implements Serializable {
             em.getTransaction().begin();
             Rol codigoRol = rolpermiso.getCodigoRol();
             if (codigoRol != null) {
-                //codigoRol = em.getReference(codigoRol.getClass(), codigoRol.getCodigoRol());
-                //rolpermiso.setCodigoRol(codigoRol);
+                codigoRol = em.getReference(codigoRol.getClass(), codigoRol.getCodigoRol());
+                rolpermiso.setCodigoRol(codigoRol);
             }
-            /*Permiso codigoPermiso = rolpermiso.getCodigoPermiso();
+            Permiso codigoPermiso = rolpermiso.getCodigoPermiso();
             if (codigoPermiso != null) {
                 codigoPermiso = em.getReference(codigoPermiso.getClass(), codigoPermiso.getCodigoPermiso());
                 rolpermiso.setCodigoPermiso(codigoPermiso);
-            }*/
+            }
             em.persist(rolpermiso);
             if (codigoRol != null) {
                 codigoRol.getRolpermisoList().add(rolpermiso);
-                //codigoRol = em.merge(codigoRol);
+                codigoRol = em.merge(codigoRol);
             }
-            /*if (codigoPermiso != null) {
+            if (codigoPermiso != null) {
                 codigoPermiso.getRolpermisoList().add(rolpermiso);
                 codigoPermiso = em.merge(codigoPermiso);
-            }*/
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -82,7 +84,7 @@ public class RolpermisoJpaController implements Serializable {
             Rol codigoRolNew = rolpermiso.getCodigoRol();
             Permiso codigoPermisoOld = persistentRolpermiso.getCodigoPermiso();
             Permiso codigoPermisoNew = rolpermiso.getCodigoPermiso();
-            /*if (codigoRolNew != null) {
+            if (codigoRolNew != null) {
                 codigoRolNew = em.getReference(codigoRolNew.getClass(), codigoRolNew.getCodigoRol());
                 rolpermiso.setCodigoRol(codigoRolNew);
             }
@@ -106,7 +108,7 @@ public class RolpermisoJpaController implements Serializable {
             if (codigoPermisoNew != null && !codigoPermisoNew.equals(codigoPermisoOld)) {
                 codigoPermisoNew.getRolpermisoList().add(rolpermiso);
                 codigoPermisoNew = em.merge(codigoPermisoNew);
-            }*/
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -136,16 +138,16 @@ public class RolpermisoJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The rolpermiso with id " + id + " no longer exists.", enfe);
             }
-            /*Rol codigoRol = rolpermiso.getCodigoRol();
+            Rol codigoRol = rolpermiso.getCodigoRol();
             if (codigoRol != null) {
                 codigoRol.getRolpermisoList().remove(rolpermiso);
                 codigoRol = em.merge(codigoRol);
-            }*/
-            /*Permiso codigoPermiso = rolpermiso.getCodigoPermiso();
+            }
+            Permiso codigoPermiso = rolpermiso.getCodigoPermiso();
             if (codigoPermiso != null) {
                 codigoPermiso.getRolpermisoList().remove(rolpermiso);
                 codigoPermiso = em.merge(codigoPermiso);
-            }*/
+            }
             em.remove(rolpermiso);
             em.getTransaction().commit();
         } finally {

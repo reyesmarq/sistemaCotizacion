@@ -1,12 +1,23 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+* Nombre de Formulario: FrmPrincipal
+ * Fecha: 13/10/2020
+ * @author Diego Guevara
+ * Version: 1.0
+ * CopyRight: Diego Guevara
  */
 package com.views;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.controller.UsuarioJpaController;
+import com.views.FmrRolUsuario;
+import com.views.FmrRolUsuario;
+import com.views.FrmPermiso;
+import com.views.FrmPermiso;
+import com.views.FrmRolPermisos;
+import com.views.FrmRolPermisos;
+import com.views.FrmRoles;
+import com.views.FrmRoles;
+import com.views.FrmUsuario;
+import com.views.FrmUsuario;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,41 +25,29 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
-
 /**
  *
- * @author Ulises y dguevara
+ * @author dguevara
  */
 public class FrmPrincipal extends javax.swing.JFrame {
-
+    
+    private List listaPermisos = new ArrayList();
+    int nivel;
     /**
      * Creates new form FrmPrincipal
      */
-    private List listaPermisos = new ArrayList();
-    private FrmAcercaDe acercade=null;
-    private FrmCategoria categoria = null;
-    private FrmPresentacion presentacion = null;
-    private FrmArticulos articulo = null;
-    private FrmIngreso ingreso = null;
-    private FrmProveedor proveedor = null;
-    private FrmVenta venta = null;
-    private FrmCliente cliente = null;
-    private FrmTrabajador trabajador = null;
-    private FrmIngreso ingresos = null;
-    private FrmCotizacion cotizacion = null;
-    int nivel;
-    
     public FrmPrincipal() 
     {
-        FrmLogin login = new FrmLogin();
-        login.setVisible(true);
-    }
-    
-    public FrmPrincipal(List permisos) {
         initComponents();
-        listaPermisos=permisos;
     }
 
+    public FrmPrincipal(List permisos)
+    {
+        initComponents();
+        listaPermisos=permisos;
+        
+        //JOptionPane.showMessageDialog(null, "Prueba"+listaPermisos);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,33 +58,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jDesktopPane1 = new javax.swing.JDesktopPane();
-        menuBar = new javax.swing.JMenuBar();
-        sistemaMenu = new javax.swing.JMenu();
-        acercaDeMenuItem = new javax.swing.JMenuItem();
-        salirMenuItem = new javax.swing.JMenuItem();
-        Almacen = new javax.swing.JMenu();
-        articulosMenuItem = new javax.swing.JMenuItem();
-        categoriaMenuItem = new javax.swing.JMenuItem();
-        presentacionMenuItem = new javax.swing.JMenuItem();
-        comprasMenu = new javax.swing.JMenu();
-        ingresosMenuItem = new javax.swing.JMenuItem();
-        preevodoresMenuItem = new javax.swing.JMenuItem();
-        ventasMenu = new javax.swing.JMenu();
-        ventasMenuItem = new javax.swing.JMenuItem();
-        clientesMenuItem = new javax.swing.JMenuItem();
-        cotizacionesMenu = new javax.swing.JMenu();
-        mantenimientoMenu = new javax.swing.JMenu();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        btnSalir = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
-        consultasMenu = new javax.swing.JMenu();
-        reporteArticulos = new javax.swing.JMenuItem();
-        reportesCategorias = new javax.swing.JMenuItem();
-        reportesPresentaciones = new javax.swing.JMenuItem();
-        reportesClientes = new javax.swing.JMenuItem();
-        reporteProveedores = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -93,124 +73,27 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1080, Short.MAX_VALUE)
+            .addGap(0, 775, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 763, Short.MAX_VALUE)
+            .addGap(0, 517, Short.MAX_VALUE)
         );
 
-        sistemaMenu.setMnemonic('f');
-        sistemaMenu.setText("Sistema");
-        sistemaMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sistemaMenuActionPerformed(evt);
+        btnSalir.setText("Salir");
+        btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSalirMouseClicked(evt);
             }
         });
+        jMenuBar1.add(btnSalir);
 
-        acercaDeMenuItem.setText("Acerca de");
-        acercaDeMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        jMenu2.setText("Formularios");
+        jMenu2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                acercaDeMenuItemActionPerformed(evt);
+                jMenu2ActionPerformed(evt);
             }
         });
-        sistemaMenu.add(acercaDeMenuItem);
-
-        salirMenuItem.setMnemonic('x');
-        salirMenuItem.setText("Salir");
-        sistemaMenu.add(salirMenuItem);
-
-        menuBar.add(sistemaMenu);
-
-        Almacen.setMnemonic('e');
-        Almacen.setText("Almacen");
-
-        articulosMenuItem.setMnemonic('t');
-        articulosMenuItem.setText("Articulos");
-        articulosMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                articulosMenuItemActionPerformed(evt);
-            }
-        });
-        Almacen.add(articulosMenuItem);
-
-        categoriaMenuItem.setMnemonic('y');
-        categoriaMenuItem.setText("Categoria");
-        categoriaMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                categoriaMenuItemActionPerformed(evt);
-            }
-        });
-        Almacen.add(categoriaMenuItem);
-
-        presentacionMenuItem.setMnemonic('p');
-        presentacionMenuItem.setText("Presentacion");
-        presentacionMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                presentacionMenuItemActionPerformed(evt);
-            }
-        });
-        Almacen.add(presentacionMenuItem);
-
-        menuBar.add(Almacen);
-
-        comprasMenu.setMnemonic('h');
-        comprasMenu.setText("Compras");
-        comprasMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comprasMenuActionPerformed(evt);
-            }
-        });
-
-        ingresosMenuItem.setMnemonic('c');
-        ingresosMenuItem.setText("Ingresos");
-        ingresosMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ingresosMenuItemActionPerformed(evt);
-            }
-        });
-        comprasMenu.add(ingresosMenuItem);
-
-        preevodoresMenuItem.setMnemonic('a');
-        preevodoresMenuItem.setText("Proveedores");
-        preevodoresMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                preevodoresMenuItemActionPerformed(evt);
-            }
-        });
-        comprasMenu.add(preevodoresMenuItem);
-
-        menuBar.add(comprasMenu);
-
-        ventasMenu.setText("Ventas");
-
-        ventasMenuItem.setText("Ventas");
-        ventasMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ventasMenuItemActionPerformed(evt);
-            }
-        });
-        ventasMenu.add(ventasMenuItem);
-
-        clientesMenuItem.setText("Clientes");
-        clientesMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clientesMenuItemActionPerformed(evt);
-            }
-        });
-        ventasMenu.add(clientesMenuItem);
-
-        menuBar.add(ventasMenu);
-
-        cotizacionesMenu.setText("Cotizaciones");
-        cotizacionesMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cotizacionesMenuActionPerformed(evt);
-            }
-        });
-        menuBar.add(cotizacionesMenu);
-
-        mantenimientoMenu.setText("Mantenimiento");
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem4.setText("Usuarios");
@@ -219,7 +102,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 jMenuItem4ActionPerformed(evt);
             }
         });
-        mantenimientoMenu.add(jMenuItem4);
+        jMenu2.add(jMenuItem4);
 
         jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem5.setText("Roles");
@@ -228,7 +111,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 jMenuItem5ActionPerformed(evt);
             }
         });
-        mantenimientoMenu.add(jMenuItem5);
+        jMenu2.add(jMenuItem5);
 
         jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem6.setText("Roles Usuarios");
@@ -237,7 +120,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 jMenuItem6ActionPerformed(evt);
             }
         });
-        mantenimientoMenu.add(jMenuItem6);
+        jMenu2.add(jMenuItem6);
 
         jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem7.setText("Roles Permisos");
@@ -246,7 +129,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 jMenuItem7ActionPerformed(evt);
             }
         });
-        mantenimientoMenu.add(jMenuItem7);
+        jMenu2.add(jMenuItem7);
 
         jMenuItem8.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem8.setText("Permisos");
@@ -255,35 +138,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 jMenuItem8ActionPerformed(evt);
             }
         });
-        mantenimientoMenu.add(jMenuItem8);
+        jMenu2.add(jMenuItem8);
 
-        menuBar.add(mantenimientoMenu);
+        jMenuBar1.add(jMenu2);
 
-        consultasMenu.setText("Consultas");
-
-        reporteArticulos.setText("Stock articulos");
-        reporteArticulos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reporteArticulosActionPerformed(evt);
-            }
-        });
-        consultasMenu.add(reporteArticulos);
-
-        reportesCategorias.setText("Categorias");
-        consultasMenu.add(reportesCategorias);
-
-        reportesPresentaciones.setText("Presentaciones");
-        consultasMenu.add(reportesPresentaciones);
-
-        reportesClientes.setText("Clientes");
-        consultasMenu.add(reportesClientes);
-
-        reporteProveedores.setText("Proveedores");
-        consultasMenu.add(reporteProveedores);
-
-        menuBar.add(consultasMenu);
-
-        setJMenuBar(menuBar);
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -299,191 +158,79 @@ public class FrmPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void categoriaMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoriaMenuItemActionPerformed
-        try {
-            if(categoria==null || categoria.isClosed()){
-                categoria=new FrmCategoria();
-                this.jDesktopPane1.add(categoria);
-            }
-            categoria.setVisible(true);
-        } catch (Exception ex) {
-            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_categoriaMenuItemActionPerformed
-
-    private void sistemaMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sistemaMenuActionPerformed
+    private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
         System.exit(0);
-    }//GEN-LAST:event_sistemaMenuActionPerformed
+    }//GEN-LAST:event_btnSalirMouseClicked
 
-    private void acercaDeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acercaDeMenuItemActionPerformed
-        try {
-            if(acercade==null || acercade.isClosed()){
-                acercade=new FrmAcercaDe();
-                this.jDesktopPane1.add(acercade);
-            }
-            acercade.setVisible(true);
-        } catch (Exception ex) {
-            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_acercaDeMenuItemActionPerformed
-
-    private void articulosMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_articulosMenuItemActionPerformed
-        try {
-            if(articulo==null || articulo.isClosed()){
-                articulo=new FrmArticulos();
-                this.jDesktopPane1.add(articulo);
-            }
-            articulo.setVisible(true);
-        } catch (Exception ex) {
-            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_articulosMenuItemActionPerformed
-
-    private void presentacionMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_presentacionMenuItemActionPerformed
-        try {
-            if(presentacion==null || presentacion.isClosed()){
-                presentacion=new FrmPresentacion();
-                this.jDesktopPane1.add(presentacion);
-            }
-            presentacion.setVisible(true);
-        } catch (Exception ex) {
-            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_presentacionMenuItemActionPerformed
-
-    private void ingresosMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresosMenuItemActionPerformed
-        try {
-            if(ingresos==null || ingresos.isClosed()){
-                ingresos=new FrmIngreso();
-                this.jDesktopPane1.add(ingresos);
-            }
-            ingresos.setVisible(true);
-        } catch (Exception ex) {
-            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_ingresosMenuItemActionPerformed
-
-    private void comprasMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comprasMenuActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comprasMenuActionPerformed
-
-    private void preevodoresMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_preevodoresMenuItemActionPerformed
-        try {
-            if(proveedor==null || proveedor.isClosed()){
-                proveedor=new FrmProveedor();
-                this.jDesktopPane1.add(proveedor);
-            }
-            proveedor.setVisible(true);
-        } catch (Exception ex) {
-            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_preevodoresMenuItemActionPerformed
-
-    private void clientesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientesMenuItemActionPerformed
-        try {
-            if(cliente==null || cliente.isClosed()){
-                cliente=new FrmCliente();
-                this.jDesktopPane1.add(cliente);
-            }
-            cliente.setVisible(true);
-        } catch (Exception ex) {
-            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_clientesMenuItemActionPerformed
-
-    private void cotizacionesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cotizacionesMenuActionPerformed
-        try {
-            if(cotizacion==null || cotizacion.isClosed()){
-                cotizacion=new FrmCotizacion();
-                this.jDesktopPane1.add(cotizacion);
-            }
-            cotizacion.setVisible(true);
-        } catch (Exception ex) {
-            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_cotizacionesMenuActionPerformed
-
-    private void reporteArticulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteArticulosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_reporteArticulosActionPerformed
-
-    private void ventasMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ventasMenuItemActionPerformed
-        try {
-            if(venta==null || venta.isClosed()){
-                venta=new FrmVenta();
-                this.jDesktopPane1.add(venta);
-            }
-            venta.setVisible(true);
-        } catch (Exception ex) {
-            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_ventasMenuItemActionPerformed
+    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
+        
+    }//GEN-LAST:event_jMenu2ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        try
+        try 
         {
             if(listaPermisos.contains("VISTA_USUARIO"))
             {
                 FrmUsuario usuario=new FrmUsuario(listaPermisos);
                 this.jDesktopPane1.add(usuario);
-                usuario.setVisible(true);
+                usuario.setVisible(true);  
             }
             else
             {
                 JOptionPane.showMessageDialog(null,"No tiene acceso a este formulario",
-                    "Alerta",JOptionPane.WARNING_MESSAGE);
+                "Alerta",JOptionPane.WARNING_MESSAGE);
             }
-        }
-        catch (Exception ex)
+        } 
+        catch (Exception ex) 
         {
             Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        try
+        try 
         {
             if(listaPermisos.contains("VISTA_ROL"))
             {
                 FrmRoles rol=new FrmRoles(listaPermisos);
                 this.jDesktopPane1.add(rol);
-                rol.setVisible(true);
+                rol.setVisible(true);  
             }
             else
             {
                 JOptionPane.showMessageDialog(null,"No tiene acceso a este formulario",
-                    "Alerta",JOptionPane.WARNING_MESSAGE);
+                "Alerta",JOptionPane.WARNING_MESSAGE);
             }
-        }
-        catch (Exception ex)
+        } 
+        catch (Exception ex) 
         {
             Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        try
+        try 
         {
             if(listaPermisos.contains("VISTA_ROLUSUARIO"))
             {
                 FmrRolUsuario rolUs=new FmrRolUsuario(listaPermisos);
                 this.jDesktopPane1.add(rolUs);
-                rolUs.setVisible(true);
+                rolUs.setVisible(true); 
             }
             else
             {
                 JOptionPane.showMessageDialog(null,"No tiene acceso a este formulario",
-                    "Alerta",JOptionPane.WARNING_MESSAGE);
+                "Alerta",JOptionPane.WARNING_MESSAGE);
             }
-        }
-        catch (Exception ex)
+        } 
+        catch (Exception ex) 
         {
             Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        try
+        try 
         {
             if(listaPermisos.contains("VISTA_ROLPERMISO"))
             {
@@ -494,17 +241,17 @@ public class FrmPrincipal extends javax.swing.JFrame {
             else
             {
                 JOptionPane.showMessageDialog(null,"No tiene acceso a este formulario",
-                    "Alerta",JOptionPane.WARNING_MESSAGE);
+                "Alerta",JOptionPane.WARNING_MESSAGE);
             }
-        }
-        catch (Exception ex)
+        } 
+        catch (Exception ex) 
         {
             Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        try
+        try 
         {
             if(listaPermisos.contains("VISTA_PERMISO"))
             {
@@ -515,10 +262,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
             else
             {
                 JOptionPane.showMessageDialog(null,"No tiene acceso a este formulario",
-                    "Alerta",JOptionPane.WARNING_MESSAGE);
+                "Alerta",JOptionPane.WARNING_MESSAGE);
             }
-        }
-        catch (Exception ex)
+        } 
+        catch (Exception ex) 
         {
             Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -550,6 +297,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -560,34 +314,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu Almacen;
-    private javax.swing.JMenuItem acercaDeMenuItem;
-    private javax.swing.JMenuItem articulosMenuItem;
-    private javax.swing.JMenuItem categoriaMenuItem;
-    private javax.swing.JMenuItem clientesMenuItem;
-    private javax.swing.JMenu comprasMenu;
-    private javax.swing.JMenu consultasMenu;
-    private javax.swing.JMenu cotizacionesMenu;
-    private javax.swing.JMenuItem ingresosMenuItem;
+    private javax.swing.JMenu btnSalir;
     private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenu mantenimientoMenu;
-    private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem preevodoresMenuItem;
-    private javax.swing.JMenuItem presentacionMenuItem;
-    private javax.swing.JMenuItem reporteArticulos;
-    private javax.swing.JMenuItem reporteProveedores;
-    private javax.swing.JMenuItem reportesCategorias;
-    private javax.swing.JMenuItem reportesClientes;
-    private javax.swing.JMenuItem reportesPresentaciones;
-    private javax.swing.JMenuItem salirMenuItem;
-    private javax.swing.JMenu sistemaMenu;
-    private javax.swing.JMenu ventasMenu;
-    private javax.swing.JMenuItem ventasMenuItem;
     // End of variables declaration//GEN-END:variables
-
 }

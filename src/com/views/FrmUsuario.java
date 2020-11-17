@@ -117,32 +117,32 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
     public void insertar() 
     {
         Object us;
-        try 
-        {
-            //usuario.setCodigoUsuario(100000);
-            usuario.setNombreUsuario(this.txtNombre.getText());
-            nombreUsuario=this.txtNombre.getText();
-            pass=this.txtContra.getText();
-            cryptPass=encry.encrypt(pass);
-            usuario.setContraUsuario(cryptPass);
-            us=UsuarioController.getExistUser(nombreUsuario,cryptPass);
-            int resp=Integer.parseInt(us.toString());
-            if(resp==0)
-            {
-                UsuarioController.create(usuario);
-                JOptionPane.showMessageDialog(null,"Usuario insertado correctamente");//daoUs.insertarUsuario(us));
-                this.limpiar();
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(null,"Usuario ya existe");
-            }
-            
-        } 
-        catch (Exception e) 
-        {
-            JOptionPane.showMessageDialog(null, "Error al insertar usuario en formulario: ");
-        }
+//        try 
+//        {
+//            //usuario.setCodigoUsuario(100000);
+//            usuario.setNombreUsuario(this.txtNombre.getText());
+//            nombreUsuario=this.txtNombre.getText();
+//            pass=this.txtContra.getText();
+//            cryptPass=encry.encrypt(pass);
+//            usuario.setContraUsuario(cryptPass);
+//            us=UsuarioController.getExistUser(nombreUsuario,cryptPass);
+//            int resp=Integer.parseInt(us.toString());
+//            if(resp==0)
+//            {
+//                UsuarioController.create(usuario);
+//                JOptionPane.showMessageDialog(null,"Usuario insertado correctamente");//daoUs.insertarUsuario(us));
+//                this.limpiar();
+//            }
+//            else
+//            {
+//                JOptionPane.showMessageDialog(null,"Usuario ya existe");
+//            }
+//            
+//        } 
+//        catch (Exception e) 
+//        {
+//            JOptionPane.showMessageDialog(null, "Error al insertar usuario en formulario: ");
+//        }
     }
     
     
@@ -150,43 +150,43 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
     public void modificar() 
     {
         Object us;
-        try 
-        {
-            usuario.setCodigoUsuario(Integer.parseInt(this.txtCodigo.getText()));
-            codUsuario=Integer.parseInt(this.txtCodigo.getText());
-            usuario.setNombreUsuario(this.txtNombre.getText());
-            pass=this.txtContra.getText();
-            cryptPass=encry.encrypt(pass);
-            usuario.setContraUsuario(cryptPass);
-            us=UsuarioController.getDependUser(codUsuario);
-            int resp=Integer.parseInt(us.toString());
-            if(resp==0)
-            {
-                int respuesta = JOptionPane.showConfirmDialog(this, "Desea modificar a usuario",
-                    "Modificar", JOptionPane.YES_NO_OPTION);
-                if (respuesta == JOptionPane.OK_OPTION) 
-                {
-                    UsuarioController.edit(usuario);
-                    JOptionPane.showMessageDialog(null,"Usuario modificado correctamente");
-                    mostrar();
-                    limpiar();                
-                } 
-                else 
-                {
-                    mostrar();
-                    limpiar();
-                }
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(null,"Usuario no puede modificarse ya que hay registros dependientes");
-            }
-            
-        } 
-        catch (Exception e) 
-        {
-            JOptionPane.showMessageDialog(null, "Error al modificar usuario");
-        }
+//        try 
+//        {
+//            usuario.setCodigoUsuario(Integer.parseInt(this.txtCodigo.getText()));
+//            codUsuario=Integer.parseInt(this.txtCodigo.getText());
+//            usuario.setNombreUsuario(this.txtNombre.getText());
+//            pass=this.txtContra.getText();
+//            cryptPass=encry.encrypt(pass);
+//            usuario.setContraUsuario(cryptPass);
+//            us=UsuarioController.getDependUser(codUsuario);
+//            int resp=Integer.parseInt(us.toString());
+//            if(resp==0)
+//            {
+//                int respuesta = JOptionPane.showConfirmDialog(this, "Desea modificar a usuario",
+//                    "Modificar", JOptionPane.YES_NO_OPTION);
+//                if (respuesta == JOptionPane.OK_OPTION) 
+//                {
+//                    UsuarioController.edit(usuario);
+//                    JOptionPane.showMessageDialog(null,"Usuario modificado correctamente");
+//                    mostrar();
+//                    limpiar();                
+//                } 
+//                else 
+//                {
+//                    mostrar();
+//                    limpiar();
+//                }
+//            }
+//            else
+//            {
+//                JOptionPane.showMessageDialog(null,"Usuario no puede modificarse ya que hay registros dependientes");
+//            }
+//            
+//        } 
+//        catch (Exception e) 
+//        {
+//            JOptionPane.showMessageDialog(null, "Error al modificar usuario");
+//        }
     }
     
     
@@ -194,39 +194,39 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
     public void eliminar()
     {
         Object us;
-        try 
-        {
-            usuario.setCodigoUsuario(Integer.parseInt(this.txtCodigo.getText()));
-            codUsuario=Integer.parseInt(this.txtCodigo.getText());
-            us=UsuarioController.getDependUser(codUsuario);
-            int resp=Integer.parseInt(us.toString());
-            if(resp==0)
-            {
-                int respuesta = JOptionPane.showConfirmDialog(this, "Desea eliminar a usuario",
-                "Eliminar", JOptionPane.YES_NO_OPTION);
-                if (respuesta == JOptionPane.OK_OPTION) 
-                {
-                    UsuarioController.destroy(usuario.getCodigoUsuario());
-                    JOptionPane.showMessageDialog(null,"Usuario eliminado correctamente");
-                    mostrar();
-                    limpiar();
-                } 
-                else 
-                {
-                    mostrar();
-                    limpiar();
-                }
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(null,"Usuario no puede eliminarse ya que hay registros dependientes");
-            }
-            
-        } 
-        catch (Exception e) 
-        {
-            JOptionPane.showMessageDialog(null,"Error al eliminar usuario");
-        }
+//        try 
+//        {
+//            usuario.setCodigoUsuario(Integer.parseInt(this.txtCodigo.getText()));
+//            codUsuario=Integer.parseInt(this.txtCodigo.getText());
+//            us=UsuarioController.getDependUser(codUsuario);
+//            int resp=Integer.parseInt(us.toString());
+//            if(resp==0)
+//            {
+//                int respuesta = JOptionPane.showConfirmDialog(this, "Desea eliminar a usuario",
+//                "Eliminar", JOptionPane.YES_NO_OPTION);
+//                if (respuesta == JOptionPane.OK_OPTION) 
+//                {
+//                    UsuarioController.destroy(usuario.getCodigoUsuario());
+//                    JOptionPane.showMessageDialog(null,"Usuario eliminado correctamente");
+//                    mostrar();
+//                    limpiar();
+//                } 
+//                else 
+//                {
+//                    mostrar();
+//                    limpiar();
+//                }
+//            }
+//            else
+//            {
+//                JOptionPane.showMessageDialog(null,"Usuario no puede eliminarse ya que hay registros dependientes");
+//            }
+//            
+//        } 
+//        catch (Exception e) 
+//        {
+//            JOptionPane.showMessageDialog(null,"Error al eliminar usuario");
+//        }
     }
 
     

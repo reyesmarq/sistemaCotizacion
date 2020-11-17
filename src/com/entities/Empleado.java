@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.entities;
 
 import java.io.Serializable;
@@ -26,8 +27,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
- * @author dguevara
+ *  Nombre de la clase: Empleado
+ *  Fecha: 11-17-2020 (m/d/a)
+ *  Versión: 1.0
+ *  CopyRight: Ulises Guzmán
+ *  @author Ulises Guzmán
  */
 @Entity
 @Table(catalog = "cotizacionEmpresa", schema = "")

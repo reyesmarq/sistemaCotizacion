@@ -2,23 +2,22 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="POE_Proyecto_finalPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>com.entities.Venta</class>
+    <class>com.entities.Presentacion</class>
+    <class>com.entities.Empleado</class>
     <class>com.entities.Categoria</class>
     <class>com.entities.Detalleingreso</class>
-    <class>com.entities.Ingreso</class>
-    <class>com.entities.Rol</class>
-    <class>com.entities.Cliente</class>
-    <class>com.entities.Permiso</class>
-    <class>com.entities.Usuario</class>
-    <class>com.entities.Usuariopermiso</class>
-    <class>com.entities.Detalleventa</class>
-    <class>com.entities.Empleado</class>
     <class>com.entities.Rolpermiso</class>
-    <class>com.entities.Rolusuario</class>
+    <class>com.entities.Rol</class>
+    <class>com.entities.Usuario</class>
     <class>com.entities.Articulo</class>
+    <class>com.entities.Venta</class>
     <class>com.entities.Loguusuario</class>
+    <class>com.entities.Ingreso</class>
+    <class>com.entities.Cliente</class>
     <class>com.entities.Proveedor</class>
-    <class>com.entities.Presentacion</class>
+    <class>com.entities.Permiso</class>
+    <class>com.entities.Rolusuario</class>
+    <class>com.entities.Detalleventa</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/cotizacionEmpresa"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
