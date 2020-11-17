@@ -1,33 +1,31 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Nombre de Controlador: PermisoJpaController
+ * Fecha: 16/11/2020
+ * @author Diego Guevara
+ * Version: 1.0
+ * CopyRight: Diego Guevara
  */
-
 package com.controller;
 
-import com.controller.exceptions.IllegalOrphanException;
-import com.controller.exceptions.NonexistentEntityException;
+import com.controllers.exceptions.IllegalOrphanException;
+import com.controllers.exceptions.NonexistentEntityException;
 import com.entities.Permiso;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.entities.Usuariopermiso;
+import com.entities.Rolpermiso;
 import java.util.ArrayList;
 import java.util.List;
-import com.entities.Rolpermiso;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 
 /**
- *  Nombre de la clase: PermisoJpaController
- *  Fecha: 11-04-2020 (m/d/a)
- *  Versión: 1.0
- *  CopyRight: Ulises Guzmán
- *  @author Ulises Guzmán
+ *
+ * @author dguevara
  */
 public class PermisoJpaController implements Serializable {
 
@@ -36,7 +34,7 @@ public class PermisoJpaController implements Serializable {
     }
     
     public PermisoJpaController() {
-        this.emf = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
+        this.emf = Persistence.createEntityManagerFactory("LoginProyectoPersistenciaFullBasePU");
     }
     
     private EntityManagerFactory emf = null;
@@ -46,9 +44,6 @@ public class PermisoJpaController implements Serializable {
     }
 
     public void create(Permiso permiso) {
-        if (permiso.getUsuariopermisoList() == null) {
-            permiso.setUsuariopermisoList(new ArrayList<Usuariopermiso>());
-        }
         if (permiso.getRolpermisoList() == null) {
             permiso.setRolpermisoList(new ArrayList<Rolpermiso>());
         }
@@ -56,29 +51,14 @@ public class PermisoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            List<Usuariopermiso> attachedUsuariopermisoList = new ArrayList<Usuariopermiso>();
-            for (Usuariopermiso usuariopermisoListUsuariopermisoToAttach : permiso.getUsuariopermisoList()) {
-                usuariopermisoListUsuariopermisoToAttach = em.getReference(usuariopermisoListUsuariopermisoToAttach.getClass(), usuariopermisoListUsuariopermisoToAttach.getCodigoUsuarioPermiso());
-                attachedUsuariopermisoList.add(usuariopermisoListUsuariopermisoToAttach);
-            }
-            permiso.setUsuariopermisoList(attachedUsuariopermisoList);
             List<Rolpermiso> attachedRolpermisoList = new ArrayList<Rolpermiso>();
             for (Rolpermiso rolpermisoListRolpermisoToAttach : permiso.getRolpermisoList()) {
-                rolpermisoListRolpermisoToAttach = em.getReference(rolpermisoListRolpermisoToAttach.getClass(), rolpermisoListRolpermisoToAttach.getCodigoRolPermiso());
-                attachedRolpermisoList.add(rolpermisoListRolpermisoToAttach);
+                //rolpermisoListRolpermisoToAttach = em.getReference(rolpermisoListRolpermisoToAttach.getClass(), rolpermisoListRolpermisoToAttach.getCodigoRolPermiso());
+                //attachedRolpermisoList.add(rolpermisoListRolpermisoToAttach);
             }
             permiso.setRolpermisoList(attachedRolpermisoList);
             em.persist(permiso);
-            for (Usuariopermiso usuariopermisoListUsuariopermiso : permiso.getUsuariopermisoList()) {
-                Permiso oldCodigoPermisoOfUsuariopermisoListUsuariopermiso = usuariopermisoListUsuariopermiso.getCodigoPermiso();
-                usuariopermisoListUsuariopermiso.setCodigoPermiso(permiso);
-                usuariopermisoListUsuariopermiso = em.merge(usuariopermisoListUsuariopermiso);
-                if (oldCodigoPermisoOfUsuariopermisoListUsuariopermiso != null) {
-                    oldCodigoPermisoOfUsuariopermisoListUsuariopermiso.getUsuariopermisoList().remove(usuariopermisoListUsuariopermiso);
-                    oldCodigoPermisoOfUsuariopermisoListUsuariopermiso = em.merge(oldCodigoPermisoOfUsuariopermisoListUsuariopermiso);
-                }
-            }
-            for (Rolpermiso rolpermisoListRolpermiso : permiso.getRolpermisoList()) {
+            /*for (Rolpermiso rolpermisoListRolpermiso : permiso.getRolpermisoList()) {
                 Permiso oldCodigoPermisoOfRolpermisoListRolpermiso = rolpermisoListRolpermiso.getCodigoPermiso();
                 rolpermisoListRolpermiso.setCodigoPermiso(permiso);
                 rolpermisoListRolpermiso = em.merge(rolpermisoListRolpermiso);
@@ -86,7 +66,7 @@ public class PermisoJpaController implements Serializable {
                     oldCodigoPermisoOfRolpermisoListRolpermiso.getRolpermisoList().remove(rolpermisoListRolpermiso);
                     oldCodigoPermisoOfRolpermisoListRolpermiso = em.merge(oldCodigoPermisoOfRolpermisoListRolpermiso);
                 }
-            }
+            }*/
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -101,19 +81,9 @@ public class PermisoJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Permiso persistentPermiso = em.find(Permiso.class, permiso.getCodigoPermiso());
-            List<Usuariopermiso> usuariopermisoListOld = persistentPermiso.getUsuariopermisoList();
-            List<Usuariopermiso> usuariopermisoListNew = permiso.getUsuariopermisoList();
             List<Rolpermiso> rolpermisoListOld = persistentPermiso.getRolpermisoList();
             List<Rolpermiso> rolpermisoListNew = permiso.getRolpermisoList();
             List<String> illegalOrphanMessages = null;
-            for (Usuariopermiso usuariopermisoListOldUsuariopermiso : usuariopermisoListOld) {
-                if (!usuariopermisoListNew.contains(usuariopermisoListOldUsuariopermiso)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Usuariopermiso " + usuariopermisoListOldUsuariopermiso + " since its codigoPermiso field is not nullable.");
-                }
-            }
             for (Rolpermiso rolpermisoListOldRolpermiso : rolpermisoListOld) {
                 if (!rolpermisoListNew.contains(rolpermisoListOldRolpermiso)) {
                     if (illegalOrphanMessages == null) {
@@ -125,33 +95,15 @@ public class PermisoJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            List<Usuariopermiso> attachedUsuariopermisoListNew = new ArrayList<Usuariopermiso>();
-            for (Usuariopermiso usuariopermisoListNewUsuariopermisoToAttach : usuariopermisoListNew) {
-                usuariopermisoListNewUsuariopermisoToAttach = em.getReference(usuariopermisoListNewUsuariopermisoToAttach.getClass(), usuariopermisoListNewUsuariopermisoToAttach.getCodigoUsuarioPermiso());
-                attachedUsuariopermisoListNew.add(usuariopermisoListNewUsuariopermisoToAttach);
-            }
-            usuariopermisoListNew = attachedUsuariopermisoListNew;
-            permiso.setUsuariopermisoList(usuariopermisoListNew);
             List<Rolpermiso> attachedRolpermisoListNew = new ArrayList<Rolpermiso>();
             for (Rolpermiso rolpermisoListNewRolpermisoToAttach : rolpermisoListNew) {
-                rolpermisoListNewRolpermisoToAttach = em.getReference(rolpermisoListNewRolpermisoToAttach.getClass(), rolpermisoListNewRolpermisoToAttach.getCodigoRolPermiso());
-                attachedRolpermisoListNew.add(rolpermisoListNewRolpermisoToAttach);
+                //rolpermisoListNewRolpermisoToAttach = em.getReference(rolpermisoListNewRolpermisoToAttach.getClass(), rolpermisoListNewRolpermisoToAttach.getCodigoRolPermiso());
+                //attachedRolpermisoListNew.add(rolpermisoListNewRolpermisoToAttach);
             }
             rolpermisoListNew = attachedRolpermisoListNew;
             permiso.setRolpermisoList(rolpermisoListNew);
             permiso = em.merge(permiso);
-            for (Usuariopermiso usuariopermisoListNewUsuariopermiso : usuariopermisoListNew) {
-                if (!usuariopermisoListOld.contains(usuariopermisoListNewUsuariopermiso)) {
-                    Permiso oldCodigoPermisoOfUsuariopermisoListNewUsuariopermiso = usuariopermisoListNewUsuariopermiso.getCodigoPermiso();
-                    usuariopermisoListNewUsuariopermiso.setCodigoPermiso(permiso);
-                    usuariopermisoListNewUsuariopermiso = em.merge(usuariopermisoListNewUsuariopermiso);
-                    if (oldCodigoPermisoOfUsuariopermisoListNewUsuariopermiso != null && !oldCodigoPermisoOfUsuariopermisoListNewUsuariopermiso.equals(permiso)) {
-                        oldCodigoPermisoOfUsuariopermisoListNewUsuariopermiso.getUsuariopermisoList().remove(usuariopermisoListNewUsuariopermiso);
-                        oldCodigoPermisoOfUsuariopermisoListNewUsuariopermiso = em.merge(oldCodigoPermisoOfUsuariopermisoListNewUsuariopermiso);
-                    }
-                }
-            }
-            for (Rolpermiso rolpermisoListNewRolpermiso : rolpermisoListNew) {
+            /*for (Rolpermiso rolpermisoListNewRolpermiso : rolpermisoListNew) {
                 if (!rolpermisoListOld.contains(rolpermisoListNewRolpermiso)) {
                     Permiso oldCodigoPermisoOfRolpermisoListNewRolpermiso = rolpermisoListNewRolpermiso.getCodigoPermiso();
                     rolpermisoListNewRolpermiso.setCodigoPermiso(permiso);
@@ -161,7 +113,7 @@ public class PermisoJpaController implements Serializable {
                         oldCodigoPermisoOfRolpermisoListNewRolpermiso = em.merge(oldCodigoPermisoOfRolpermisoListNewRolpermiso);
                     }
                 }
-            }
+            }*/
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -192,13 +144,6 @@ public class PermisoJpaController implements Serializable {
                 throw new NonexistentEntityException("The permiso with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            List<Usuariopermiso> usuariopermisoListOrphanCheck = permiso.getUsuariopermisoList();
-            for (Usuariopermiso usuariopermisoListOrphanCheckUsuariopermiso : usuariopermisoListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Permiso (" + permiso + ") cannot be destroyed since the Usuariopermiso " + usuariopermisoListOrphanCheckUsuariopermiso + " in its usuariopermisoList field has a non-nullable codigoPermiso field.");
-            }
             List<Rolpermiso> rolpermisoListOrphanCheck = permiso.getRolpermisoList();
             for (Rolpermiso rolpermisoListOrphanCheckRolpermiso : rolpermisoListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
@@ -241,6 +186,29 @@ public class PermisoJpaController implements Serializable {
             em.close();
         }
     }
+    
+    
+    
+    public List<Permiso> findPermisoEntitiesOrdenado() {
+        EntityManager em = getEntityManager();
+        try {
+            EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("LoginProyectoPersistenciaFullBasePU");
+            EntityManager entitymanager = emfactory.createEntityManager();
+
+            Query query = entitymanager.createNamedQuery("Permiso.findAll");
+            
+            /*CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(Permiso.class));
+            Query q = em.createQuery(cq);
+            if (!all) {
+                q.setMaxResults(maxResults);
+                q.setFirstResult(firstResult);
+            }*/
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
 
     public Permiso findPermiso(Integer id) {
         EntityManager em = getEntityManager();
@@ -261,6 +229,44 @@ public class PermisoJpaController implements Serializable {
             return ((Long) q.getSingleResult()).intValue();
         } finally {
             em.close();
+        }
+    }
+    
+    
+    public Object getExistPermiso(String nombre, String descripcion)
+    {
+        try
+        {
+            EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("LoginProyectoPersistenciaFullBasePU");
+            EntityManager entitymanager = emfactory.createEntityManager();
+
+            Query query = entitymanager.createNamedQuery("Permiso.existPermiso");
+            query.setParameter("nombrePermiso",nombre);
+            query.setParameter("descripcionPermiso", descripcion);
+            Object user=query.getSingleResult();
+            return user;
+        }
+        catch(NoResultException e)
+        {
+            return null;
+        }
+    }
+    
+    public Object getDependRolPermiso(int permiso)
+    {
+        try
+        {
+            EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("LoginProyectoPersistenciaFullBasePU");
+            EntityManager entitymanager = emfactory.createEntityManager();
+
+            Query query = entitymanager.createNamedQuery("Permiso.dependRolPermiso");
+            query.setParameter("codigoPermiso",permiso);
+            Object user=query.getSingleResult();
+            return user;
+        }
+        catch(NoResultException e)
+        {
+            return null;
         }
     }
     

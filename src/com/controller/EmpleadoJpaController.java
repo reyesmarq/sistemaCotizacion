@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.controller;
 
-import com.controller.exceptions.NonexistentEntityException;
+import com.controllers.exceptions.NonexistentEntityException;
 import com.entities.Empleado;
 import java.io.Serializable;
 import javax.persistence.Query;
@@ -20,25 +19,16 @@ import java.util.List;
 import com.entities.Ingreso;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 /**
- *  Nombre de la clase: EmpleadoJpaController
- *  Fecha: 11-04-2020 (m/d/a)
- *  Versión: 1.0
- *  CopyRight: Ulises Guzmán
- *  @author Ulises Guzmán
+ *
+ * @author dguevara
  */
 public class EmpleadoJpaController implements Serializable {
 
     public EmpleadoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    
-    public EmpleadoJpaController() {
-        this.emf = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
-    }
-    
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {

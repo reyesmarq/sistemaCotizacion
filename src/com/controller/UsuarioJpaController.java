@@ -1,46 +1,52 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Nombre de Controlador: UsuarioJpaController
+ * Fecha: 16/11/2020
+ * @author Diego Guevara
+ * Version: 1.0
+ * CopyRight: Diego Guevara
  */
-
 package com.controller;
 
-import com.controller.exceptions.IllegalOrphanException;
-import com.controller.exceptions.NonexistentEntityException;
+import com.conexion.Conexion;
+import com.controllers.exceptions.IllegalOrphanException;
+import com.controllers.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.entities.Usuariopermiso;
+import com.entities.Loguusuario;
 import java.util.ArrayList;
 import java.util.List;
-import com.entities.Loguusuario;
 import com.entities.Rolusuario;
 import com.entities.Empleado;
 import com.entities.Usuario;
+import com.views.FrmLogin;
+import com.views.FrmPrincipal;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
 
 /**
- *  Nombre de la clase: UsuarioJpaController
- *  Fecha: 11-04-2020 (m/d/a)
- *  Versión: 1.0
- *  CopyRight: Ulises Guzmán
- *  @author Ulises Guzmán
+ *
+ * @author dguevara
  */
-public class UsuarioJpaController implements Serializable {
+public class UsuarioJpaController extends Conexion implements Serializable {
 
     public UsuarioJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     
     public UsuarioJpaController() {
-        this.emf = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
+        this.emf = Persistence.createEntityManagerFactory("LoginProyectoPersistenciaFullBasePU");
     }
-    
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
@@ -48,10 +54,7 @@ public class UsuarioJpaController implements Serializable {
     }
 
     public void create(Usuario usuario) {
-        if (usuario.getUsuariopermisoList() == null) {
-            usuario.setUsuariopermisoList(new ArrayList<Usuariopermiso>());
-        }
-        if (usuario.getLoguusuarioList() == null) {
+        /*if (usuario.getLoguusuarioList() == null) {
             usuario.setLoguusuarioList(new ArrayList<Loguusuario>());
         }
         if (usuario.getRolusuarioList() == null) {
@@ -59,17 +62,11 @@ public class UsuarioJpaController implements Serializable {
         }
         if (usuario.getEmpleadoList() == null) {
             usuario.setEmpleadoList(new ArrayList<Empleado>());
-        }
+        }*/
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            List<Usuariopermiso> attachedUsuariopermisoList = new ArrayList<Usuariopermiso>();
-            for (Usuariopermiso usuariopermisoListUsuariopermisoToAttach : usuario.getUsuariopermisoList()) {
-                usuariopermisoListUsuariopermisoToAttach = em.getReference(usuariopermisoListUsuariopermisoToAttach.getClass(), usuariopermisoListUsuariopermisoToAttach.getCodigoUsuarioPermiso());
-                attachedUsuariopermisoList.add(usuariopermisoListUsuariopermisoToAttach);
-            }
-            usuario.setUsuariopermisoList(attachedUsuariopermisoList);
             List<Loguusuario> attachedLoguusuarioList = new ArrayList<Loguusuario>();
             for (Loguusuario loguusuarioListLoguusuarioToAttach : usuario.getLoguusuarioList()) {
                 loguusuarioListLoguusuarioToAttach = em.getReference(loguusuarioListLoguusuarioToAttach.getClass(), loguusuarioListLoguusuarioToAttach.getCodigoLog());
@@ -89,15 +86,6 @@ public class UsuarioJpaController implements Serializable {
             }
             usuario.setEmpleadoList(attachedEmpleadoList);
             em.persist(usuario);
-            for (Usuariopermiso usuariopermisoListUsuariopermiso : usuario.getUsuariopermisoList()) {
-                Usuario oldCodigoUsuarioOfUsuariopermisoListUsuariopermiso = usuariopermisoListUsuariopermiso.getCodigoUsuario();
-                usuariopermisoListUsuariopermiso.setCodigoUsuario(usuario);
-                usuariopermisoListUsuariopermiso = em.merge(usuariopermisoListUsuariopermiso);
-                if (oldCodigoUsuarioOfUsuariopermisoListUsuariopermiso != null) {
-                    oldCodigoUsuarioOfUsuariopermisoListUsuariopermiso.getUsuariopermisoList().remove(usuariopermisoListUsuariopermiso);
-                    oldCodigoUsuarioOfUsuariopermisoListUsuariopermiso = em.merge(oldCodigoUsuarioOfUsuariopermisoListUsuariopermiso);
-                }
-            }
             for (Loguusuario loguusuarioListLoguusuario : usuario.getLoguusuarioList()) {
                 Usuario oldCodigoUsuarioOfLoguusuarioListLoguusuario = loguusuarioListLoguusuario.getCodigoUsuario();
                 loguusuarioListLoguusuario.setCodigoUsuario(usuario);
@@ -109,11 +97,11 @@ public class UsuarioJpaController implements Serializable {
             }
             for (Rolusuario rolusuarioListRolusuario : usuario.getRolusuarioList()) {
                 Usuario oldCodigoUsuarioOfRolusuarioListRolusuario = rolusuarioListRolusuario.getCodigoUsuario();
-                rolusuarioListRolusuario.setCodigoUsuario(usuario);
-                rolusuarioListRolusuario = em.merge(rolusuarioListRolusuario);
+                //rolusuarioListRolusuario.setCodigoUsuario(usuario);
+                //rolusuarioListRolusuario = em.merge(rolusuarioListRolusuario);
                 if (oldCodigoUsuarioOfRolusuarioListRolusuario != null) {
-                    oldCodigoUsuarioOfRolusuarioListRolusuario.getRolusuarioList().remove(rolusuarioListRolusuario);
-                    oldCodigoUsuarioOfRolusuarioListRolusuario = em.merge(oldCodigoUsuarioOfRolusuarioListRolusuario);
+                    //oldCodigoUsuarioOfRolusuarioListRolusuario.getRolusuarioList().remove(rolusuarioListRolusuario);
+                    //oldCodigoUsuarioOfRolusuarioListRolusuario = em.merge(oldCodigoUsuarioOfRolusuarioListRolusuario);
                 }
             }
             for (Empleado empleadoListEmpleado : usuario.getEmpleadoList()) {
@@ -139,8 +127,6 @@ public class UsuarioJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Usuario persistentUsuario = em.find(Usuario.class, usuario.getCodigoUsuario());
-            List<Usuariopermiso> usuariopermisoListOld = persistentUsuario.getUsuariopermisoList();
-            List<Usuariopermiso> usuariopermisoListNew = usuario.getUsuariopermisoList();
             List<Loguusuario> loguusuarioListOld = persistentUsuario.getLoguusuarioList();
             List<Loguusuario> loguusuarioListNew = usuario.getLoguusuarioList();
             List<Rolusuario> rolusuarioListOld = persistentUsuario.getRolusuarioList();
@@ -148,14 +134,6 @@ public class UsuarioJpaController implements Serializable {
             List<Empleado> empleadoListOld = persistentUsuario.getEmpleadoList();
             List<Empleado> empleadoListNew = usuario.getEmpleadoList();
             List<String> illegalOrphanMessages = null;
-            for (Usuariopermiso usuariopermisoListOldUsuariopermiso : usuariopermisoListOld) {
-                if (!usuariopermisoListNew.contains(usuariopermisoListOldUsuariopermiso)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Usuariopermiso " + usuariopermisoListOldUsuariopermiso + " since its codigoUsuario field is not nullable.");
-                }
-            }
             for (Rolusuario rolusuarioListOldRolusuario : rolusuarioListOld) {
                 if (!rolusuarioListNew.contains(rolusuarioListOldRolusuario)) {
                     if (illegalOrphanMessages == null) {
@@ -167,13 +145,6 @@ public class UsuarioJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            List<Usuariopermiso> attachedUsuariopermisoListNew = new ArrayList<Usuariopermiso>();
-            for (Usuariopermiso usuariopermisoListNewUsuariopermisoToAttach : usuariopermisoListNew) {
-                usuariopermisoListNewUsuariopermisoToAttach = em.getReference(usuariopermisoListNewUsuariopermisoToAttach.getClass(), usuariopermisoListNewUsuariopermisoToAttach.getCodigoUsuarioPermiso());
-                attachedUsuariopermisoListNew.add(usuariopermisoListNewUsuariopermisoToAttach);
-            }
-            usuariopermisoListNew = attachedUsuariopermisoListNew;
-            usuario.setUsuariopermisoList(usuariopermisoListNew);
             List<Loguusuario> attachedLoguusuarioListNew = new ArrayList<Loguusuario>();
             for (Loguusuario loguusuarioListNewLoguusuarioToAttach : loguusuarioListNew) {
                 loguusuarioListNewLoguusuarioToAttach = em.getReference(loguusuarioListNewLoguusuarioToAttach.getClass(), loguusuarioListNewLoguusuarioToAttach.getCodigoLog());
@@ -196,17 +167,6 @@ public class UsuarioJpaController implements Serializable {
             empleadoListNew = attachedEmpleadoListNew;
             usuario.setEmpleadoList(empleadoListNew);
             usuario = em.merge(usuario);
-            for (Usuariopermiso usuariopermisoListNewUsuariopermiso : usuariopermisoListNew) {
-                if (!usuariopermisoListOld.contains(usuariopermisoListNewUsuariopermiso)) {
-                    Usuario oldCodigoUsuarioOfUsuariopermisoListNewUsuariopermiso = usuariopermisoListNewUsuariopermiso.getCodigoUsuario();
-                    usuariopermisoListNewUsuariopermiso.setCodigoUsuario(usuario);
-                    usuariopermisoListNewUsuariopermiso = em.merge(usuariopermisoListNewUsuariopermiso);
-                    if (oldCodigoUsuarioOfUsuariopermisoListNewUsuariopermiso != null && !oldCodigoUsuarioOfUsuariopermisoListNewUsuariopermiso.equals(usuario)) {
-                        oldCodigoUsuarioOfUsuariopermisoListNewUsuariopermiso.getUsuariopermisoList().remove(usuariopermisoListNewUsuariopermiso);
-                        oldCodigoUsuarioOfUsuariopermisoListNewUsuariopermiso = em.merge(oldCodigoUsuarioOfUsuariopermisoListNewUsuariopermiso);
-                    }
-                }
-            }
             for (Loguusuario loguusuarioListOldLoguusuario : loguusuarioListOld) {
                 if (!loguusuarioListNew.contains(loguusuarioListOldLoguusuario)) {
                     loguusuarioListOldLoguusuario.setCodigoUsuario(null);
@@ -219,8 +179,8 @@ public class UsuarioJpaController implements Serializable {
                     loguusuarioListNewLoguusuario.setCodigoUsuario(usuario);
                     loguusuarioListNewLoguusuario = em.merge(loguusuarioListNewLoguusuario);
                     if (oldCodigoUsuarioOfLoguusuarioListNewLoguusuario != null && !oldCodigoUsuarioOfLoguusuarioListNewLoguusuario.equals(usuario)) {
-                        oldCodigoUsuarioOfLoguusuarioListNewLoguusuario.getLoguusuarioList().remove(loguusuarioListNewLoguusuario);
-                        oldCodigoUsuarioOfLoguusuarioListNewLoguusuario = em.merge(oldCodigoUsuarioOfLoguusuarioListNewLoguusuario);
+                        //oldCodigoUsuarioOfLoguusuarioListNewLoguusuario.getLoguusuarioList().remove(loguusuarioListNewLoguusuario);
+                        //oldCodigoUsuarioOfLoguusuarioListNewLoguusuario = em.merge(oldCodigoUsuarioOfLoguusuarioListNewLoguusuario);
                     }
                 }
             }
@@ -230,8 +190,8 @@ public class UsuarioJpaController implements Serializable {
                     rolusuarioListNewRolusuario.setCodigoUsuario(usuario);
                     rolusuarioListNewRolusuario = em.merge(rolusuarioListNewRolusuario);
                     if (oldCodigoUsuarioOfRolusuarioListNewRolusuario != null && !oldCodigoUsuarioOfRolusuarioListNewRolusuario.equals(usuario)) {
-                        oldCodigoUsuarioOfRolusuarioListNewRolusuario.getRolusuarioList().remove(rolusuarioListNewRolusuario);
-                        oldCodigoUsuarioOfRolusuarioListNewRolusuario = em.merge(oldCodigoUsuarioOfRolusuarioListNewRolusuario);
+                        //oldCodigoUsuarioOfRolusuarioListNewRolusuario.getRolusuarioList().remove(rolusuarioListNewRolusuario);
+                        //oldCodigoUsuarioOfRolusuarioListNewRolusuario = em.merge(oldCodigoUsuarioOfRolusuarioListNewRolusuario);
                     }
                 }
             }
@@ -247,8 +207,8 @@ public class UsuarioJpaController implements Serializable {
                     empleadoListNewEmpleado.setCodigoUsuario(usuario);
                     empleadoListNewEmpleado = em.merge(empleadoListNewEmpleado);
                     if (oldCodigoUsuarioOfEmpleadoListNewEmpleado != null && !oldCodigoUsuarioOfEmpleadoListNewEmpleado.equals(usuario)) {
-                        oldCodigoUsuarioOfEmpleadoListNewEmpleado.getEmpleadoList().remove(empleadoListNewEmpleado);
-                        oldCodigoUsuarioOfEmpleadoListNewEmpleado = em.merge(oldCodigoUsuarioOfEmpleadoListNewEmpleado);
+                        //oldCodigoUsuarioOfEmpleadoListNewEmpleado.getEmpleadoList().remove(empleadoListNewEmpleado);
+                        //oldCodigoUsuarioOfEmpleadoListNewEmpleado = em.merge(oldCodigoUsuarioOfEmpleadoListNewEmpleado);
                     }
                 }
             }
@@ -281,14 +241,7 @@ public class UsuarioJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The usuario with id " + id + " no longer exists.", enfe);
             }
-            List<String> illegalOrphanMessages = null;
-            List<Usuariopermiso> usuariopermisoListOrphanCheck = usuario.getUsuariopermisoList();
-            for (Usuariopermiso usuariopermisoListOrphanCheckUsuariopermiso : usuariopermisoListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Usuario (" + usuario + ") cannot be destroyed since the Usuariopermiso " + usuariopermisoListOrphanCheckUsuariopermiso + " in its usuariopermisoList field has a non-nullable codigoUsuario field.");
-            }
+            /*List<String> illegalOrphanMessages = null;
             List<Rolusuario> rolusuarioListOrphanCheck = usuario.getRolusuarioList();
             for (Rolusuario rolusuarioListOrphanCheckRolusuario : rolusuarioListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
@@ -308,7 +261,7 @@ public class UsuarioJpaController implements Serializable {
             for (Empleado empleadoListEmpleado : empleadoList) {
                 empleadoListEmpleado.setCodigoUsuario(null);
                 empleadoListEmpleado = em.merge(empleadoListEmpleado);
-            }
+            }*/
             em.remove(usuario);
             em.getTransaction().commit();
         } finally {
@@ -361,6 +314,109 @@ public class UsuarioJpaController implements Serializable {
             return ((Long) q.getSingleResult()).intValue();
         } finally {
             em.close();
+        }
+    }
+    
+    public Object getCodigoUsuario(String usuario, String pass)
+    {
+        try
+        {
+            EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("LoginProyectoPersistenciaFullBasePU");
+            EntityManager entitymanager = emfactory.createEntityManager();
+
+            Query query = entitymanager.createNamedQuery("Usuario.findUser");
+            query.setParameter("nombreUsuario",usuario);
+            query.setParameter("contraUsuario", pass);
+            Object user=query.getSingleResult();
+            return user;
+        }
+        catch(NoResultException e)
+        {
+            return null;
+        }
+    }
+    
+    
+    public List getPermisosUsuario(int codigoUsuario)
+    {
+        try
+        {
+            List listaPermisos = new ArrayList();
+            EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("LoginProyectoPersistenciaFullBasePU");
+            EntityManager entitymanager = emfactory.createEntityManager();
+
+            Query query = entitymanager.createNamedQuery("Usuario.findPermisos");
+            query.setParameter("codigoUsuario",codigoUsuario);
+            listaPermisos=query.getResultList();
+            return listaPermisos;
+        }
+        catch(NoResultException e)
+        {
+            return null;
+        }
+    }
+    
+    public boolean acceder(String user, String pass)
+    {
+        Object us;
+        int codigoUser;
+        List listaPermisos= new ArrayList();
+        us=getCodigoUsuario(user,pass);
+        
+        if(us!=null)
+        {
+            codigoUser=Integer.parseInt(us.toString());
+            
+            listaPermisos=getPermisosUsuario(codigoUser);
+
+            FrmPrincipal ingreso = new FrmPrincipal(listaPermisos);
+            ingreso.setVisible(true);
+            ingreso.pack();
+            return true;
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Usuario o Contraseña Incorrectas");
+            return false;
+        }
+    }
+    
+    
+    public Object getExistUser(String usuario, String pass)
+    {
+        try
+        {
+            EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("LoginProyectoPersistenciaFullBasePU");
+            EntityManager entitymanager = emfactory.createEntityManager();
+
+            Query query = entitymanager.createNamedQuery("Usuario.existUser");
+            query.setParameter("nombreUsuario",usuario);
+            query.setParameter("contraUsuario", pass);
+            Object user=query.getSingleResult();
+            return user;
+        }
+        catch(NoResultException e)
+        {
+            return null;
+        }
+    }
+    
+    
+    public Object getDependUser(int rolusuario)
+    {
+        try
+        {
+            EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("LoginProyectoPersistenciaFullBasePU");
+            EntityManager entitymanager = emfactory.createEntityManager();
+
+            Query query = entitymanager.createNamedQuery("Usuario.dependUser");
+            query.setParameter("codigoUsuario",rolusuario);
+            Object user=query.getSingleResult();
+            return user;
+        }
+        catch(NoResultException e)
+        {
+            return null;
         }
     }
     

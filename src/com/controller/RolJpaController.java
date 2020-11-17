@@ -1,13 +1,14 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Nombre de Controlador: RolJpaController
+ * Fecha: 16/11/2020
+ * @author Diego Guevara
+ * Version: 1.0
+ * CopyRight: Diego Guevara
  */
-
 package com.controller;
 
-import com.controller.exceptions.IllegalOrphanException;
-import com.controller.exceptions.NonexistentEntityException;
+import com.controllers.exceptions.IllegalOrphanException;
+import com.controllers.exceptions.NonexistentEntityException;
 import com.entities.Rol;
 import java.io.Serializable;
 import javax.persistence.Query;
@@ -20,22 +21,21 @@ import java.util.List;
 import com.entities.Rolusuario;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 
 /**
- *  Nombre de la clase: RolJpaController
- *  Fecha: 11-04-2020 (m/d/a)
- *  Versión: 1.0
- *  CopyRight: Ulises Guzmán
- *  @author Ulises Guzmán
+ *
+ * @author dguevara
  */
 public class RolJpaController implements Serializable {
 
     public RolJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
+    
     public RolJpaController() {
-        this.emf = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
+        this.emf = Persistence.createEntityManagerFactory("LoginProyectoPersistenciaFullBasePU");
     }
     private EntityManagerFactory emf = null;
 
@@ -56,24 +56,24 @@ public class RolJpaController implements Serializable {
             em.getTransaction().begin();
             List<Rolpermiso> attachedRolpermisoList = new ArrayList<Rolpermiso>();
             for (Rolpermiso rolpermisoListRolpermisoToAttach : rol.getRolpermisoList()) {
-                rolpermisoListRolpermisoToAttach = em.getReference(rolpermisoListRolpermisoToAttach.getClass(), rolpermisoListRolpermisoToAttach.getCodigoRolPermiso());
-                attachedRolpermisoList.add(rolpermisoListRolpermisoToAttach);
+                //rolpermisoListRolpermisoToAttach = em.getReference(rolpermisoListRolpermisoToAttach.getClass(), rolpermisoListRolpermisoToAttach.getCodigoRolPermiso());
+                //attachedRolpermisoList.add(rolpermisoListRolpermisoToAttach);
             }
             rol.setRolpermisoList(attachedRolpermisoList);
             List<Rolusuario> attachedRolusuarioList = new ArrayList<Rolusuario>();
             for (Rolusuario rolusuarioListRolusuarioToAttach : rol.getRolusuarioList()) {
-                rolusuarioListRolusuarioToAttach = em.getReference(rolusuarioListRolusuarioToAttach.getClass(), rolusuarioListRolusuarioToAttach.getCodigoRolUsuario());
-                attachedRolusuarioList.add(rolusuarioListRolusuarioToAttach);
+                //rolusuarioListRolusuarioToAttach = em.getReference(rolusuarioListRolusuarioToAttach.getClass(), rolusuarioListRolusuarioToAttach.getCodigoRolUsuario());
+                //attachedRolusuarioList.add(rolusuarioListRolusuarioToAttach);
             }
             rol.setRolusuarioList(attachedRolusuarioList);
             em.persist(rol);
-            for (Rolpermiso rolpermisoListRolpermiso : rol.getRolpermisoList()) {
+            /*for (Rolpermiso rolpermisoListRolpermiso : rol.getRolpermisoList()) {
                 Rol oldCodigoRolOfRolpermisoListRolpermiso = rolpermisoListRolpermiso.getCodigoRol();
                 rolpermisoListRolpermiso.setCodigoRol(rol);
                 rolpermisoListRolpermiso = em.merge(rolpermisoListRolpermiso);
                 if (oldCodigoRolOfRolpermisoListRolpermiso != null) {
-                    oldCodigoRolOfRolpermisoListRolpermiso.getRolpermisoList().remove(rolpermisoListRolpermiso);
-                    oldCodigoRolOfRolpermisoListRolpermiso = em.merge(oldCodigoRolOfRolpermisoListRolpermiso);
+                    ///oldCodigoRolOfRolpermisoListRolpermiso.getRolpermisoList().remove(rolpermisoListRolpermiso);
+                    //oldCodigoRolOfRolpermisoListRolpermiso = em.merge(oldCodigoRolOfRolpermisoListRolpermiso);
                 }
             }
             for (Rolusuario rolusuarioListRolusuario : rol.getRolusuarioList()) {
@@ -81,10 +81,10 @@ public class RolJpaController implements Serializable {
                 rolusuarioListRolusuario.setCodigoRol(rol);
                 rolusuarioListRolusuario = em.merge(rolusuarioListRolusuario);
                 if (oldCodigoRolOfRolusuarioListRolusuario != null) {
-                    oldCodigoRolOfRolusuarioListRolusuario.getRolusuarioList().remove(rolusuarioListRolusuario);
-                    oldCodigoRolOfRolusuarioListRolusuario = em.merge(oldCodigoRolOfRolusuarioListRolusuario);
+                    //oldCodigoRolOfRolusuarioListRolusuario.getRolusuarioList().remove(rolusuarioListRolusuario);
+                    //oldCodigoRolOfRolusuarioListRolusuario = em.merge(oldCodigoRolOfRolusuarioListRolusuario);
                 }
-            }
+            }*/
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -125,39 +125,39 @@ public class RolJpaController implements Serializable {
             }
             List<Rolpermiso> attachedRolpermisoListNew = new ArrayList<Rolpermiso>();
             for (Rolpermiso rolpermisoListNewRolpermisoToAttach : rolpermisoListNew) {
-                rolpermisoListNewRolpermisoToAttach = em.getReference(rolpermisoListNewRolpermisoToAttach.getClass(), rolpermisoListNewRolpermisoToAttach.getCodigoRolPermiso());
-                attachedRolpermisoListNew.add(rolpermisoListNewRolpermisoToAttach);
+                //rolpermisoListNewRolpermisoToAttach = em.getReference(rolpermisoListNewRolpermisoToAttach.getClass(), rolpermisoListNewRolpermisoToAttach.getCodigoRolPermiso());
+                //attachedRolpermisoListNew.add(rolpermisoListNewRolpermisoToAttach);
             }
             rolpermisoListNew = attachedRolpermisoListNew;
             rol.setRolpermisoList(rolpermisoListNew);
             List<Rolusuario> attachedRolusuarioListNew = new ArrayList<Rolusuario>();
             for (Rolusuario rolusuarioListNewRolusuarioToAttach : rolusuarioListNew) {
-                rolusuarioListNewRolusuarioToAttach = em.getReference(rolusuarioListNewRolusuarioToAttach.getClass(), rolusuarioListNewRolusuarioToAttach.getCodigoRolUsuario());
-                attachedRolusuarioListNew.add(rolusuarioListNewRolusuarioToAttach);
+                //rolusuarioListNewRolusuarioToAttach = em.getReference(rolusuarioListNewRolusuarioToAttach.getClass(), rolusuarioListNewRolusuarioToAttach.getCodigoRolUsuario());
+                //attachedRolusuarioListNew.add(rolusuarioListNewRolusuarioToAttach);
             }
             rolusuarioListNew = attachedRolusuarioListNew;
             rol.setRolusuarioList(rolusuarioListNew);
             rol = em.merge(rol);
             for (Rolpermiso rolpermisoListNewRolpermiso : rolpermisoListNew) {
                 if (!rolpermisoListOld.contains(rolpermisoListNewRolpermiso)) {
-                    Rol oldCodigoRolOfRolpermisoListNewRolpermiso = rolpermisoListNewRolpermiso.getCodigoRol();
-                    rolpermisoListNewRolpermiso.setCodigoRol(rol);
-                    rolpermisoListNewRolpermiso = em.merge(rolpermisoListNewRolpermiso);
-                    if (oldCodigoRolOfRolpermisoListNewRolpermiso != null && !oldCodigoRolOfRolpermisoListNewRolpermiso.equals(rol)) {
-                        oldCodigoRolOfRolpermisoListNewRolpermiso.getRolpermisoList().remove(rolpermisoListNewRolpermiso);
-                        oldCodigoRolOfRolpermisoListNewRolpermiso = em.merge(oldCodigoRolOfRolpermisoListNewRolpermiso);
-                    }
+                    //Rol oldCodigoRolOfRolpermisoListNewRolpermiso = rolpermisoListNewRolpermiso.getCodigoRol();
+                    //rolpermisoListNewRolpermiso.setCodigoRol(rol);
+                    //rolpermisoListNewRolpermiso = em.merge(rolpermisoListNewRolpermiso);
+                    //if (oldCodigoRolOfRolpermisoListNewRolpermiso != null && !oldCodigoRolOfRolpermisoListNewRolpermiso.equals(rol)) {
+                        //oldCodigoRolOfRolpermisoListNewRolpermiso.getRolpermisoList().remove(rolpermisoListNewRolpermiso);
+                        //oldCodigoRolOfRolpermisoListNewRolpermiso = em.merge(oldCodigoRolOfRolpermisoListNewRolpermiso);
+                    //}
                 }
             }
             for (Rolusuario rolusuarioListNewRolusuario : rolusuarioListNew) {
                 if (!rolusuarioListOld.contains(rolusuarioListNewRolusuario)) {
-                    Rol oldCodigoRolOfRolusuarioListNewRolusuario = rolusuarioListNewRolusuario.getCodigoRol();
-                    rolusuarioListNewRolusuario.setCodigoRol(rol);
-                    rolusuarioListNewRolusuario = em.merge(rolusuarioListNewRolusuario);
-                    if (oldCodigoRolOfRolusuarioListNewRolusuario != null && !oldCodigoRolOfRolusuarioListNewRolusuario.equals(rol)) {
-                        oldCodigoRolOfRolusuarioListNewRolusuario.getRolusuarioList().remove(rolusuarioListNewRolusuario);
-                        oldCodigoRolOfRolusuarioListNewRolusuario = em.merge(oldCodigoRolOfRolusuarioListNewRolusuario);
-                    }
+                    //Rol oldCodigoRolOfRolusuarioListNewRolusuario = rolusuarioListNewRolusuario.getCodigoRol();
+                    //rolusuarioListNewRolusuario.setCodigoRol(rol);
+                    //rolusuarioListNewRolusuario = em.merge(rolusuarioListNewRolusuario);
+                    //if (oldCodigoRolOfRolusuarioListNewRolusuario != null && !oldCodigoRolOfRolusuarioListNewRolusuario.equals(rol)) {
+                        //oldCodigoRolOfRolusuarioListNewRolusuario.getRolusuarioList().remove(rolusuarioListNewRolusuario);
+                        //oldCodigoRolOfRolusuarioListNewRolusuario = em.merge(oldCodigoRolOfRolusuarioListNewRolusuario);
+                    //}
                 }
             }
             em.getTransaction().commit();
@@ -259,6 +259,63 @@ public class RolJpaController implements Serializable {
             return ((Long) q.getSingleResult()).intValue();
         } finally {
             em.close();
+        }
+    }
+    
+    
+    public Object getExistRol(String nombre, String descripcion)
+    {
+        try
+        {
+            EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("LoginProyectoPersistenciaFullBasePU");
+            EntityManager entitymanager = emfactory.createEntityManager();
+
+            Query query = entitymanager.createNamedQuery("Rol.existRol");
+            query.setParameter("nombreRol",nombre);
+            query.setParameter("descripcionRol", descripcion);
+            Object user=query.getSingleResult();
+            return user;
+        }
+        catch(NoResultException e)
+        {
+            return null;
+        }
+    }
+    
+    public Object getDependRolUsuario(int rol)
+    {
+        try
+        {
+            EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("LoginProyectoPersistenciaFullBasePU");
+            EntityManager entitymanager = emfactory.createEntityManager();
+
+            Query query = entitymanager.createNamedQuery("Rol.dependRolUsuario");
+            query.setParameter("codigoRol",rol);
+            Object user=query.getSingleResult();
+            return user;
+        }
+        catch(NoResultException e)
+        {
+            return null;
+        }
+    }
+    
+    
+    public Object getDependRolPermiso(int rol)
+    {
+        try
+        {
+            EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("LoginProyectoPersistenciaFullBasePU");
+            EntityManager entitymanager = emfactory.createEntityManager();
+
+            Query query = entitymanager.createNamedQuery("Rol.dependRolPermiso");
+            query.setParameter("codigoRol",rol);
+            Object user=query.getSingleResult();
+            return user;
+        }
+        catch(NoResultException e)
+        {
+            return null;
         }
     }
     
