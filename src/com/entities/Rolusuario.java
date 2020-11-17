@@ -1,9 +1,10 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Nombre de Entidad: RolUsuario
+ * Fecha: 16/11/2020
+ * @author Diego Guevara
+ * Version: 1.0
+ * CopyRight: Diego Guevara
  */
-
 package com.entities;
 
 import java.io.Serializable;
@@ -22,11 +23,8 @@ import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *  Nombre de la clase: Rolusuario
- *  Fecha: 11-04-2020 (m/d/a)
- *  Versión: 1.0
- *  CopyRight: Ulises Guzmán
- *  @author Ulises Guzmán
+ *
+ * @author dguevara
  */
 @Entity
 @Table(catalog = "cotizacionEmpresa", schema = "", uniqueConstraints = {

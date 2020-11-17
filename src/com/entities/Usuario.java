@@ -1,9 +1,10 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Nombre de Entidad: Usuario
+ * Fecha: 16/11/2020
+ * @author Diego Guevara
+ * Version: 1.0
+ * CopyRight: Diego Guevara
  */
-
 package com.entities;
 
 import java.io.Serializable;
@@ -24,11 +25,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *  Nombre de la clase: Usuario
- *  Fecha: 11-04-2020 (m/d/a)
- *  Versión: 1.0
- *  CopyRight: Ulises Guzmán
- *  @author Ulises Guzmán
+ *
+ * @author dguevara
  */
 @Entity
 @Table(catalog = "cotizacionEmpresa", schema = "", uniqueConstraints = {
@@ -38,7 +36,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
     , @NamedQuery(name = "Usuario.findByCodigoUsuario", query = "SELECT u FROM Usuario u WHERE u.codigoUsuario = :codigoUsuario")
     , @NamedQuery(name = "Usuario.findByNombreUsuario", query = "SELECT u FROM Usuario u WHERE u.nombreUsuario = :nombreUsuario")
-    , @NamedQuery(name = "Usuario.findByContraUsuario", query = "SELECT u FROM Usuario u WHERE u.contraUsuario = :contraUsuario")})
+    , @NamedQuery(name = "Usuario.findByContraUsuario", query = "SELECT u FROM Usuario u WHERE u.contraUsuario = :contraUsuario")
+    , @NamedQuery(name = "Usuario.findUser", query = "SELECT distinct u.codigoUsuario FROM Usuario u WHERE u.nombreUsuario = :nombreUsuario and u.contraUsuario = :contraUsuario")
+    , @NamedQuery(name = "Usuario.existUser", query = "SELECT count(u.codigoUsuario) FROM Usuario u WHERE u.nombreUsuario = :nombreUsuario and u.contraUsuario = :contraUsuario")
+    , @NamedQuery(name = "Usuario.dependUser", query = "SELECT count(u.codigoUsuario) FROM Rolusuario u WHERE u.codigoUsuario.codigoUsuario=:codigoUsuario")
+    , @NamedQuery(name = "Usuario.findPermisos", query = "select per.nombrePermiso from Permiso per where per.codigoPermiso in(select rolPer.codigoPermiso.codigoPermiso from Rolpermiso rolPer where rolPer.codigoRol.codigoRol in(select rolUs.codigoRol.codigoRol from Rolusuario rolUs inner join Usuario us on rolUs.codigoUsuario.codigoUsuario=us.codigoUsuario where us.codigoUsuario=:codigoUsuario))")})
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,8 +53,6 @@ public class Usuario implements Serializable {
     private String nombreUsuario;
     @Column(length = 50)
     private String contraUsuario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoUsuario")
-    private List<Usuariopermiso> usuariopermisoList;
     @OneToMany(mappedBy = "codigoUsuario")
     private List<Loguusuario> loguusuarioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoUsuario")
@@ -89,15 +89,6 @@ public class Usuario implements Serializable {
 
     public void setContraUsuario(String contraUsuario) {
         this.contraUsuario = contraUsuario;
-    }
-
-    @XmlTransient
-    public List<Usuariopermiso> getUsuariopermisoList() {
-        return usuariopermisoList;
-    }
-
-    public void setUsuariopermisoList(List<Usuariopermiso> usuariopermisoList) {
-        this.usuariopermisoList = usuariopermisoList;
     }
 
     @XmlTransient

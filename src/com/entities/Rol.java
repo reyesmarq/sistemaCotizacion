@@ -1,9 +1,10 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Nombre de Entidad: Rol
+ * Fecha: 16/11/2020
+ * @author Diego Guevara
+ * Version: 1.0
+ * CopyRight: Diego Guevara
  */
-
 package com.entities;
 
 import java.io.Serializable;
@@ -19,23 +20,25 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *  Nombre de la clase: Rol
- *  Fecha: 11-04-2020 (m/d/a)
- *  Versión: 1.0
- *  CopyRight: Ulises Guzmán
- *  @author Ulises Guzmán
+ *
+ * @author dguevara
  */
 @Entity
-@Table(catalog = "cotizacionEmpresa", schema = "")
+@Table(catalog = "cotizacionEmpresa", schema = "", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"nombreRol", "descripcionRol"})})
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Rol.findAll", query = "SELECT r FROM Rol r")
     , @NamedQuery(name = "Rol.findByCodigoRol", query = "SELECT r FROM Rol r WHERE r.codigoRol = :codigoRol")
     , @NamedQuery(name = "Rol.findByNombreRol", query = "SELECT r FROM Rol r WHERE r.nombreRol = :nombreRol")
+    , @NamedQuery(name = "Rol.existRol", query = "SELECT count(u.codigoRol) FROM Rol u WHERE u.descripcionRol = :descripcionRol and u.nombreRol = :nombreRol")
+    , @NamedQuery(name = "Rol.dependRolUsuario", query = "SELECT count(u.codigoRolUsuario) FROM Rolusuario u WHERE u.codigoRol.codigoRol=:codigoRol")
+    , @NamedQuery(name = "Rol.dependRolPermiso", query = "SELECT count(u.codigoRolPermiso) FROM Rolpermiso u WHERE u.codigoRol.codigoRol=:codigoRol")
     , @NamedQuery(name = "Rol.findByDescripcionRol", query = "SELECT r FROM Rol r WHERE r.descripcionRol = :descripcionRol")})
 public class Rol implements Serializable {
 

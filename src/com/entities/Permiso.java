@@ -1,9 +1,10 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Nombre de Entidad: Permiso
+ * Fecha: 16/11/2020
+ * @author Diego Guevara
+ * Version: 1.0
+ * CopyRight: Diego Guevara
  */
-
 package com.entities;
 
 import java.io.Serializable;
@@ -23,20 +24,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *  Nombre de la clase: Permiso
- *  Fecha: 11-04-2020 (m/d/a)
- *  Versión: 1.0
- *  CopyRight: Ulises Guzmán
- *  @author Ulises Guzmán
+ *
+ * @author dguevara
  */
 @Entity
 @Table(catalog = "cotizacionEmpresa", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Permiso.findAll", query = "SELECT p FROM Permiso p")
+    @NamedQuery(name = "Permiso.findAll", query = "SELECT p FROM Permiso p order by p.codigoPermiso")
     , @NamedQuery(name = "Permiso.findByCodigoPermiso", query = "SELECT p FROM Permiso p WHERE p.codigoPermiso = :codigoPermiso")
     , @NamedQuery(name = "Permiso.findByNombrePermiso", query = "SELECT p FROM Permiso p WHERE p.nombrePermiso = :nombrePermiso")
-    , @NamedQuery(name = "Permiso.findByDescripcionPermiso", query = "SELECT p FROM Permiso p WHERE p.descripcionPermiso = :descripcionPermiso")})
+    , @NamedQuery(name = "Permiso.findByDescripcionPermiso", query = "SELECT p FROM Permiso p WHERE p.descripcionPermiso = :descripcionPermiso")
+    , @NamedQuery(name = "Permiso.existPermiso", query = "SELECT count(u.codigoPermiso) FROM Permiso u WHERE u.descripcionPermiso = :descripcionPermiso and u.nombrePermiso = :nombrePermiso")
+    , @NamedQuery(name = "Permiso.dependRolPermiso", query = "SELECT count(u.codigoRolPermiso) FROM Rolpermiso u WHERE u.codigoPermiso.codigoPermiso=:codigoPermiso")})
 public class Permiso implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,8 +49,6 @@ public class Permiso implements Serializable {
     private String nombrePermiso;
     @Column(length = 200)
     private String descripcionPermiso;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoPermiso")
-    private List<Usuariopermiso> usuariopermisoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoPermiso")
     private List<Rolpermiso> rolpermisoList;
 
@@ -83,15 +81,6 @@ public class Permiso implements Serializable {
 
     public void setDescripcionPermiso(String descripcionPermiso) {
         this.descripcionPermiso = descripcionPermiso;
-    }
-
-    @XmlTransient
-    public List<Usuariopermiso> getUsuariopermisoList() {
-        return usuariopermisoList;
-    }
-
-    public void setUsuariopermisoList(List<Usuariopermiso> usuariopermisoList) {
-        this.usuariopermisoList = usuariopermisoList;
     }
 
     @XmlTransient
