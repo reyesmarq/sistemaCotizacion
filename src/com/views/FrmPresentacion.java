@@ -86,8 +86,7 @@ public class FrmPresentacion extends javax.swing.JInternalFrame {
         String encabezados[]={"Id","Nombre","Descripción","Eliminar"};
         tabla=new DefaultTableModel(null,encabezados);
         Object datos[]=new Object[5];
-        try
-        {
+        try{
             List lista;
             lista=jpaPresentacion.findPresentacionEntities();
             for(int i=0;i<lista.size();i++)

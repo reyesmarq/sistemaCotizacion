@@ -129,6 +129,7 @@ public class FrmArticulos extends javax.swing.JInternalFrame {
         this.txtCategoria.setText("");
         this.txtIdPresentacion.setText("");
         this.txtPresentacion.setText("");
+        this.txtCodigo.setText("");
     }
     
     public void habilitar(boolean valor){

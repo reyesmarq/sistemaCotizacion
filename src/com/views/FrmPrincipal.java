@@ -63,7 +63,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         mantenimientoMenu = new javax.swing.JMenu();
         trabajadoresMenuItem = new javax.swing.JMenuItem();
         consultasMenu = new javax.swing.JMenu();
-        stockMenuItem = new javax.swing.JMenuItem();
+        reporteArticulos = new javax.swing.JMenuItem();
+        reportesCategorias = new javax.swing.JMenuItem();
+        reportesPresentaciones = new javax.swing.JMenuItem();
+        reportesClientes = new javax.swing.JMenuItem();
+        reporteProveedores = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,11 +75,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1017, Short.MAX_VALUE)
+            .addGap(0, 1080, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 556, Short.MAX_VALUE)
+            .addGap(0, 763, Short.MAX_VALUE)
         );
 
         sistemaMenu.setMnemonic('f');
@@ -202,13 +206,25 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         consultasMenu.setText("Consultas");
 
-        stockMenuItem.setText("Stock articulos");
-        stockMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        reporteArticulos.setText("Stock articulos");
+        reporteArticulos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                stockMenuItemActionPerformed(evt);
+                reporteArticulosActionPerformed(evt);
             }
         });
-        consultasMenu.add(stockMenuItem);
+        consultasMenu.add(reporteArticulos);
+
+        reportesCategorias.setText("Categorias");
+        consultasMenu.add(reportesCategorias);
+
+        reportesPresentaciones.setText("Presentaciones");
+        consultasMenu.add(reportesPresentaciones);
+
+        reportesClientes.setText("Clientes");
+        consultasMenu.add(reportesClientes);
+
+        reporteProveedores.setText("Proveedores");
+        consultasMenu.add(reporteProveedores);
 
         menuBar.add(consultasMenu);
 
@@ -344,9 +360,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_trabajadoresMenuItemActionPerformed
 
-    private void stockMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stockMenuItemActionPerformed
+    private void reporteArticulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteArticulosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_stockMenuItemActionPerformed
+    }//GEN-LAST:event_reporteArticulosActionPerformed
 
     private void ventasMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ventasMenuItemActionPerformed
         try {
@@ -410,9 +426,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem preevodoresMenuItem;
     private javax.swing.JMenuItem presentacionMenuItem;
+    private javax.swing.JMenuItem reporteArticulos;
+    private javax.swing.JMenuItem reporteProveedores;
+    private javax.swing.JMenuItem reportesCategorias;
+    private javax.swing.JMenuItem reportesClientes;
+    private javax.swing.JMenuItem reportesPresentaciones;
     private javax.swing.JMenuItem salirMenuItem;
     private javax.swing.JMenu sistemaMenu;
-    private javax.swing.JMenuItem stockMenuItem;
     private javax.swing.JMenuItem trabajadoresMenuItem;
     private javax.swing.JMenu ventasMenu;
     private javax.swing.JMenuItem ventasMenuItem;

@@ -6,6 +6,17 @@
 
 package com.views;
 
+import com.controller.ArticuloJpaController;
+import com.controller.CategoriaJpaController;
+import com.controller.PresentacionJpaController;
+import com.entities.Articulo;
+import com.entities.Categoria;
+import com.entities.Presentacion;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import utilidades.Utilidades;
+
 /**
  *  Nombre de la clase: FrmVistaArticulo
  *  Fecha: 11-15-2020 (m/d/a)
@@ -14,10 +25,16 @@ package com.views;
  *  @author Ulises Guzmán
  */
 public class FrmVistaArticulo extends javax.swing.JFrame {
+    
 
+    Articulo articulo = new Articulo();
+    ArticuloJpaController jpaArticulo = new ArticuloJpaController();
+
+    
     /** Creates new form FrmVistaArticulo */
     public FrmVistaArticulo() {
         initComponents();
+        mostrar();
     }
 
     /** This method is called from within the constructor to
@@ -39,7 +56,7 @@ public class FrmVistaArticulo extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblArticulo = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 30)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 0, 0));
@@ -135,13 +152,59 @@ public class FrmVistaArticulo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarMouseClicked
 
     private void tblArticuloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArticuloMouseClicked
-        
+        int fila = this.tblArticulo.getSelectedRow();
+        FrmIngreso.txtIdArticulo.setText(String.valueOf(this.tblArticulo.getValueAt(fila, 0)));
+        FrmIngreso.txtArticulo.setText(String.valueOf(this.tblArticulo.getValueAt(fila, 1)));
+        FrmIngreso.txtIva.setText(String.valueOf(this.tblArticulo.getValueAt(fila, 8)));
+        FrmIngreso.txtCesc.setText(String.valueOf(this.tblArticulo.getValueAt(fila, 9)));
+        FrmIngreso.txtDai.setText(String.valueOf(this.tblArticulo.getValueAt(fila, 10)));
+        this.dispose();
     }//GEN-LAST:event_tblArticuloMouseClicked
 
     public void buscarNombre(){
         
     }
-    
+    public void mostrar(){
+        DefaultTableModel tabla;
+        String temp;
+        Utilidades utilidades = new Utilidades();
+        String encabezados[]={"Id","Codigo","Nombre","Id Cat.","Categoria","Id Pre.","Presentacion","Descripción","IVA","CESC","DAI"};
+        tabla=new DefaultTableModel(null,encabezados);
+        Object datos[]=new Object[11];
+        try{
+            List lista;
+            lista=jpaArticulo.findArticuloEntities();
+            for(int i=0;i<lista.size();i++){
+                articulo=(Articulo)lista.get(i);
+                datos[0]=articulo.getIdArticulo();
+                datos[1]=articulo.getCodigo();
+                datos[2]=articulo.getNombre();
+                datos[3]=articulo.getIdCategoria().getIdCategoria();
+                datos[4]=articulo.getIdCategoria().getNombre();
+                datos[5]=articulo.getIdPresentacion().getIdPresentacion();
+                datos[6]=articulo.getIdPresentacion().getNombre();
+                datos[7]=articulo.getDescripcion();
+                temp = articulo.getIdCategoria().getCesc().toString();
+                if(temp.equals("1.0")){
+                    datos[8]="Si";
+                }else{
+                    datos[8]="No";
+                }
+                temp = articulo.getIdCategoria().getIva().toString();
+                if(temp.equals("1.0")){
+                    datos[9]="Si";
+                }else{
+                    datos[9]="No";
+                }
+                datos[10]=articulo.getIdCategoria().getDai();
+                tabla.addRow(datos);
+            }
+            this.tblArticulo.setModel(tabla);
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null,"Error al mostrar formulario : "+e);
+        }
+    }
     
     /**
      * @param args the command line arguments

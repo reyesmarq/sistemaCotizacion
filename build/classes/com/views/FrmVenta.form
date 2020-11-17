@@ -129,7 +129,6 @@
                                   <Component id="dtFechaInicio" alignment="1" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>

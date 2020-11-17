@@ -135,7 +135,6 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
         this.txtDescripcion.setText(String.valueOf(this.tblCategoria.getValueAt(fila, 2)));
         this.spDai.setValue(this.tblCategoria.getValueAt(fila, 3));
         String temp=String.valueOf(this.tblCategoria.getValueAt(fila, 4));
-        JOptionPane.showMessageDialog(null, temp);
         if(temp.equals("Si")){
             this.chkCesc.setSelected(true);
         }else{

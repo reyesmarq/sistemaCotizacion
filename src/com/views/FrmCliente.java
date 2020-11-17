@@ -51,8 +51,6 @@ public class FrmCliente extends javax.swing.JInternalFrame {
         this.txtIdCliente.setText(String.valueOf(this.tblCliente.getValueAt(fila, 0)));
         this.txtNombre.setText(String.valueOf(this.tblCliente.getValueAt(fila, 1)));
         this.cmbSexo.setSelectedItem(String.valueOf(this.tblCliente.getValueAt(fila, 2)));
-        //Buscar como pasar datos al elemento de fecha desde la tabla
-        
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             String strFecha = this.tblCliente.getValueAt(fila, 3).toString();
@@ -60,9 +58,8 @@ public class FrmCliente extends javax.swing.JInternalFrame {
             fechas=sdf.parse(strFecha);
             this.dtFechaNacimiento.setDate(fechas);
         } catch (ParseException e) {
-            
+            //No hacer nada
         }
-        
         this.cmbTipoDocumento.setSelectedItem(String.valueOf(this.tblCliente.getValueAt(fila, 4)));
         this.txtTipoDocumento.setText(String.valueOf(this.tblCliente.getValueAt(fila, 5)));
         this.txtTelefono.setText(String.valueOf(this.tblCliente.getValueAt(fila, 6)));
