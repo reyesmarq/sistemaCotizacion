@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
  *  @author Ulises Guzmán
  */
 @Entity
-@Table(catalog = "cotizacionEmpresa", schema = "")
+@Table(catalog = "empresacotizacionmark1", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Ingreso.findAll", query = "SELECT i FROM Ingreso i")
@@ -58,14 +58,14 @@ public class Ingreso implements Serializable {
     @Column(length = 50)
     private String correlativo;
     private Integer estado;
-    @OneToMany(mappedBy = "idIngreso")
-    private List<Detalleingreso> detalleingresoList;
-    @JoinColumn(name = "codigoEmpleado", referencedColumnName = "codigoEmpleado")
+    @JoinColumn(name = "idEmpleado", referencedColumnName = "idEmpleado")
     @ManyToOne
-    private Empleado codigoEmpleado;
+    private Empleado idEmpleado;
     @JoinColumn(name = "idProveedor", referencedColumnName = "idProveedor")
     @ManyToOne
     private Proveedor idProveedor;
+    @OneToMany(mappedBy = "idIngreso")
+    private List<Detalleingreso> detalleingresoList;
 
     public Ingreso() {
     }
@@ -122,21 +122,12 @@ public class Ingreso implements Serializable {
         this.estado = estado;
     }
 
-    @XmlTransient
-    public List<Detalleingreso> getDetalleingresoList() {
-        return detalleingresoList;
+    public Empleado getIdEmpleado() {
+        return idEmpleado;
     }
 
-    public void setDetalleingresoList(List<Detalleingreso> detalleingresoList) {
-        this.detalleingresoList = detalleingresoList;
-    }
-
-    public Empleado getCodigoEmpleado() {
-        return codigoEmpleado;
-    }
-
-    public void setCodigoEmpleado(Empleado codigoEmpleado) {
-        this.codigoEmpleado = codigoEmpleado;
+    public void setIdEmpleado(Empleado idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
 
     public Proveedor getIdProveedor() {
@@ -145,6 +136,15 @@ public class Ingreso implements Serializable {
 
     public void setIdProveedor(Proveedor idProveedor) {
         this.idProveedor = idProveedor;
+    }
+
+    @XmlTransient
+    public List<Detalleingreso> getDetalleingresoList() {
+        return detalleingresoList;
+    }
+
+    public void setDetalleingresoList(List<Detalleingreso> detalleingresoList) {
+        this.detalleingresoList = detalleingresoList;
     }
 
     @Override

@@ -36,9 +36,8 @@ public class DetalleingresoJpaController implements Serializable {
     }
     
     public DetalleingresoJpaController() {
-        this.emf = this.emf = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
+        this.emf = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
     }
-    
     
     private EntityManagerFactory emf = null;
 

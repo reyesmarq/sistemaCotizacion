@@ -34,6 +34,7 @@ public class ArticuloJpaController implements Serializable {
     public ArticuloJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
+    
     public ArticuloJpaController() {
         this.emf = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
     }

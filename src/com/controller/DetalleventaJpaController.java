@@ -34,8 +34,9 @@ public class DetalleventaJpaController implements Serializable {
     }
     
     public DetalleventaJpaController() {
-        this.emf = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
+        this.emf=Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
     }
+    
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {

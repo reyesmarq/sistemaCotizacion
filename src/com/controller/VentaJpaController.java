@@ -56,10 +56,10 @@ public class VentaJpaController implements Serializable {
                 idCliente = em.getReference(idCliente.getClass(), idCliente.getIdCliente());
                 venta.setIdCliente(idCliente);
             }
-            Empleado codigoEmpleado = venta.getCodigoEmpleado();
-            if (codigoEmpleado != null) {
-                codigoEmpleado = em.getReference(codigoEmpleado.getClass(), codigoEmpleado.getCodigoEmpleado());
-                venta.setCodigoEmpleado(codigoEmpleado);
+            Empleado idEmpleado = venta.getIdEmpleado();
+            if (idEmpleado != null) {
+                idEmpleado = em.getReference(idEmpleado.getClass(), idEmpleado.getIdEmpleado());
+                venta.setIdEmpleado(idEmpleado);
             }
             List<Detalleventa> attachedDetalleventaList = new ArrayList<Detalleventa>();
             for (Detalleventa detalleventaListDetalleventaToAttach : venta.getDetalleventaList()) {
@@ -72,9 +72,9 @@ public class VentaJpaController implements Serializable {
                 idCliente.getVentaList().add(venta);
                 idCliente = em.merge(idCliente);
             }
-            if (codigoEmpleado != null) {
-                codigoEmpleado.getVentaList().add(venta);
-                codigoEmpleado = em.merge(codigoEmpleado);
+            if (idEmpleado != null) {
+                idEmpleado.getVentaList().add(venta);
+                idEmpleado = em.merge(idEmpleado);
             }
             for (Detalleventa detalleventaListDetalleventa : venta.getDetalleventaList()) {
                 Venta oldIdVentaOfDetalleventaListDetalleventa = detalleventaListDetalleventa.getIdVenta();
@@ -101,17 +101,17 @@ public class VentaJpaController implements Serializable {
             Venta persistentVenta = em.find(Venta.class, venta.getIdVenta());
             Cliente idClienteOld = persistentVenta.getIdCliente();
             Cliente idClienteNew = venta.getIdCliente();
-            Empleado codigoEmpleadoOld = persistentVenta.getCodigoEmpleado();
-            Empleado codigoEmpleadoNew = venta.getCodigoEmpleado();
+            Empleado idEmpleadoOld = persistentVenta.getIdEmpleado();
+            Empleado idEmpleadoNew = venta.getIdEmpleado();
             List<Detalleventa> detalleventaListOld = persistentVenta.getDetalleventaList();
             List<Detalleventa> detalleventaListNew = venta.getDetalleventaList();
             if (idClienteNew != null) {
                 idClienteNew = em.getReference(idClienteNew.getClass(), idClienteNew.getIdCliente());
                 venta.setIdCliente(idClienteNew);
             }
-            if (codigoEmpleadoNew != null) {
-                codigoEmpleadoNew = em.getReference(codigoEmpleadoNew.getClass(), codigoEmpleadoNew.getCodigoEmpleado());
-                venta.setCodigoEmpleado(codigoEmpleadoNew);
+            if (idEmpleadoNew != null) {
+                idEmpleadoNew = em.getReference(idEmpleadoNew.getClass(), idEmpleadoNew.getIdEmpleado());
+                venta.setIdEmpleado(idEmpleadoNew);
             }
             List<Detalleventa> attachedDetalleventaListNew = new ArrayList<Detalleventa>();
             for (Detalleventa detalleventaListNewDetalleventaToAttach : detalleventaListNew) {
@@ -129,13 +129,13 @@ public class VentaJpaController implements Serializable {
                 idClienteNew.getVentaList().add(venta);
                 idClienteNew = em.merge(idClienteNew);
             }
-            if (codigoEmpleadoOld != null && !codigoEmpleadoOld.equals(codigoEmpleadoNew)) {
-                codigoEmpleadoOld.getVentaList().remove(venta);
-                codigoEmpleadoOld = em.merge(codigoEmpleadoOld);
+            if (idEmpleadoOld != null && !idEmpleadoOld.equals(idEmpleadoNew)) {
+                idEmpleadoOld.getVentaList().remove(venta);
+                idEmpleadoOld = em.merge(idEmpleadoOld);
             }
-            if (codigoEmpleadoNew != null && !codigoEmpleadoNew.equals(codigoEmpleadoOld)) {
-                codigoEmpleadoNew.getVentaList().add(venta);
-                codigoEmpleadoNew = em.merge(codigoEmpleadoNew);
+            if (idEmpleadoNew != null && !idEmpleadoNew.equals(idEmpleadoOld)) {
+                idEmpleadoNew.getVentaList().add(venta);
+                idEmpleadoNew = em.merge(idEmpleadoNew);
             }
             for (Detalleventa detalleventaListOldDetalleventa : detalleventaListOld) {
                 if (!detalleventaListNew.contains(detalleventaListOldDetalleventa)) {
@@ -188,10 +188,10 @@ public class VentaJpaController implements Serializable {
                 idCliente.getVentaList().remove(venta);
                 idCliente = em.merge(idCliente);
             }
-            Empleado codigoEmpleado = venta.getCodigoEmpleado();
-            if (codigoEmpleado != null) {
-                codigoEmpleado.getVentaList().remove(venta);
-                codigoEmpleado = em.merge(codigoEmpleado);
+            Empleado idEmpleado = venta.getIdEmpleado();
+            if (idEmpleado != null) {
+                idEmpleado.getVentaList().remove(venta);
+                idEmpleado = em.merge(idEmpleado);
             }
             List<Detalleventa> detalleventaList = venta.getDetalleventaList();
             for (Detalleventa detalleventaListDetalleventa : detalleventaList) {

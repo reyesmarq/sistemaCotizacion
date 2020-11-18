@@ -7,17 +7,7 @@
  */
 package com.views;
 
-import com.controller.UsuarioJpaController;
-import com.views.FmrRolUsuario;
-import com.views.FmrRolUsuario;
-import com.views.FrmPermiso;
-import com.views.FrmPermiso;
-import com.views.FrmRolPermisos;
-import com.views.FrmRolPermisos;
-import com.views.FrmRoles;
-import com.views.FrmRoles;
-import com.views.FrmUsuario;
-import com.views.FrmUsuario;
+
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +22,19 @@ import javax.swing.WindowConstants;
 public class FrmPrincipal extends javax.swing.JFrame {
     
     private List listaPermisos = new ArrayList();
+    
+    private FrmAcercaDe acercade=null;
+    private FrmCategoria categoria = null;
+    private FrmPresentacion presentacion = null;
+    private FrmArticulos articulo = null;
+    private FrmIngreso ingreso = null;
+    private FrmProveedor proveedor = null;
+    private FrmVenta venta = null;
+    private FrmCliente cliente = null;
+    private FrmTrabajador trabajador = null;
+    private FrmIngreso ingresos = null;
+    private FrmCotizacion cotizacion = null;
+    
     int nivel;
     /**
      * Creates new form FrmPrincipal
@@ -58,14 +61,29 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jDesktopPane1 = new javax.swing.JDesktopPane();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        btnSalir = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
+        menuBar = new javax.swing.JMenuBar();
+        sistemaMenu = new javax.swing.JMenu();
+        acercaDeMenuItem = new javax.swing.JMenuItem();
+        salirMenuItem = new javax.swing.JMenuItem();
+        Almacen = new javax.swing.JMenu();
+        articulosMenuItem = new javax.swing.JMenuItem();
+        categoriaMenuItem = new javax.swing.JMenuItem();
+        presentacionMenuItem = new javax.swing.JMenuItem();
+        comprasMenu = new javax.swing.JMenu();
+        ingresosMenuItem = new javax.swing.JMenuItem();
+        preevodoresMenuItem = new javax.swing.JMenuItem();
+        ventasMenu = new javax.swing.JMenu();
+        ventasMenuItem = new javax.swing.JMenuItem();
+        clientesMenuItem = new javax.swing.JMenuItem();
+        cotizacionesMenu = new javax.swing.JMenu();
+        mantenimientoMenu = new javax.swing.JMenu();
+        empleado = new javax.swing.JMenuItem();
+        consultasMenu = new javax.swing.JMenu();
+        reporteArticulos = new javax.swing.JMenuItem();
+        reportesCategorias = new javax.swing.JMenuItem();
+        reportesPresentaciones = new javax.swing.JMenuItem();
+        reportesClientes = new javax.swing.JMenuItem();
+        reporteProveedores = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,203 +91,319 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 775, Short.MAX_VALUE)
+            .addGap(0, 1041, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 517, Short.MAX_VALUE)
+            .addGap(0, 710, Short.MAX_VALUE)
         );
 
-        btnSalir.setText("Salir");
-        btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
+        sistemaMenu.setMnemonic('f');
+        sistemaMenu.setText("Sistema");
+
+        acercaDeMenuItem.setText("Acerca de");
+        acercaDeMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                acercaDeMenuItemActionPerformed(evt);
+            }
+        });
+        sistemaMenu.add(acercaDeMenuItem);
+
+        salirMenuItem.setMnemonic('x');
+        salirMenuItem.setText("Salir");
+        salirMenuItem.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnSalirMouseClicked(evt);
+                salirMenuItemMouseClicked(evt);
             }
         });
-        jMenuBar1.add(btnSalir);
-
-        jMenu2.setText("Formularios");
-        jMenu2.addActionListener(new java.awt.event.ActionListener() {
+        salirMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu2ActionPerformed(evt);
+                salirMenuItemActionPerformed(evt);
             }
         });
+        sistemaMenu.add(salirMenuItem);
 
-        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem4.setText("Usuarios");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        menuBar.add(sistemaMenu);
+
+        Almacen.setMnemonic('e');
+        Almacen.setText("Almacen");
+
+        articulosMenuItem.setMnemonic('t');
+        articulosMenuItem.setText("Articulos");
+        articulosMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                articulosMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem4);
+        Almacen.add(articulosMenuItem);
 
-        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem5.setText("Roles");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        categoriaMenuItem.setMnemonic('y');
+        categoriaMenuItem.setText("Categoria");
+        categoriaMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                categoriaMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem5);
+        Almacen.add(categoriaMenuItem);
 
-        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem6.setText("Roles Usuarios");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+        presentacionMenuItem.setMnemonic('p');
+        presentacionMenuItem.setText("Presentacion");
+        presentacionMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
+                presentacionMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem6);
+        Almacen.add(presentacionMenuItem);
 
-        jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem7.setText("Roles Permisos");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        menuBar.add(Almacen);
+
+        comprasMenu.setMnemonic('h');
+        comprasMenu.setText("Compras");
+        comprasMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                comprasMenuActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem7);
 
-        jMenuItem8.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem8.setText("Permisos");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+        ingresosMenuItem.setMnemonic('c');
+        ingresosMenuItem.setText("Ingresos");
+        ingresosMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
+                ingresosMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem8);
+        comprasMenu.add(ingresosMenuItem);
 
-        jMenuBar1.add(jMenu2);
+        preevodoresMenuItem.setMnemonic('a');
+        preevodoresMenuItem.setText("Proveedores");
+        preevodoresMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                preevodoresMenuItemActionPerformed(evt);
+            }
+        });
+        comprasMenu.add(preevodoresMenuItem);
 
-        setJMenuBar(jMenuBar1);
+        menuBar.add(comprasMenu);
+
+        ventasMenu.setText("Ventas");
+
+        ventasMenuItem.setText("Ventas");
+        ventasMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ventasMenuItemActionPerformed(evt);
+            }
+        });
+        ventasMenu.add(ventasMenuItem);
+
+        clientesMenuItem.setText("Clientes");
+        clientesMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clientesMenuItemActionPerformed(evt);
+            }
+        });
+        ventasMenu.add(clientesMenuItem);
+
+        menuBar.add(ventasMenu);
+
+        cotizacionesMenu.setText("Cotizaciones");
+        cotizacionesMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cotizacionesMenuActionPerformed(evt);
+            }
+        });
+        menuBar.add(cotizacionesMenu);
+
+        mantenimientoMenu.setText("Mantenimiento");
+
+        empleado.setText("Empleados");
+        empleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                empleadoActionPerformed(evt);
+            }
+        });
+        mantenimientoMenu.add(empleado);
+
+        menuBar.add(mantenimientoMenu);
+
+        consultasMenu.setText("Consultas");
+
+        reporteArticulos.setText("Stock articulos");
+        reporteArticulos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reporteArticulosActionPerformed(evt);
+            }
+        });
+        consultasMenu.add(reporteArticulos);
+
+        reportesCategorias.setText("Categorias");
+        consultasMenu.add(reportesCategorias);
+
+        reportesPresentaciones.setText("Presentaciones");
+        consultasMenu.add(reportesPresentaciones);
+
+        reportesClientes.setText("Clientes");
+        consultasMenu.add(reportesClientes);
+
+        reporteProveedores.setText("Proveedores");
+        consultasMenu.add(reporteProveedores);
+
+        menuBar.add(consultasMenu);
+
+        setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
+    private void acercaDeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acercaDeMenuItemActionPerformed
+        try {
+            if(acercade==null || acercade.isClosed()){
+                acercade=new FrmAcercaDe();
+                this.jDesktopPane1.add(acercade);
+            }
+            acercade.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_acercaDeMenuItemActionPerformed
+
+    private void articulosMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_articulosMenuItemActionPerformed
+        try {
+            if(articulo==null || articulo.isClosed()){
+                articulo=new FrmArticulos();
+                this.jDesktopPane1.add(articulo);
+            }
+            articulo.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_articulosMenuItemActionPerformed
+
+    private void categoriaMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoriaMenuItemActionPerformed
+        try {
+            if(categoria==null || categoria.isClosed()){
+                categoria=new FrmCategoria();
+                this.jDesktopPane1.add(categoria);
+            }
+            categoria.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_categoriaMenuItemActionPerformed
+
+    private void presentacionMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_presentacionMenuItemActionPerformed
+        try {
+            if(presentacion==null || presentacion.isClosed()){
+                presentacion=new FrmPresentacion();
+                this.jDesktopPane1.add(presentacion);
+            }
+            presentacion.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_presentacionMenuItemActionPerformed
+
+    private void ingresosMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresosMenuItemActionPerformed
+        try {
+            if(ingresos==null || ingresos.isClosed()){
+                ingresos=new FrmIngreso();
+                this.jDesktopPane1.add(ingresos);
+            }
+            ingresos.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_ingresosMenuItemActionPerformed
+
+    private void preevodoresMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_preevodoresMenuItemActionPerformed
+        try {
+            if(proveedor==null || proveedor.isClosed()){
+                proveedor=new FrmProveedor();
+                this.jDesktopPane1.add(proveedor);
+            }
+            proveedor.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_preevodoresMenuItemActionPerformed
+
+    private void comprasMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comprasMenuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comprasMenuActionPerformed
+
+    private void ventasMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ventasMenuItemActionPerformed
+        try {
+            if(venta==null || venta.isClosed()){
+                venta=new FrmVenta();
+                this.jDesktopPane1.add(venta);
+            }
+            venta.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_ventasMenuItemActionPerformed
+
+    private void clientesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientesMenuItemActionPerformed
+        try {
+            if(cliente==null || cliente.isClosed()){
+                cliente=new FrmCliente();
+                this.jDesktopPane1.add(cliente);
+            }
+            cliente.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_clientesMenuItemActionPerformed
+
+    private void cotizacionesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cotizacionesMenuActionPerformed
+        try {
+            if(cotizacion==null || cotizacion.isClosed()){
+                cotizacion=new FrmCotizacion();
+                this.jDesktopPane1.add(cotizacion);
+            }
+            cotizacion.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cotizacionesMenuActionPerformed
+
+    private void reporteArticulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteArticulosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_reporteArticulosActionPerformed
+
+    private void salirMenuItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salirMenuItemMouseClicked
         System.exit(0);
-    }//GEN-LAST:event_btnSalirMouseClicked
+    }//GEN-LAST:event_salirMenuItemMouseClicked
 
-    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
-        
-    }//GEN-LAST:event_jMenu2ActionPerformed
+    private void salirMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirMenuItemActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_salirMenuItemActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        try 
-        {
-            if(listaPermisos.contains("VISTA_USUARIO"))
-            {
-                FrmUsuario usuario=new FrmUsuario(listaPermisos);
-                this.jDesktopPane1.add(usuario);
-                usuario.setVisible(true);  
+    private void empleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empleadoActionPerformed
+        try {
+            if(trabajador==null || trabajador.isClosed()){
+                trabajador=new FrmTrabajador();
+                this.jDesktopPane1.add(trabajador);
             }
-            else
-            {
-                JOptionPane.showMessageDialog(null,"No tiene acceso a este formulario",
-                "Alerta",JOptionPane.WARNING_MESSAGE);
-            }
-        } 
-        catch (Exception ex) 
-        {
+            trabajador.setVisible(true);
+        } catch (Exception ex) {
             Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
-
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        try 
-        {
-            if(listaPermisos.contains("VISTA_ROL"))
-            {
-                FrmRoles rol=new FrmRoles(listaPermisos);
-                this.jDesktopPane1.add(rol);
-                rol.setVisible(true);  
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(null,"No tiene acceso a este formulario",
-                "Alerta",JOptionPane.WARNING_MESSAGE);
-            }
-        } 
-        catch (Exception ex) 
-        {
-            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
-
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        try 
-        {
-            if(listaPermisos.contains("VISTA_ROLUSUARIO"))
-            {
-                FmrRolUsuario rolUs=new FmrRolUsuario(listaPermisos);
-                this.jDesktopPane1.add(rolUs);
-                rolUs.setVisible(true); 
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(null,"No tiene acceso a este formulario",
-                "Alerta",JOptionPane.WARNING_MESSAGE);
-            }
-        } 
-        catch (Exception ex) 
-        {
-            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
-
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        try 
-        {
-            if(listaPermisos.contains("VISTA_ROLPERMISO"))
-            {
-                FrmRolPermisos rolPer=new FrmRolPermisos(listaPermisos);
-                this.jDesktopPane1.add(rolPer);
-                rolPer.setVisible(true);
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(null,"No tiene acceso a este formulario",
-                "Alerta",JOptionPane.WARNING_MESSAGE);
-            }
-        } 
-        catch (Exception ex) 
-        {
-            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
-
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        try 
-        {
-            if(listaPermisos.contains("VISTA_PERMISO"))
-            {
-                FrmPermiso per=new FrmPermiso(listaPermisos);
-                this.jDesktopPane1.add(per);
-                per.setVisible(true);
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(null,"No tiene acceso a este formulario",
-                "Alerta",JOptionPane.WARNING_MESSAGE);
-            }
-        } 
-        catch (Exception ex) 
-        {
-            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
+    }//GEN-LAST:event_empleadoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -314,14 +448,29 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu btnSalir;
+    private javax.swing.JMenu Almacen;
+    private javax.swing.JMenuItem acercaDeMenuItem;
+    private javax.swing.JMenuItem articulosMenuItem;
+    private javax.swing.JMenuItem categoriaMenuItem;
+    private javax.swing.JMenuItem clientesMenuItem;
+    private javax.swing.JMenu comprasMenu;
+    private javax.swing.JMenu consultasMenu;
+    private javax.swing.JMenu cotizacionesMenu;
+    private javax.swing.JMenuItem empleado;
+    private javax.swing.JMenuItem ingresosMenuItem;
     private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenu mantenimientoMenu;
+    private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem preevodoresMenuItem;
+    private javax.swing.JMenuItem presentacionMenuItem;
+    private javax.swing.JMenuItem reporteArticulos;
+    private javax.swing.JMenuItem reporteProveedores;
+    private javax.swing.JMenuItem reportesCategorias;
+    private javax.swing.JMenuItem reportesClientes;
+    private javax.swing.JMenuItem reportesPresentaciones;
+    private javax.swing.JMenuItem salirMenuItem;
+    private javax.swing.JMenu sistemaMenu;
+    private javax.swing.JMenu ventasMenu;
+    private javax.swing.JMenuItem ventasMenuItem;
     // End of variables declaration//GEN-END:variables
 }

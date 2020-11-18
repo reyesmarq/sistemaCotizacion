@@ -13,7 +13,6 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.entities.Usuario;
 import com.entities.Venta;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +37,7 @@ public class EmpleadoJpaController implements Serializable {
     public EmpleadoJpaController() {
         this.emf = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
     }
+    
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
@@ -55,11 +55,6 @@ public class EmpleadoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Usuario codigoUsuario = empleado.getCodigoUsuario();
-            if (codigoUsuario != null) {
-                codigoUsuario = em.getReference(codigoUsuario.getClass(), codigoUsuario.getCodigoUsuario());
-                empleado.setCodigoUsuario(codigoUsuario);
-            }
             List<Venta> attachedVentaList = new ArrayList<Venta>();
             for (Venta ventaListVentaToAttach : empleado.getVentaList()) {
                 ventaListVentaToAttach = em.getReference(ventaListVentaToAttach.getClass(), ventaListVentaToAttach.getIdVenta());
@@ -73,26 +68,22 @@ public class EmpleadoJpaController implements Serializable {
             }
             empleado.setIngresoList(attachedIngresoList);
             em.persist(empleado);
-            if (codigoUsuario != null) {
-                codigoUsuario.getEmpleadoList().add(empleado);
-                codigoUsuario = em.merge(codigoUsuario);
-            }
             for (Venta ventaListVenta : empleado.getVentaList()) {
-                Empleado oldCodigoEmpleadoOfVentaListVenta = ventaListVenta.getCodigoEmpleado();
-                ventaListVenta.setCodigoEmpleado(empleado);
+                Empleado oldIdEmpleadoOfVentaListVenta = ventaListVenta.getIdEmpleado();
+                ventaListVenta.setIdEmpleado(empleado);
                 ventaListVenta = em.merge(ventaListVenta);
-                if (oldCodigoEmpleadoOfVentaListVenta != null) {
-                    oldCodigoEmpleadoOfVentaListVenta.getVentaList().remove(ventaListVenta);
-                    oldCodigoEmpleadoOfVentaListVenta = em.merge(oldCodigoEmpleadoOfVentaListVenta);
+                if (oldIdEmpleadoOfVentaListVenta != null) {
+                    oldIdEmpleadoOfVentaListVenta.getVentaList().remove(ventaListVenta);
+                    oldIdEmpleadoOfVentaListVenta = em.merge(oldIdEmpleadoOfVentaListVenta);
                 }
             }
             for (Ingreso ingresoListIngreso : empleado.getIngresoList()) {
-                Empleado oldCodigoEmpleadoOfIngresoListIngreso = ingresoListIngreso.getCodigoEmpleado();
-                ingresoListIngreso.setCodigoEmpleado(empleado);
+                Empleado oldIdEmpleadoOfIngresoListIngreso = ingresoListIngreso.getIdEmpleado();
+                ingresoListIngreso.setIdEmpleado(empleado);
                 ingresoListIngreso = em.merge(ingresoListIngreso);
-                if (oldCodigoEmpleadoOfIngresoListIngreso != null) {
-                    oldCodigoEmpleadoOfIngresoListIngreso.getIngresoList().remove(ingresoListIngreso);
-                    oldCodigoEmpleadoOfIngresoListIngreso = em.merge(oldCodigoEmpleadoOfIngresoListIngreso);
+                if (oldIdEmpleadoOfIngresoListIngreso != null) {
+                    oldIdEmpleadoOfIngresoListIngreso.getIngresoList().remove(ingresoListIngreso);
+                    oldIdEmpleadoOfIngresoListIngreso = em.merge(oldIdEmpleadoOfIngresoListIngreso);
                 }
             }
             em.getTransaction().commit();
@@ -108,17 +99,11 @@ public class EmpleadoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Empleado persistentEmpleado = em.find(Empleado.class, empleado.getCodigoEmpleado());
-            Usuario codigoUsuarioOld = persistentEmpleado.getCodigoUsuario();
-            Usuario codigoUsuarioNew = empleado.getCodigoUsuario();
+            Empleado persistentEmpleado = em.find(Empleado.class, empleado.getIdEmpleado());
             List<Venta> ventaListOld = persistentEmpleado.getVentaList();
             List<Venta> ventaListNew = empleado.getVentaList();
             List<Ingreso> ingresoListOld = persistentEmpleado.getIngresoList();
             List<Ingreso> ingresoListNew = empleado.getIngresoList();
-            if (codigoUsuarioNew != null) {
-                codigoUsuarioNew = em.getReference(codigoUsuarioNew.getClass(), codigoUsuarioNew.getCodigoUsuario());
-                empleado.setCodigoUsuario(codigoUsuarioNew);
-            }
             List<Venta> attachedVentaListNew = new ArrayList<Venta>();
             for (Venta ventaListNewVentaToAttach : ventaListNew) {
                 ventaListNewVentaToAttach = em.getReference(ventaListNewVentaToAttach.getClass(), ventaListNewVentaToAttach.getIdVenta());
@@ -134,45 +119,37 @@ public class EmpleadoJpaController implements Serializable {
             ingresoListNew = attachedIngresoListNew;
             empleado.setIngresoList(ingresoListNew);
             empleado = em.merge(empleado);
-            if (codigoUsuarioOld != null && !codigoUsuarioOld.equals(codigoUsuarioNew)) {
-                codigoUsuarioOld.getEmpleadoList().remove(empleado);
-                codigoUsuarioOld = em.merge(codigoUsuarioOld);
-            }
-            if (codigoUsuarioNew != null && !codigoUsuarioNew.equals(codigoUsuarioOld)) {
-                codigoUsuarioNew.getEmpleadoList().add(empleado);
-                codigoUsuarioNew = em.merge(codigoUsuarioNew);
-            }
             for (Venta ventaListOldVenta : ventaListOld) {
                 if (!ventaListNew.contains(ventaListOldVenta)) {
-                    ventaListOldVenta.setCodigoEmpleado(null);
+                    ventaListOldVenta.setIdEmpleado(null);
                     ventaListOldVenta = em.merge(ventaListOldVenta);
                 }
             }
             for (Venta ventaListNewVenta : ventaListNew) {
                 if (!ventaListOld.contains(ventaListNewVenta)) {
-                    Empleado oldCodigoEmpleadoOfVentaListNewVenta = ventaListNewVenta.getCodigoEmpleado();
-                    ventaListNewVenta.setCodigoEmpleado(empleado);
+                    Empleado oldIdEmpleadoOfVentaListNewVenta = ventaListNewVenta.getIdEmpleado();
+                    ventaListNewVenta.setIdEmpleado(empleado);
                     ventaListNewVenta = em.merge(ventaListNewVenta);
-                    if (oldCodigoEmpleadoOfVentaListNewVenta != null && !oldCodigoEmpleadoOfVentaListNewVenta.equals(empleado)) {
-                        oldCodigoEmpleadoOfVentaListNewVenta.getVentaList().remove(ventaListNewVenta);
-                        oldCodigoEmpleadoOfVentaListNewVenta = em.merge(oldCodigoEmpleadoOfVentaListNewVenta);
+                    if (oldIdEmpleadoOfVentaListNewVenta != null && !oldIdEmpleadoOfVentaListNewVenta.equals(empleado)) {
+                        oldIdEmpleadoOfVentaListNewVenta.getVentaList().remove(ventaListNewVenta);
+                        oldIdEmpleadoOfVentaListNewVenta = em.merge(oldIdEmpleadoOfVentaListNewVenta);
                     }
                 }
             }
             for (Ingreso ingresoListOldIngreso : ingresoListOld) {
                 if (!ingresoListNew.contains(ingresoListOldIngreso)) {
-                    ingresoListOldIngreso.setCodigoEmpleado(null);
+                    ingresoListOldIngreso.setIdEmpleado(null);
                     ingresoListOldIngreso = em.merge(ingresoListOldIngreso);
                 }
             }
             for (Ingreso ingresoListNewIngreso : ingresoListNew) {
                 if (!ingresoListOld.contains(ingresoListNewIngreso)) {
-                    Empleado oldCodigoEmpleadoOfIngresoListNewIngreso = ingresoListNewIngreso.getCodigoEmpleado();
-                    ingresoListNewIngreso.setCodigoEmpleado(empleado);
+                    Empleado oldIdEmpleadoOfIngresoListNewIngreso = ingresoListNewIngreso.getIdEmpleado();
+                    ingresoListNewIngreso.setIdEmpleado(empleado);
                     ingresoListNewIngreso = em.merge(ingresoListNewIngreso);
-                    if (oldCodigoEmpleadoOfIngresoListNewIngreso != null && !oldCodigoEmpleadoOfIngresoListNewIngreso.equals(empleado)) {
-                        oldCodigoEmpleadoOfIngresoListNewIngreso.getIngresoList().remove(ingresoListNewIngreso);
-                        oldCodigoEmpleadoOfIngresoListNewIngreso = em.merge(oldCodigoEmpleadoOfIngresoListNewIngreso);
+                    if (oldIdEmpleadoOfIngresoListNewIngreso != null && !oldIdEmpleadoOfIngresoListNewIngreso.equals(empleado)) {
+                        oldIdEmpleadoOfIngresoListNewIngreso.getIngresoList().remove(ingresoListNewIngreso);
+                        oldIdEmpleadoOfIngresoListNewIngreso = em.merge(oldIdEmpleadoOfIngresoListNewIngreso);
                     }
                 }
             }
@@ -180,7 +157,7 @@ public class EmpleadoJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = empleado.getCodigoEmpleado();
+                Integer id = empleado.getIdEmpleado();
                 if (findEmpleado(id) == null) {
                     throw new NonexistentEntityException("The empleado with id " + id + " no longer exists.");
                 }
@@ -201,23 +178,18 @@ public class EmpleadoJpaController implements Serializable {
             Empleado empleado;
             try {
                 empleado = em.getReference(Empleado.class, id);
-                empleado.getCodigoEmpleado();
+                empleado.getIdEmpleado();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The empleado with id " + id + " no longer exists.", enfe);
             }
-            Usuario codigoUsuario = empleado.getCodigoUsuario();
-            if (codigoUsuario != null) {
-                codigoUsuario.getEmpleadoList().remove(empleado);
-                codigoUsuario = em.merge(codigoUsuario);
-            }
             List<Venta> ventaList = empleado.getVentaList();
             for (Venta ventaListVenta : ventaList) {
-                ventaListVenta.setCodigoEmpleado(null);
+                ventaListVenta.setIdEmpleado(null);
                 ventaListVenta = em.merge(ventaListVenta);
             }
             List<Ingreso> ingresoList = empleado.getIngresoList();
             for (Ingreso ingresoListIngreso : ingresoList) {
-                ingresoListIngreso.setCodigoEmpleado(null);
+                ingresoListIngreso.setIdEmpleado(null);
                 ingresoListIngreso = em.merge(ingresoListIngreso);
             }
             em.remove(empleado);

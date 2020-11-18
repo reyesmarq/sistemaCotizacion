@@ -34,9 +34,11 @@ public class IngresoJpaController implements Serializable {
     public IngresoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
+    
     public IngresoJpaController() {
         this.emf = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
     }
+    
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
@@ -51,10 +53,10 @@ public class IngresoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Empleado codigoEmpleado = ingreso.getCodigoEmpleado();
-            if (codigoEmpleado != null) {
-                codigoEmpleado = em.getReference(codigoEmpleado.getClass(), codigoEmpleado.getCodigoEmpleado());
-                ingreso.setCodigoEmpleado(codigoEmpleado);
+            Empleado idEmpleado = ingreso.getIdEmpleado();
+            if (idEmpleado != null) {
+                idEmpleado = em.getReference(idEmpleado.getClass(), idEmpleado.getIdEmpleado());
+                ingreso.setIdEmpleado(idEmpleado);
             }
             Proveedor idProveedor = ingreso.getIdProveedor();
             if (idProveedor != null) {
@@ -68,9 +70,9 @@ public class IngresoJpaController implements Serializable {
             }
             ingreso.setDetalleingresoList(attachedDetalleingresoList);
             em.persist(ingreso);
-            if (codigoEmpleado != null) {
-                codigoEmpleado.getIngresoList().add(ingreso);
-                codigoEmpleado = em.merge(codigoEmpleado);
+            if (idEmpleado != null) {
+                idEmpleado.getIngresoList().add(ingreso);
+                idEmpleado = em.merge(idEmpleado);
             }
             if (idProveedor != null) {
                 idProveedor.getIngresoList().add(ingreso);
@@ -99,15 +101,15 @@ public class IngresoJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Ingreso persistentIngreso = em.find(Ingreso.class, ingreso.getIdIngreso());
-            Empleado codigoEmpleadoOld = persistentIngreso.getCodigoEmpleado();
-            Empleado codigoEmpleadoNew = ingreso.getCodigoEmpleado();
+            Empleado idEmpleadoOld = persistentIngreso.getIdEmpleado();
+            Empleado idEmpleadoNew = ingreso.getIdEmpleado();
             Proveedor idProveedorOld = persistentIngreso.getIdProveedor();
             Proveedor idProveedorNew = ingreso.getIdProveedor();
             List<Detalleingreso> detalleingresoListOld = persistentIngreso.getDetalleingresoList();
             List<Detalleingreso> detalleingresoListNew = ingreso.getDetalleingresoList();
-            if (codigoEmpleadoNew != null) {
-                codigoEmpleadoNew = em.getReference(codigoEmpleadoNew.getClass(), codigoEmpleadoNew.getCodigoEmpleado());
-                ingreso.setCodigoEmpleado(codigoEmpleadoNew);
+            if (idEmpleadoNew != null) {
+                idEmpleadoNew = em.getReference(idEmpleadoNew.getClass(), idEmpleadoNew.getIdEmpleado());
+                ingreso.setIdEmpleado(idEmpleadoNew);
             }
             if (idProveedorNew != null) {
                 idProveedorNew = em.getReference(idProveedorNew.getClass(), idProveedorNew.getIdProveedor());
@@ -121,13 +123,13 @@ public class IngresoJpaController implements Serializable {
             detalleingresoListNew = attachedDetalleingresoListNew;
             ingreso.setDetalleingresoList(detalleingresoListNew);
             ingreso = em.merge(ingreso);
-            if (codigoEmpleadoOld != null && !codigoEmpleadoOld.equals(codigoEmpleadoNew)) {
-                codigoEmpleadoOld.getIngresoList().remove(ingreso);
-                codigoEmpleadoOld = em.merge(codigoEmpleadoOld);
+            if (idEmpleadoOld != null && !idEmpleadoOld.equals(idEmpleadoNew)) {
+                idEmpleadoOld.getIngresoList().remove(ingreso);
+                idEmpleadoOld = em.merge(idEmpleadoOld);
             }
-            if (codigoEmpleadoNew != null && !codigoEmpleadoNew.equals(codigoEmpleadoOld)) {
-                codigoEmpleadoNew.getIngresoList().add(ingreso);
-                codigoEmpleadoNew = em.merge(codigoEmpleadoNew);
+            if (idEmpleadoNew != null && !idEmpleadoNew.equals(idEmpleadoOld)) {
+                idEmpleadoNew.getIngresoList().add(ingreso);
+                idEmpleadoNew = em.merge(idEmpleadoNew);
             }
             if (idProveedorOld != null && !idProveedorOld.equals(idProveedorNew)) {
                 idProveedorOld.getIngresoList().remove(ingreso);
@@ -183,10 +185,10 @@ public class IngresoJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The ingreso with id " + id + " no longer exists.", enfe);
             }
-            Empleado codigoEmpleado = ingreso.getCodigoEmpleado();
-            if (codigoEmpleado != null) {
-                codigoEmpleado.getIngresoList().remove(ingreso);
-                codigoEmpleado = em.merge(codigoEmpleado);
+            Empleado idEmpleado = ingreso.getIdEmpleado();
+            if (idEmpleado != null) {
+                idEmpleado.getIngresoList().remove(ingreso);
+                idEmpleado = em.merge(idEmpleado);
             }
             Proveedor idProveedor = ingreso.getIdProveedor();
             if (idProveedor != null) {

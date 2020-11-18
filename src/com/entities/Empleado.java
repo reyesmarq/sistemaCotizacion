@@ -7,7 +7,6 @@
 package com.entities;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -15,14 +14,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -34,18 +29,20 @@ import javax.xml.bind.annotation.XmlTransient;
  *  @author Ulises Guzmán
  */
 @Entity
-@Table(catalog = "cotizacionEmpresa", schema = "")
+@Table(catalog = "empresacotizacionmark1", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Empleado.findAll", query = "SELECT e FROM Empleado e")
-    , @NamedQuery(name = "Empleado.findByCodigoEmpleado", query = "SELECT e FROM Empleado e WHERE e.codigoEmpleado = :codigoEmpleado")
-    , @NamedQuery(name = "Empleado.findByNombreEmpleado", query = "SELECT e FROM Empleado e WHERE e.nombreEmpleado = :nombreEmpleado")
-    , @NamedQuery(name = "Empleado.findByDuiEmpleado", query = "SELECT e FROM Empleado e WHERE e.duiEmpleado = :duiEmpleado")
-    , @NamedQuery(name = "Empleado.findByNitEmpleado", query = "SELECT e FROM Empleado e WHERE e.nitEmpleado = :nitEmpleado")
-    , @NamedQuery(name = "Empleado.findByFechaNacimientoEmpleado", query = "SELECT e FROM Empleado e WHERE e.fechaNacimientoEmpleado = :fechaNacimientoEmpleado")
-    , @NamedQuery(name = "Empleado.findByCargoEmpleado", query = "SELECT e FROM Empleado e WHERE e.cargoEmpleado = :cargoEmpleado")
-    , @NamedQuery(name = "Empleado.findByDireccionEmpleado", query = "SELECT e FROM Empleado e WHERE e.direccionEmpleado = :direccionEmpleado")
-    , @NamedQuery(name = "Empleado.findByTelefonoEmpleado", query = "SELECT e FROM Empleado e WHERE e.telefonoEmpleado = :telefonoEmpleado")})
+    , @NamedQuery(name = "Empleado.findByIdEmpleado", query = "SELECT e FROM Empleado e WHERE e.idEmpleado = :idEmpleado")
+    , @NamedQuery(name = "Empleado.findByNombre", query = "SELECT e FROM Empleado e WHERE e.nombre = :nombre")
+    , @NamedQuery(name = "Empleado.findByDui", query = "SELECT e FROM Empleado e WHERE e.dui = :dui")
+    , @NamedQuery(name = "Empleado.findByNit", query = "SELECT e FROM Empleado e WHERE e.nit = :nit")
+    , @NamedQuery(name = "Empleado.findByFechaNacimiento", query = "SELECT e FROM Empleado e WHERE e.fechaNacimiento = :fechaNacimiento")
+    , @NamedQuery(name = "Empleado.findByDireccion", query = "SELECT e FROM Empleado e WHERE e.direccion = :direccion")
+    , @NamedQuery(name = "Empleado.findByTelefono", query = "SELECT e FROM Empleado e WHERE e.telefono = :telefono")
+    , @NamedQuery(name = "Empleado.findByUser", query = "SELECT e FROM Empleado e WHERE e.user = :user")
+    , @NamedQuery(name = "Empleado.findByPassword", query = "SELECT e FROM Empleado e WHERE e.password = :password")
+    , @NamedQuery(name = "Empleado.findByAcceso", query = "SELECT e FROM Empleado e WHERE e.acceso = :acceso")})
 public class Empleado implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,98 +50,115 @@ public class Empleado implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(nullable = false)
-    private Integer codigoEmpleado;
+    private Integer idEmpleado;
     @Column(length = 100)
-    private String nombreEmpleado;
+    private String nombre;
     @Column(length = 10)
-    private String duiEmpleado;
+    private String dui;
     @Column(length = 20)
-    private String nitEmpleado;
-    @Temporal(TemporalType.DATE)
-    private Date fechaNacimientoEmpleado;
+    private String nit;
     @Column(length = 50)
-    private String cargoEmpleado;
+    private String fechaNacimiento;
     @Column(length = 200)
-    private String direccionEmpleado;
+    private String direccion;
     @Column(length = 10)
-    private String telefonoEmpleado;
-    @OneToMany(mappedBy = "codigoEmpleado")
+    private String telefono;
+    @Column(length = 50)
+    private String user;
+    @Column(length = 50)
+    private String password;
+    @Column(length = 50)
+    private String acceso;
+    @OneToMany(mappedBy = "idEmpleado")
     private List<Venta> ventaList;
-    @JoinColumn(name = "codigoUsuario", referencedColumnName = "codigoUsuario")
-    @ManyToOne
-    private Usuario codigoUsuario;
-    @OneToMany(mappedBy = "codigoEmpleado")
+    @OneToMany(mappedBy = "idEmpleado")
     private List<Ingreso> ingresoList;
 
     public Empleado() {
     }
 
-    public Empleado(Integer codigoEmpleado) {
-        this.codigoEmpleado = codigoEmpleado;
+    public Empleado(Integer idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
 
-    public Integer getCodigoEmpleado() {
-        return codigoEmpleado;
+    public Integer getIdEmpleado() {
+        return idEmpleado;
     }
 
-    public void setCodigoEmpleado(Integer codigoEmpleado) {
-        this.codigoEmpleado = codigoEmpleado;
+    public void setIdEmpleado(Integer idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
 
-    public String getNombreEmpleado() {
-        return nombreEmpleado;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreEmpleado(String nombreEmpleado) {
-        this.nombreEmpleado = nombreEmpleado;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getDuiEmpleado() {
-        return duiEmpleado;
+    public String getDui() {
+        return dui;
     }
 
-    public void setDuiEmpleado(String duiEmpleado) {
-        this.duiEmpleado = duiEmpleado;
+    public void setDui(String dui) {
+        this.dui = dui;
     }
 
-    public String getNitEmpleado() {
-        return nitEmpleado;
+    public String getNit() {
+        return nit;
     }
 
-    public void setNitEmpleado(String nitEmpleado) {
-        this.nitEmpleado = nitEmpleado;
+    public void setNit(String nit) {
+        this.nit = nit;
     }
 
-    public Date getFechaNacimientoEmpleado() {
-        return fechaNacimientoEmpleado;
+    public String getFechaNacimiento() {
+        return fechaNacimiento;
     }
 
-    public void setFechaNacimientoEmpleado(Date fechaNacimientoEmpleado) {
-        this.fechaNacimientoEmpleado = fechaNacimientoEmpleado;
+    public void setFechaNacimiento(String fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 
-    public String getCargoEmpleado() {
-        return cargoEmpleado;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setCargoEmpleado(String cargoEmpleado) {
-        this.cargoEmpleado = cargoEmpleado;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
-    public String getDireccionEmpleado() {
-        return direccionEmpleado;
+    public String getTelefono() {
+        return telefono;
     }
 
-    public void setDireccionEmpleado(String direccionEmpleado) {
-        this.direccionEmpleado = direccionEmpleado;
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
-    public String getTelefonoEmpleado() {
-        return telefonoEmpleado;
+    public String getUser() {
+        return user;
     }
 
-    public void setTelefonoEmpleado(String telefonoEmpleado) {
-        this.telefonoEmpleado = telefonoEmpleado;
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getAcceso() {
+        return acceso;
+    }
+
+    public void setAcceso(String acceso) {
+        this.acceso = acceso;
     }
 
     @XmlTransient
@@ -154,14 +168,6 @@ public class Empleado implements Serializable {
 
     public void setVentaList(List<Venta> ventaList) {
         this.ventaList = ventaList;
-    }
-
-    public Usuario getCodigoUsuario() {
-        return codigoUsuario;
-    }
-
-    public void setCodigoUsuario(Usuario codigoUsuario) {
-        this.codigoUsuario = codigoUsuario;
     }
 
     @XmlTransient
@@ -176,7 +182,7 @@ public class Empleado implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (codigoEmpleado != null ? codigoEmpleado.hashCode() : 0);
+        hash += (idEmpleado != null ? idEmpleado.hashCode() : 0);
         return hash;
     }
 
@@ -187,7 +193,7 @@ public class Empleado implements Serializable {
             return false;
         }
         Empleado other = (Empleado) object;
-        if ((this.codigoEmpleado == null && other.codigoEmpleado != null) || (this.codigoEmpleado != null && !this.codigoEmpleado.equals(other.codigoEmpleado))) {
+        if ((this.idEmpleado == null && other.idEmpleado != null) || (this.idEmpleado != null && !this.idEmpleado.equals(other.idEmpleado))) {
             return false;
         }
         return true;
@@ -195,7 +201,7 @@ public class Empleado implements Serializable {
 
     @Override
     public String toString() {
-        return "com.entities.Empleado[ codigoEmpleado=" + codigoEmpleado + " ]";
+        return "com.entities.Empleado[ idEmpleado=" + idEmpleado + " ]";
     }
     
 }

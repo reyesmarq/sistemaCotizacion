@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
  *  @author Ulises Guzmán
  */
 @Entity
-@Table(catalog = "cotizacionEmpresa", schema = "")
+@Table(catalog = "empresacotizacionmark1", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Venta.findAll", query = "SELECT v FROM Venta v")
@@ -70,9 +70,9 @@ public class Venta implements Serializable {
     @JoinColumn(name = "idCliente", referencedColumnName = "idCliente")
     @ManyToOne
     private Cliente idCliente;
-    @JoinColumn(name = "codigoEmpleado", referencedColumnName = "codigoEmpleado")
+    @JoinColumn(name = "idEmpleado", referencedColumnName = "idEmpleado")
     @ManyToOne
-    private Empleado codigoEmpleado;
+    private Empleado idEmpleado;
     @OneToMany(mappedBy = "idVenta")
     private List<Detalleventa> detalleventaList;
 
@@ -163,12 +163,12 @@ public class Venta implements Serializable {
         this.idCliente = idCliente;
     }
 
-    public Empleado getCodigoEmpleado() {
-        return codigoEmpleado;
+    public Empleado getIdEmpleado() {
+        return idEmpleado;
     }
 
-    public void setCodigoEmpleado(Empleado codigoEmpleado) {
-        this.codigoEmpleado = codigoEmpleado;
+    public void setIdEmpleado(Empleado idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
 
     @XmlTransient
