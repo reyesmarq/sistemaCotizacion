@@ -50,7 +50,7 @@ public class FrmVistaPresentacionArticulos extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblPresentacion = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 30)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 0, 0));

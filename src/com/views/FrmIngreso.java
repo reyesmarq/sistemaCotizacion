@@ -51,11 +51,10 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
     
     String nombre;
     String acceso;
-    int idEmpleado=0;
+    int idEmpleado;
     double iva=0;
     double cesc=0;
     double dai=0;
-    
     
     private FrmVistaProveedor vistaProveedor=null;
     private FrmVistaArticulo vistaArticulo=null; 
@@ -126,36 +125,35 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
         Utilidades utilidades = new Utilidades();
         String encabezados[]={"Id Factura","Id Prov.","Proveedor","Fecha","Tipo Comprobante","Serie","Correlativo","Eliminar"};
         tabla=new DefaultTableModel(null,encabezados);
-        Object datos[]=new Object[6];
+        Object datos[]=new Object[7];
         try{
             List lista;
             lista=jpaIngreso.findIngresoEntities();
-            for(int i=0;i<lista.size();i++)
-            {
+            for(int i=0;i<lista.size();i++){
                 ingreso=(Ingreso)lista.get(i);
                 datos[0]=ingreso.getIdIngreso();
-                datos[1]=ingreso.getIdProveedor();
+                datos[1]=ingreso.getIdProveedor().getIdProveedor();
                 datos[2]=ingreso.getIdProveedor().getRazonSocial();
                 datos[3]=ingreso.getFecha();
                 datos[4]=ingreso.getTipoComprobante();
                 datos[5]=ingreso.getSerie();
                 datos[6]=ingreso.getCorrelativo();
-                
                 tabla.addRow(datos);
             }
-            
             this.tblAlmacen.setModel(tabla);
-            
             if(chkEliminar.isSelected()){
                 utilidades.agregarCheckBox(7,tblAlmacen);
             }else{
                 ocultarColumnas();
             }
-        }
-        catch(Exception e)
+        }catch(Exception e)
         {
             JOptionPane.showMessageDialog(null,"Error al mostrar formulario: "+e);
         }
+    }
+    
+    public void ocultarColumnas(){
+        tblAlmacen.removeColumn(tblAlmacen.getColumnModel().getColumn(7));
     }
     
     public void crearTabla(){
@@ -195,10 +193,6 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
         {
             JOptionPane.showMessageDialog(null,"Error al mostrar formulario: "+e);
         }
-    }
-    
-    public void ocultarColumnas(){
-        tblAlmacen.removeColumn(tblAlmacen.getColumnModel().getColumn(7));
     }
     
     public void llenarIngresoDetalle(){
@@ -262,6 +256,9 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
 
     public FrmIngreso(String nombre, String acceso, int id) {
         initComponents();
+        this.nombre = nombre;
+        this.acceso = acceso;
+        this.idEmpleado = id;
         mostrar();
         crearTabla();
         habilitar(false);
@@ -336,7 +333,6 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
-        setMaximizable(true);
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 30)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 0, 0));
@@ -796,21 +792,21 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
 
     private void tblAlmacenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAlmacenMouseClicked
         int fila = this.tblAlmacen.getSelectedRow();
-        this.txtIdIngreso.setText(String.valueOf(this.tblAlmacen.getValueAt(fila, 1)));
-        this.txtIdProveedor.setText(String.valueOf(this.tblAlmacen.getValueAt(fila, 2)));
-        this.txtProveedor.setText(String.valueOf(this.tblAlmacen.getValueAt(fila, 3)));
+        this.txtIdIngreso.setText(String.valueOf(this.tblAlmacen.getValueAt(fila, 0)));
+        this.txtIdProveedor.setText(String.valueOf(this.tblAlmacen.getValueAt(fila, 1)));
+        this.txtProveedor.setText(String.valueOf(this.tblAlmacen.getValueAt(fila, 2)));
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            String strFecha = this.tblAlmacen.getValueAt(fila, 4).toString();
+            String strFecha = this.tblAlmacen.getValueAt(fila, 3).toString();
             Date fechas;
             fechas=sdf.parse(strFecha);
             this.dtFecha.setDate(fechas);
         } catch (ParseException e) {
             
         }
-        this.cmbComprobante.setSelectedItem(String.valueOf(this.tblAlmacen.getValueAt(fila, 5)));
-        this.txtSerie.setText(String.valueOf(this.tblAlmacen.getValueAt(fila, 6)));
-        this.txtCorrelativo.setText(String.valueOf(this.tblAlmacen.getValueAt(fila, 7)));
+        this.cmbComprobante.setSelectedItem(String.valueOf(this.tblAlmacen.getValueAt(fila, 4)));
+        this.txtSerie.setText(String.valueOf(this.tblAlmacen.getValueAt(fila, 5)));
+        this.txtCorrelativo.setText(String.valueOf(this.tblAlmacen.getValueAt(fila, 6)));
         mostrarDetalleIngreso();
     }//GEN-LAST:event_tblAlmacenMouseClicked
 
@@ -938,7 +934,9 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
             }else{
                 if(esNuevo){
                     empleado.setIdEmpleado(idEmpleado);
+                    JOptionPane.showMessageDialog(null, idEmpleado+ " " + empleado.getIdEmpleado());
                     proveedor.setIdProveedor(Integer.parseInt(this.txtIdProveedor.getText().toString()));
+                    JOptionPane.showMessageDialog(null, proveedor.getIdProveedor());
                     ingreso.setIdEmpleado(empleado);
                     ingreso.setIdProveedor(proveedor);
                     Date date = dtFecha.getDate();

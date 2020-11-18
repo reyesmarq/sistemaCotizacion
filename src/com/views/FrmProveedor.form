@@ -387,13 +387,15 @@
             <Component class="javax.swing.JComboBox" name="cmbSectorComercial">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="6">
+                  <StringArray count="8">
                     <StringItem index="0" value="Tecnolog&#xed;a"/>
                     <StringItem index="1" value="Alimentos"/>
                     <StringItem index="2" value="Salud"/>
                     <StringItem index="3" value="Ropa"/>
                     <StringItem index="4" value="Servicios"/>
                     <StringItem index="5" value="Muebles"/>
+                    <StringItem index="6" value="Venta de repuestos"/>
+                    <StringItem index="7" value="Mecanica automotriz"/>
                   </StringArray>
                 </Property>
               </Properties>
