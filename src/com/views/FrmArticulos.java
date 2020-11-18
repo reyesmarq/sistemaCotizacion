@@ -54,6 +54,15 @@ public class FrmArticulos extends javax.swing.JInternalFrame {
         this.txtIdCategoria.setEnabled(false);
     }
     
+    public FrmArticulos(String nombre, String acceso, int id) {
+        initComponents();
+        this.mostrar();
+        this.habilitar(false);
+        this.botones();
+        this.txtIdArticulo.setEnabled(false);
+        this.txtIdCategoria.setEnabled(false);
+    }
+    
     private void llenarComboPresentacion(JComboBox combo){ //Llenado de combobox modificado a listas.
         List list=jpaPresentacion.findPresentacionEntities();
         for(int i=0;i<list.size();i++){

@@ -125,6 +125,14 @@ public class FrmPresentacion extends javax.swing.JInternalFrame {
         this.habilitar(false);
         this.botones();
     }
+    
+    public FrmPresentacion(String nombre, String acceso, int id) {
+        initComponents();
+        this.txtIdPresentacion.setEnabled(false);
+        this.mostrar();
+        this.habilitar(false);
+        this.botones();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

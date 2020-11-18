@@ -17,6 +17,9 @@ public class FrmCotizacion extends javax.swing.JInternalFrame {
     public FrmCotizacion() {
         initComponents();
     }
+    public FrmCotizacion(String nombre, String acceso, int id) {
+        initComponents();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

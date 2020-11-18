@@ -8,20 +8,24 @@
 package com.views;
 
 
+import com.entities.Empleado;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
+import utilidades.ComunicacionAcceso;
 /**
  *
  * @author dguevara
  */
 public class FrmPrincipal extends javax.swing.JFrame {
     
-    private List listaPermisos = new ArrayList();
+    private List<String> listaAcceso = new ArrayList<String>();
+    private List<String> listaNombre = new ArrayList<String>();
     
     private FrmAcercaDe acercade=null;
     private FrmCategoria categoria = null;
@@ -34,22 +38,58 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private FrmTrabajador trabajador = null;
     private FrmIngreso ingresos = null;
     private FrmCotizacion cotizacion = null;
+    private ComunicacionAcceso datos = new ComunicacionAcceso();
+    Empleado temp = new Empleado();
+    int idTrabajador=0;
+    String nombre="";
+    String acceso="";
     
-    int nivel;
+    
+    
+    private void gestionarUsuario(){
+        if (acceso.equals("Administrador")) {
+            this.mnuAlmacen.setVisible(true);
+            this.mnuCompras.setVisible(true);
+            this.mnuVentas.setVisible(true);
+            this.mnuCotizaciones.setVisible(true);
+            this.mnuConsultas.setVisible(true);
+            this.mnuMantenimiento.setVisible(true);
+        }else if(acceso.equals("Vendedor")){
+            this.mnuAlmacen.setVisible(false);
+            this.mnuCompras.setVisible(false);
+            this.mnuVentas.setVisible(true);
+            this.mnuCotizaciones.setVisible(true);
+            this.mnuConsultas.setVisible(false);
+            this.mnuMantenimiento.setVisible(false);
+        }else if(acceso.equals("Bodeguero")){
+            this.mnuAlmacen.setVisible(true);
+            this.mnuCompras.setVisible(true);
+            this.mnuVentas.setVisible(false);
+            this.mnuCotizaciones.setVisible(false);
+            this.mnuConsultas.setVisible(false);
+            this.mnuMantenimiento.setVisible(false);
+        }
+    }
+    
     /**
      * Creates new form FrmPrincipal
      */
-    public FrmPrincipal() 
-    {
+    public FrmPrincipal() {
         initComponents();
+        this.setExtendedState(MAXIMIZED_BOTH);
+        gestionarUsuario();
     }
-
-    public FrmPrincipal(List permisos)
-    {
+    
+    public FrmPrincipal(List<String> accesoL, List<String> nombreL, int id){
         initComponents();
-        listaPermisos=permisos;
+        this.setExtendedState(MAXIMIZED_BOTH);
+        listaAcceso=accesoL;
+        listaNombre=nombreL;
+        nombre=listaNombre.get(0);
+        acceso=listaAcceso.get(0);
+        idTrabajador=id;
+        gestionarUsuario();
         
-        //JOptionPane.showMessageDialog(null, "Prueba"+listaPermisos);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -65,20 +105,20 @@ public class FrmPrincipal extends javax.swing.JFrame {
         sistemaMenu = new javax.swing.JMenu();
         acercaDeMenuItem = new javax.swing.JMenuItem();
         salirMenuItem = new javax.swing.JMenuItem();
-        Almacen = new javax.swing.JMenu();
+        mnuAlmacen = new javax.swing.JMenu();
         articulosMenuItem = new javax.swing.JMenuItem();
         categoriaMenuItem = new javax.swing.JMenuItem();
         presentacionMenuItem = new javax.swing.JMenuItem();
-        comprasMenu = new javax.swing.JMenu();
+        mnuCompras = new javax.swing.JMenu();
         ingresosMenuItem = new javax.swing.JMenuItem();
         preevodoresMenuItem = new javax.swing.JMenuItem();
-        ventasMenu = new javax.swing.JMenu();
+        mnuVentas = new javax.swing.JMenu();
         ventasMenuItem = new javax.swing.JMenuItem();
         clientesMenuItem = new javax.swing.JMenuItem();
-        cotizacionesMenu = new javax.swing.JMenu();
-        mantenimientoMenu = new javax.swing.JMenu();
+        mnuCotizaciones = new javax.swing.JMenu();
+        mnuMantenimiento = new javax.swing.JMenu();
         empleado = new javax.swing.JMenuItem();
-        consultasMenu = new javax.swing.JMenu();
+        mnuConsultas = new javax.swing.JMenu();
         reporteArticulos = new javax.swing.JMenuItem();
         reportesCategorias = new javax.swing.JMenuItem();
         reportesPresentaciones = new javax.swing.JMenuItem();
@@ -86,16 +126,18 @@ public class FrmPrincipal extends javax.swing.JFrame {
         reporteProveedores = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setSize(new java.awt.Dimension(0, 0));
+        setState(getExtendedState());
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1041, Short.MAX_VALUE)
+            .addGap(0, Short.MAX_VALUE, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 710, Short.MAX_VALUE)
+            .addGap(0, Short.MAX_VALUE, Short.MAX_VALUE)
         );
 
         sistemaMenu.setMnemonic('f');
@@ -125,8 +167,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         menuBar.add(sistemaMenu);
 
-        Almacen.setMnemonic('e');
-        Almacen.setText("Almacen");
+        mnuAlmacen.setMnemonic('e');
+        mnuAlmacen.setText("Almacen");
 
         articulosMenuItem.setMnemonic('t');
         articulosMenuItem.setText("Articulos");
@@ -135,7 +177,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 articulosMenuItemActionPerformed(evt);
             }
         });
-        Almacen.add(articulosMenuItem);
+        mnuAlmacen.add(articulosMenuItem);
 
         categoriaMenuItem.setMnemonic('y');
         categoriaMenuItem.setText("Categoria");
@@ -144,7 +186,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 categoriaMenuItemActionPerformed(evt);
             }
         });
-        Almacen.add(categoriaMenuItem);
+        mnuAlmacen.add(categoriaMenuItem);
 
         presentacionMenuItem.setMnemonic('p');
         presentacionMenuItem.setText("Presentacion");
@@ -153,17 +195,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 presentacionMenuItemActionPerformed(evt);
             }
         });
-        Almacen.add(presentacionMenuItem);
+        mnuAlmacen.add(presentacionMenuItem);
 
-        menuBar.add(Almacen);
+        menuBar.add(mnuAlmacen);
 
-        comprasMenu.setMnemonic('h');
-        comprasMenu.setText("Compras");
-        comprasMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comprasMenuActionPerformed(evt);
-            }
-        });
+        mnuCompras.setMnemonic('h');
+        mnuCompras.setText("Compras");
 
         ingresosMenuItem.setMnemonic('c');
         ingresosMenuItem.setText("Ingresos");
@@ -172,7 +209,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 ingresosMenuItemActionPerformed(evt);
             }
         });
-        comprasMenu.add(ingresosMenuItem);
+        mnuCompras.add(ingresosMenuItem);
 
         preevodoresMenuItem.setMnemonic('a');
         preevodoresMenuItem.setText("Proveedores");
@@ -181,11 +218,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 preevodoresMenuItemActionPerformed(evt);
             }
         });
-        comprasMenu.add(preevodoresMenuItem);
+        mnuCompras.add(preevodoresMenuItem);
 
-        menuBar.add(comprasMenu);
+        menuBar.add(mnuCompras);
 
-        ventasMenu.setText("Ventas");
+        mnuVentas.setText("Ventas");
 
         ventasMenuItem.setText("Ventas");
         ventasMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -193,7 +230,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 ventasMenuItemActionPerformed(evt);
             }
         });
-        ventasMenu.add(ventasMenuItem);
+        mnuVentas.add(ventasMenuItem);
 
         clientesMenuItem.setText("Clientes");
         clientesMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -201,19 +238,19 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 clientesMenuItemActionPerformed(evt);
             }
         });
-        ventasMenu.add(clientesMenuItem);
+        mnuVentas.add(clientesMenuItem);
 
-        menuBar.add(ventasMenu);
+        menuBar.add(mnuVentas);
 
-        cotizacionesMenu.setText("Cotizaciones");
-        cotizacionesMenu.addActionListener(new java.awt.event.ActionListener() {
+        mnuCotizaciones.setText("Cotizaciones");
+        mnuCotizaciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cotizacionesMenuActionPerformed(evt);
+                mnuCotizacionesActionPerformed(evt);
             }
         });
-        menuBar.add(cotizacionesMenu);
+        menuBar.add(mnuCotizaciones);
 
-        mantenimientoMenu.setText("Mantenimiento");
+        mnuMantenimiento.setText("Mantenimiento");
 
         empleado.setText("Empleados");
         empleado.addActionListener(new java.awt.event.ActionListener() {
@@ -221,11 +258,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 empleadoActionPerformed(evt);
             }
         });
-        mantenimientoMenu.add(empleado);
+        mnuMantenimiento.add(empleado);
 
-        menuBar.add(mantenimientoMenu);
+        menuBar.add(mnuMantenimiento);
 
-        consultasMenu.setText("Consultas");
+        mnuConsultas.setText("Consultas");
 
         reporteArticulos.setText("Stock articulos");
         reporteArticulos.addActionListener(new java.awt.event.ActionListener() {
@@ -233,21 +270,21 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 reporteArticulosActionPerformed(evt);
             }
         });
-        consultasMenu.add(reporteArticulos);
+        mnuConsultas.add(reporteArticulos);
 
         reportesCategorias.setText("Categorias");
-        consultasMenu.add(reportesCategorias);
+        mnuConsultas.add(reportesCategorias);
 
         reportesPresentaciones.setText("Presentaciones");
-        consultasMenu.add(reportesPresentaciones);
+        mnuConsultas.add(reportesPresentaciones);
 
         reportesClientes.setText("Clientes");
-        consultasMenu.add(reportesClientes);
+        mnuConsultas.add(reportesClientes);
 
         reporteProveedores.setText("Proveedores");
-        consultasMenu.add(reporteProveedores);
+        mnuConsultas.add(reporteProveedores);
 
-        menuBar.add(consultasMenu);
+        menuBar.add(mnuConsultas);
 
         setJMenuBar(menuBar);
 
@@ -255,15 +292,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jDesktopPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jDesktopPane1)
         );
 
         pack();
@@ -284,7 +317,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void articulosMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_articulosMenuItemActionPerformed
         try {
             if(articulo==null || articulo.isClosed()){
-                articulo=new FrmArticulos();
+                articulo=new FrmArticulos(nombre, acceso, idTrabajador);
                 this.jDesktopPane1.add(articulo);
             }
             articulo.setVisible(true);
@@ -296,7 +329,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void categoriaMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoriaMenuItemActionPerformed
         try {
             if(categoria==null || categoria.isClosed()){
-                categoria=new FrmCategoria();
+                categoria=new FrmCategoria(nombre, acceso, idTrabajador);
                 this.jDesktopPane1.add(categoria);
             }
             categoria.setVisible(true);
@@ -308,7 +341,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void presentacionMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_presentacionMenuItemActionPerformed
         try {
             if(presentacion==null || presentacion.isClosed()){
-                presentacion=new FrmPresentacion();
+                presentacion=new FrmPresentacion(nombre, acceso, idTrabajador);
                 this.jDesktopPane1.add(presentacion);
             }
             presentacion.setVisible(true);
@@ -318,9 +351,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_presentacionMenuItemActionPerformed
 
     private void ingresosMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresosMenuItemActionPerformed
-        try {
+        try{
             if(ingresos==null || ingresos.isClosed()){
-                ingresos=new FrmIngreso();
+                ingresos=new FrmIngreso(nombre, acceso, idTrabajador);
                 this.jDesktopPane1.add(ingresos);
             }
             ingresos.setVisible(true);
@@ -332,7 +365,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void preevodoresMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_preevodoresMenuItemActionPerformed
         try {
             if(proveedor==null || proveedor.isClosed()){
-                proveedor=new FrmProveedor();
+                proveedor=new FrmProveedor(nombre, acceso, idTrabajador);
                 this.jDesktopPane1.add(proveedor);
             }
             proveedor.setVisible(true);
@@ -341,14 +374,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_preevodoresMenuItemActionPerformed
 
-    private void comprasMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comprasMenuActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comprasMenuActionPerformed
-
     private void ventasMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ventasMenuItemActionPerformed
         try {
             if(venta==null || venta.isClosed()){
-                venta=new FrmVenta();
+                venta=new FrmVenta(nombre, acceso, idTrabajador);
                 this.jDesktopPane1.add(venta);
             }
             venta.setVisible(true);
@@ -360,7 +389,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void clientesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientesMenuItemActionPerformed
         try {
             if(cliente==null || cliente.isClosed()){
-                cliente=new FrmCliente();
+                cliente=new FrmCliente(nombre, acceso, idTrabajador);
                 this.jDesktopPane1.add(cliente);
             }
             cliente.setVisible(true);
@@ -369,17 +398,17 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_clientesMenuItemActionPerformed
 
-    private void cotizacionesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cotizacionesMenuActionPerformed
+    private void mnuCotizacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCotizacionesActionPerformed
         try {
             if(cotizacion==null || cotizacion.isClosed()){
-                cotizacion=new FrmCotizacion();
+                cotizacion=new FrmCotizacion(nombre, acceso, idTrabajador);
                 this.jDesktopPane1.add(cotizacion);
             }
             cotizacion.setVisible(true);
         } catch (Exception ex) {
             Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_cotizacionesMenuActionPerformed
+    }//GEN-LAST:event_mnuCotizacionesActionPerformed
 
     private void reporteArticulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteArticulosActionPerformed
         // TODO add your handling code here:
@@ -396,7 +425,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void empleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empleadoActionPerformed
         try {
             if(trabajador==null || trabajador.isClosed()){
-                trabajador=new FrmTrabajador();
+                trabajador=new FrmTrabajador(nombre, acceso, idTrabajador);
                 this.jDesktopPane1.add(trabajador);
             }
             trabajador.setVisible(true);
@@ -448,19 +477,20 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu Almacen;
     private javax.swing.JMenuItem acercaDeMenuItem;
     private javax.swing.JMenuItem articulosMenuItem;
     private javax.swing.JMenuItem categoriaMenuItem;
     private javax.swing.JMenuItem clientesMenuItem;
-    private javax.swing.JMenu comprasMenu;
-    private javax.swing.JMenu consultasMenu;
-    private javax.swing.JMenu cotizacionesMenu;
     private javax.swing.JMenuItem empleado;
     private javax.swing.JMenuItem ingresosMenuItem;
     private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JMenu mantenimientoMenu;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenu mnuAlmacen;
+    private javax.swing.JMenu mnuCompras;
+    private javax.swing.JMenu mnuConsultas;
+    private javax.swing.JMenu mnuCotizaciones;
+    private javax.swing.JMenu mnuMantenimiento;
+    private javax.swing.JMenu mnuVentas;
     private javax.swing.JMenuItem preevodoresMenuItem;
     private javax.swing.JMenuItem presentacionMenuItem;
     private javax.swing.JMenuItem reporteArticulos;
@@ -470,7 +500,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem reportesPresentaciones;
     private javax.swing.JMenuItem salirMenuItem;
     private javax.swing.JMenu sistemaMenu;
-    private javax.swing.JMenu ventasMenu;
     private javax.swing.JMenuItem ventasMenuItem;
     // End of variables declaration//GEN-END:variables
 }

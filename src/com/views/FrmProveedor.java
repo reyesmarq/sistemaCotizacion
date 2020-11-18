@@ -46,6 +46,13 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
         botones();
     }
     
+    public FrmProveedor(String nombre, String acceso, int id) {
+        initComponents();
+        mostrar();
+        habilitar(false);
+        botones();
+    }
+    
     public void ocultarColumnas(){
         tblProveedor.removeColumn(tblProveedor.getColumnModel().getColumn(8));//Definir cantidad de columnas de tabla
     }

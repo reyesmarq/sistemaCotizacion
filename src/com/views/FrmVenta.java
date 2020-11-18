@@ -17,6 +17,10 @@ public class FrmVenta extends javax.swing.JInternalFrame {
     public FrmVenta() {
         initComponents();
     }
+    
+    public FrmVenta(String nombre, String acceso, int id) {
+        initComponents();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

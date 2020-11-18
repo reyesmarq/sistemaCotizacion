@@ -36,6 +36,14 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
         this.botones();
     }
     
+    public FrmCategoria(String nombre, String acceso, int id) {
+        initComponents();
+        this.txtIdCategoria.setEnabled(false);
+        this.mostrar();
+        this.habilitar(false);
+        this.botones();
+    }
+    
     private void mensajeOk(String mensaje){
         JOptionPane.showMessageDialog(null, mensaje + " sistema de cotización", "Respuesta", JOptionPane.INFORMATION_MESSAGE);
     }

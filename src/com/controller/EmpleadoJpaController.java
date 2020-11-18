@@ -7,19 +7,29 @@
 package com.controller;
 
 import com.controller.exceptions.NonexistentEntityException;
-import com.entities.Empleado;
+import com.entities.Venta;
+import com.entities.Ingreso;
+
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.entities.Venta;
 import java.util.ArrayList;
 import java.util.List;
-import com.entities.Ingreso;
+import com.entities.Empleado;
+import com.views.FrmLogin;
+import com.views.FrmPrincipal;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
 
 /**
  *  Nombre de la clase: EmpleadoJpaController
@@ -244,6 +254,75 @@ public class EmpleadoJpaController implements Serializable {
             return ((Long) q.getSingleResult()).intValue();
         } finally {
             em.close();
+        }
+    }
+    
+    
+    //Funciones de acceso
+    public boolean acceder(String user, String pass){
+        Object us;
+        int codigoUser;
+        List acceso= new ArrayList();
+        List nombre= new ArrayList();
+        
+        us=getCodigoUsuario(user,pass); //Busca el codigo del usuario
+        if(us!=null){
+            codigoUser=Integer.parseInt(us.toString());
+            
+            acceso=getAcceso(codigoUser);
+            nombre=getNombre(codigoUser);
+
+            FrmPrincipal ingreso = new FrmPrincipal(acceso, nombre, codigoUser);
+            ingreso.setVisible(true);
+            ingreso.pack();
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(null, "Usuario o Contraseña Incorrectas");
+            return false;
+        }
+    }
+    
+    public Object getCodigoUsuario(String usuario, String pass){
+        try{
+            EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
+            EntityManager entitymanager = emfactory.createEntityManager();
+            Query query = entitymanager.createNamedQuery("Empleado.findUser");
+            query.setParameter("nombre",usuario);
+            query.setParameter("password",pass);
+            Object user=query.getSingleResult();
+            return user;
+        }catch(NoResultException e){
+            return null;
+        }
+    }
+    
+    public List getAcceso(int id){
+        try{
+            List<String> listaPermisos = new ArrayList<String>();;
+            EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
+            EntityManager entitymanager = emfactory.createEntityManager();
+
+            Query query = entitymanager.createNamedQuery("Empleado.findAcceso");
+            query.setParameter("idEmpleado",id);
+            listaPermisos=query.getResultList();
+            return listaPermisos;
+        }catch(NoResultException e){
+            return null;
+        }
+    }
+    
+    public List getNombre(int id){
+        try{
+            List<String> listaPermisos = new ArrayList<String>();;
+            EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
+            EntityManager entitymanager = emfactory.createEntityManager();
+
+            Query query = entitymanager.createNamedQuery("Empleado.findNombre");
+            query.setParameter("idEmpleado",id);
+            listaPermisos=query.getResultList();
+            return listaPermisos;
+        }catch(NoResultException e){
+            return null;
         }
     }
     

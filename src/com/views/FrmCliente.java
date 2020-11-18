@@ -45,6 +45,13 @@ public class FrmCliente extends javax.swing.JInternalFrame {
         botones();
     }
     
+    public FrmCliente(String nombre, String acceso, int id) {
+        initComponents();
+        mostrar();
+        habilitar(false);
+        botones();
+    }
+    
     public void llenarFormulario(){
         int fila = this.tblCliente.getSelectedRow();
         
@@ -141,7 +148,6 @@ public class FrmCliente extends javax.swing.JInternalFrame {
                 datos[8]=cliente.getDireccion();
                 tabla.addRow(datos);
             }
-            
             this.tblCliente.setModel(tabla);
             
             if(chkEliminar.isSelected()){
@@ -149,8 +155,7 @@ public class FrmCliente extends javax.swing.JInternalFrame {
             }else{
                 ocultarColumnas();
             }
-        }
-        catch(Exception e){
+        }catch(Exception e){
             JOptionPane.showMessageDialog(null,"Error al mostrar formulario : "+e);
         }
     }

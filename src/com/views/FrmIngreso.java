@@ -8,10 +8,12 @@ package com.views;
 import com.views.FrmPrincipal;
 import com.controller.ArticuloJpaController;
 import com.controller.DetalleingresoJpaController;
+import com.controller.EmpleadoJpaController;
 import com.controller.IngresoJpaController;
 import com.controller.ProveedorJpaController;
 import com.entities.Articulo;
 import com.entities.Detalleingreso;
+import com.entities.Empleado;
 import com.entities.Ingreso;
 import com.entities.Presentacion;
 import com.entities.Proveedor;
@@ -44,11 +46,16 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
     IngresoJpaController jpaIngreso = new IngresoJpaController();
     Detalleingreso detalleIngreso = new Detalleingreso();
     DetalleingresoJpaController jpaDetalleIngreso = new DetalleingresoJpaController();
+    Empleado empleado = new Empleado();
+    EmpleadoJpaController jpaEmpleado = new EmpleadoJpaController();
     
-    
+    String nombre;
+    String acceso;
+    int idEmpleado=0;
     double iva=0;
     double cesc=0;
     double dai=0;
+    
     
     private FrmVistaProveedor vistaProveedor=null;
     private FrmVistaArticulo vistaArticulo=null; 
@@ -194,7 +201,7 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
         tblAlmacen.removeColumn(tblAlmacen.getColumnModel().getColumn(7));
     }
     
-    public void llenarArticulo(){
+    public void llenarIngresoDetalle(){
         int fila = this.tblDetalleIngreso.getSelectedRow();
         DecimalFormat decimal = new DecimalFormat ("###,###,###.00");
         this.txtIdArticulo.setText(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 0)));
@@ -253,6 +260,13 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
         habilitar(false);
     }
 
+    public FrmIngreso(String nombre, String acceso, int id) {
+        initComponents();
+        mostrar();
+        crearTabla();
+        habilitar(false);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -818,7 +832,7 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void tblDetalleIngresoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDetalleIngresoMouseClicked
-        llenarArticulo();
+        llenarIngresoDetalle();
     }//GEN-LAST:event_tblDetalleIngresoMouseClicked
 
     private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
@@ -917,21 +931,61 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         try {
             String respuesta = "";
+            DecimalFormat decimal = new DecimalFormat("###,###.00");
             if(this.txtIdProveedor.getText()=="" || this.txtSerie.getText().equals("") || this.txtCorrelativo.getText().equals("")){
                 mensajeError("Falta ingresar algunos datos");
                 this.txtProveedor.setFocusable(true);
             }else{
                 if(esNuevo){
-//                    ingreso.setCorrelativo(this.txtCorrelativo.getText());
-//                    Date date = dtFecha.getDate();
-//                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
-//                    ingreso.setFecha(sdf.format(date));
-//                    proveedor.setIdProveedor(Integer.parseInt(this.txtIdProveedor.getText()));
-//                    ingreso.setIdProveedor(proveedor);
-//                    ingreso.setSerie(this.txtSerie.getText());
-//                    ingreso.setTipoComprobante(this.cmbComprobante.getSelectedItem().toString());
-//                    jpaIngreso.create(ingreso);
-//                    respuesta = "Ok";
+                    empleado.setIdEmpleado(idEmpleado);
+                    proveedor.setIdProveedor(Integer.parseInt(this.txtIdProveedor.getText().toString()));
+                    ingreso.setIdEmpleado(empleado);
+                    ingreso.setIdProveedor(proveedor);
+                    Date date = dtFecha.getDate();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
+                    ingreso.setFecha(sdf.format(date));
+                    ingreso.setTipoComprobante(this.cmbComprobante.getSelectedItem().toString());
+                    ingreso.setSerie(this.txtSerie.getText());
+                    ingreso.setCorrelativo(this.txtCorrelativo.getText());
+                    jpaIngreso.create(ingreso);
+                    for (int fila = 0; fila < tblDetalleIngreso.getRowCount(); fila++) {
+                        detalleIngreso.setIdIngreso(ingreso); //Prueba de ultimo dato ingresado
+                        articulo.setIdArticulo(Integer.parseInt(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 0)).toString()));
+                        detalleIngreso.setIdArticulo(articulo);
+                        detalleIngreso.setPrecioCompra(Double.parseDouble(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 2)).toString()));
+                        double iva=0, cesc=0;
+                        if (this.tblDetalleIngreso.getValueAt(fila, 3).equals("0")) {
+                            this.txtIva.setText("No");
+                        }else{
+                            this.txtIva.setText("Si");
+                            iva=Double.parseDouble(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 3)));
+                        }
+                        if (this.tblDetalleIngreso.getValueAt(fila, 4).equals("0")) {
+                            this.txtCesc.setText("No");
+                        }else{
+                            this.txtCesc.setText("Si");
+                            cesc=Double.parseDouble(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 4)));
+                        }
+                        if (this.tblDetalleIngreso.getValueAt(fila, 5).equals("0")) {
+                            this.txtDai.setText("0");
+                        }else{
+                            double dai=0, precioCompra=0, precioVenta=0;
+                            precioCompra=Double.parseDouble(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 2)));
+                            precioVenta=Double.parseDouble(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 6)));
+                            dai = Double.parseDouble(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 5)));
+                            //dai = (precioVenta-precioCompra*iva*cesc-(precioCompra+iva+cesc)*0.20)/1.20;
+                            dai = (precioVenta/1.2)-precioCompra-iva-cesc;
+                            this.txtDai.setText(String.valueOf(decimal.format(dai)));
+                        }
+                        detalleIngreso.setPrecioVenta(Double.parseDouble(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 2)).toString()));
+                        detalleIngreso.setStockInicial(Integer.parseInt(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 7)).toString()));
+                        detalleIngreso.setStockActual(Integer.parseInt(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 7)).toString()));
+                        date = dtFechaProduccion.getDate();
+                        ingreso.setFecha(sdf.format(date));
+                        date = dtFechaVencimiento.getDate();
+                        ingreso.setFecha(sdf.format(date));
+                        jpaDetalleIngreso.create(detalleIngreso);
+                    }
                 }
                 if(respuesta.equals("Ok")){
                     if (this.esNuevo) {
