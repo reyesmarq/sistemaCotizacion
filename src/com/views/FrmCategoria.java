@@ -8,7 +8,12 @@ package com.views;
 import com.controller.CategoriaJpaController;
 import com.entities.Categoria;
 import com.entities.Presentacion;
+import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import utilidades.Utilidades;
@@ -98,8 +103,18 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
         Object datos[]=new Object[6];
         try
         {
-            List lista;
-            lista=jpaCategoria.findCategoriaEntities();
+            List<Categoria> lista = new ArrayList<>();
+            
+            if (txtBuscar.getText().trim().isEmpty()) {
+                lista = jpaCategoria.findCategoriaEntities();
+            } else {
+                EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
+                EntityManager entitymanager = emfactory.createEntityManager();
+                Query query = entitymanager.createNamedQuery("Categoria.findByNombre");
+                query.setParameter("nombre", txtBuscar.getText());
+                lista = query.getResultList();
+            }
+            
             for(int i=0;i<lista.size();i++)
             {
                 categoria=(Categoria)lista.get(i);
@@ -160,8 +175,8 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
     }
     
     public void buscarNombre(){
-        //Buscar como hacer Querys con JPA
-        
+        // la funcion de filtrado se trabajo en la parte de mostrar
+        mostrar();
     }
     
     
