@@ -15,7 +15,7 @@ import utilidades.Utilidades;
 
 /**
  *
- * @author Ulises
+ * @author Ulises Guzman, Mauricio Reyes, Manuel Moya
  */
 public class FrmCategoria extends javax.swing.JInternalFrame {
 
