@@ -197,7 +197,7 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
         tblAlmacen.removeColumn(tblAlmacen.getColumnModel().getColumn(7));
     }
     
-    //Llenar cuando se agrega un nuevo articulo a la lista a guardar
+    //doble clic en tblDetalleIngreso para editar en apartado articulos
     public void llenarIngresoDetalle(){ 
         int fila = this.tblDetalleIngreso.getSelectedRow();
         DecimalFormat decimal = new DecimalFormat ("###.00");
