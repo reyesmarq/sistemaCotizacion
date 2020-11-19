@@ -64,9 +64,7 @@ public class FrmCliente extends javax.swing.JInternalFrame {
             Date fechas;
             fechas=sdf.parse(strFecha);
             this.dtFechaNacimiento.setDate(fechas);
-        } catch (ParseException e) {
-            //No hacer nada
-        }
+        } catch (ParseException e) {}//No hacer nada
         this.cmbTipoDocumento.setSelectedItem(String.valueOf(this.tblCliente.getValueAt(fila, 4)));
         this.txtTipoDocumento.setText(String.valueOf(this.tblCliente.getValueAt(fila, 5)));
         this.txtTelefono.setText(String.valueOf(this.tblCliente.getValueAt(fila, 6)));

@@ -972,7 +972,6 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
                         jpaDetalleIngreso.create(detalleIngreso2);
                     }
                 }
-                
                 JOptionPane.showMessageDialog(null, "Ingreso completado con exitó");
                 esNuevo=false;
                 this.botones();
