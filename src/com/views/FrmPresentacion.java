@@ -9,7 +9,12 @@ import com.controller.PresentacionJpaController;
 import com.entities.Presentacion;
 import javax.swing.JOptionPane;
 import java.awt.Dialog;
+import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -17,7 +22,7 @@ import utilidades.Utilidades;
 
 /**
  *
- * @author Ulises
+ * @author Ulises Guzman, Mauricio Reyes, Manuel Moya
  */
 public class FrmPresentacion extends javax.swing.JInternalFrame {
     
@@ -87,8 +92,18 @@ public class FrmPresentacion extends javax.swing.JInternalFrame {
         tabla=new DefaultTableModel(null,encabezados);
         Object datos[]=new Object[5];
         try{
-            List lista;
-            lista=jpaPresentacion.findPresentacionEntities();
+            List<Presentacion> lista = new ArrayList<>();
+            
+            if (txtBuscar.getText().trim().isEmpty()) {
+                lista=jpaPresentacion.findPresentacionEntities();
+            } else {
+                EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
+                EntityManager entitymanager = emfactory.createEntityManager();
+                Query query = entitymanager.createNamedQuery("Presentacion.findByNombre");
+                query.setParameter("nombre", txtBuscar.getText());
+                lista = query.getResultList();
+            }
+            
             for(int i=0;i<lista.size();i++)
             {
                 presentacion=(Presentacion)lista.get(i);
@@ -115,7 +130,8 @@ public class FrmPresentacion extends javax.swing.JInternalFrame {
     
     
     public void buscarNombre(){
-        
+        // La logica de filtrado se trabajo en mostrar()
+        mostrar();
     }
     
     public FrmPresentacion() {
