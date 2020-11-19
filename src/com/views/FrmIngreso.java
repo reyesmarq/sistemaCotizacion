@@ -142,6 +142,9 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
                 datos[1]=detalleIngreso.getIdArticulo().getNombre();
                 double precioCompra = detalleIngreso.getPrecioCompra();
                 datos[2]= decimal.format(precioCompra);
+                datos[3]=detalleIngreso.getIva();
+                datos[4]=detalleIngreso.getCesc();
+                datos[5]=detalleIngreso.getDai();
                 datos[3]=detalleIngreso.getPrecioVenta();
                 double stockInicial = detalleIngreso.getStockInicial();
                 datos[4]= stockInicial;
