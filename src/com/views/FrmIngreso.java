@@ -120,6 +120,47 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
         }
     }
     
+    public void crearTabla(){
+        String encabezados2[]={"Id","Articulo","Precio Compra","IVA","CESC","DAI","Precio Venta","Stock Inicial","Fecha Produccion","Fecha Vencimiento","Sub Total"};
+        tablaTemp = new DefaultTableModel(null, encabezados2);
+        this.tblDetalleIngreso.setModel(tablaTemp);
+    }
+    
+    //Mostrar al arrastar el id de ingreso.
+    public void mostrarDetalleIngreso(int id){
+        DefaultTableModel tabla;
+        DecimalFormat decimal = new DecimalFormat();
+        String encabezados[]={"Id","Articulo","Precio Compra","IVA","CESC","DAI","Precio Venta","Stock Inicial","Fecha Produccion","Fecha Vencimiento","Sub Total"};
+        tabla=new DefaultTableModel(null,encabezados);
+        Object datos[]=new Object[9];
+        try{
+            List<Detalleingreso> lista;
+            lista=jpaDetalleIngreso.buscarDetalleIngreso(id);
+            for(int i=0;i<lista.size();i++){
+                detalleIngreso=(Detalleingreso)lista.get(i);
+                datos[0]=detalleIngreso.getIdDetalleIngreso();
+                datos[1]=detalleIngreso.getIdArticulo().getNombre();
+                double precioCompra = detalleIngreso.getPrecioCompra();
+                datos[2]= decimal.format(precioCompra);
+                datos[3]=detalleIngreso.getPrecioVenta();
+                double stockInicial = detalleIngreso.getStockInicial();
+                datos[4]= stockInicial;
+                datos[5]=detalleIngreso.getFechaProduccion();
+                datos[6]=detalleIngreso.getFechaVencimiento();
+                datos[7]= precioCompra*stockInicial;
+                datos[8]=detalleIngreso.getStockActual();
+                tabla.addRow(datos);
+            }
+            this.tblDetalleIngreso.setModel(tabla);
+            
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null,"Error al mostrar formulario: "+e);
+        }
+    }
+    
+    //Mostrar lista de ingresos a almacen
     public void mostrar(){
         DefaultTableModel tabla;
         Utilidades utilidades = new Utilidades();
@@ -156,64 +197,30 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
         tblAlmacen.removeColumn(tblAlmacen.getColumnModel().getColumn(7));
     }
     
-    public void crearTabla(){
-        String encabezados2[]={"Id","Articulo","Precio Compra","IVA","CESC","DAI","Precio Venta","Stock Inicial","Fecha Produccion","Fecha Vencimiento","Sub Total"};
-        tablaTemp = new DefaultTableModel(null, encabezados2);
-        this.tblDetalleIngreso.setModel(tablaTemp);
-    }
-    
-    public void mostrarDetalleIngreso(){
-        DefaultTableModel tabla;
-        Utilidades utilidades = new Utilidades();
-        String encabezados[]={"Id","Articulo","Precio Compra","Precio Venta","Stock Inicial","Fecha Produccion","Fecha Vencimiento","Sub Total","Stock actual"};
-        tabla=new DefaultTableModel(null,encabezados);
-        Object datos[]=new Object[9];
-        try{
-            List lista;
-            lista=jpaIngreso.findIngresoEntities();
-            for(int i=0;i<lista.size();i++){
-                detalleIngreso=(Detalleingreso)lista.get(i);
-                datos[0]=detalleIngreso.getIdDetalleIngreso();
-                datos[1]=detalleIngreso.getIdArticulo().getNombre();
-                double precioCompra = detalleIngreso.getPrecioCompra();
-                datos[2]= precioCompra;
-                datos[3]=detalleIngreso.getPrecioVenta();
-                double stockInicial = detalleIngreso.getStockInicial();
-                datos[4]= stockInicial;
-                datos[5]=detalleIngreso.getFechaProduccion();
-                datos[6]=detalleIngreso.getFechaVencimiento();
-                datos[7]= precioCompra*stockInicial;
-                datos[8]=detalleIngreso.getStockActual();
-                tabla.addRow(datos);
-            }
-            this.tblDetalleIngreso.setModel(tabla);
-            
-        }
-        catch(Exception e)
-        {
-            JOptionPane.showMessageDialog(null,"Error al mostrar formulario: "+e);
-        }
-    }
-    
-    public void llenarIngresoDetalle(){
+    //Llenar cuando se agrega un nuevo articulo a la lista a guardar
+    public void llenarIngresoDetalle(){ 
         int fila = this.tblDetalleIngreso.getSelectedRow();
-        DecimalFormat decimal = new DecimalFormat ("###,###,###.00");
+        DecimalFormat decimal = new DecimalFormat ("###.00");
+        DecimalFormat decimal2 = new DecimalFormat ("###.0");
         this.txtIdArticulo.setText(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 0)));
         this.txtArticulo.setText(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 1)));
         this.txtPrecioCompra.setText(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 2)));
         double iva=0, cesc=0;
+        
         if (this.tblDetalleIngreso.getValueAt(fila, 3).equals("0")) {
             this.txtIva.setText("No");
         }else{
             this.txtIva.setText("Si");
             iva=Double.parseDouble(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 3)));
         }
+        
         if (this.tblDetalleIngreso.getValueAt(fila, 4).equals("0")) {
             this.txtCesc.setText("No");
         }else{
             this.txtCesc.setText("Si");
             cesc=Double.parseDouble(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 4)));
         }
+        
         if (this.tblDetalleIngreso.getValueAt(fila, 5).equals("0")) {
             this.txtDai.setText("0");
         }else{
@@ -223,7 +230,8 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
             dai = Double.parseDouble(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 5)));
             //dai = (precioVenta-precioCompra*iva*cesc-(precioCompra+iva+cesc)*0.20)/1.20;
             dai = (precioVenta/1.2)-precioCompra-iva-cesc;
-            this.txtDai.setText(String.valueOf(decimal.format(dai)));
+            dai = (dai/precioCompra)/0.01;
+            this.txtDai.setText(String.valueOf(decimal2.format(dai)));
         }
         this.txtPrecioVenta.setText(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 6)));
         this.txtStockInicial.setText(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 7)));
@@ -791,23 +799,22 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnBuscarArticuloActionPerformed
 
     private void tblAlmacenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAlmacenMouseClicked
+        limpiarDetalle();
         int fila = this.tblAlmacen.getSelectedRow();
         this.txtIdIngreso.setText(String.valueOf(this.tblAlmacen.getValueAt(fila, 0)));
         this.txtIdProveedor.setText(String.valueOf(this.tblAlmacen.getValueAt(fila, 1)));
         this.txtProveedor.setText(String.valueOf(this.tblAlmacen.getValueAt(fila, 2)));
-        try {
+        try{
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             String strFecha = this.tblAlmacen.getValueAt(fila, 3).toString();
             Date fechas;
             fechas=sdf.parse(strFecha);
             this.dtFecha.setDate(fechas);
-        } catch (ParseException e) {
-            
-        }
+        }catch(ParseException e){}
         this.cmbComprobante.setSelectedItem(String.valueOf(this.tblAlmacen.getValueAt(fila, 4)));
         this.txtSerie.setText(String.valueOf(this.tblAlmacen.getValueAt(fila, 5)));
         this.txtCorrelativo.setText(String.valueOf(this.tblAlmacen.getValueAt(fila, 6)));
-        mostrarDetalleIngreso();
+        mostrarDetalleIngreso(Integer.parseInt(this.txtIdIngreso.getText()));
     }//GEN-LAST:event_tblAlmacenMouseClicked
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
@@ -847,8 +854,8 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         try {
-            DecimalFormat decimal = new DecimalFormat ("###,###,###.00");
-            DecimalFormat entero = new DecimalFormat ("###,###,###");
+            DecimalFormat decimal = new DecimalFormat ("##.00");
+            DecimalFormat entero = new DecimalFormat ("##");
             if (this.txtIdArticulo.getText().equals("") || this.txtArticulo.getText().equals("") || this.txtPrecioCompra.getText().equals("") ||
                  dtFechaProduccion.getDate().equals("") || dtFechaVencimiento.getDate().equals("")) {
                 JOptionPane.showMessageDialog(null, "Error, datos de articulo incompleto");
@@ -890,7 +897,7 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
                         }else{
                             datos[5]=0;
                         }
-                        double precioVenta=(precioCompra + iva + cesc + dai)+(precioCompra + iva + cesc + dai)*0.20;
+                        double precioVenta=(precioCompra + iva + cesc + dai)*1.20;
                         datos[6]=decimal.format(precioVenta);
                         double stockInicial = Double.parseDouble(this.txtStockInicial.getText());
                         datos[7]= entero.format(stockInicial);
@@ -928,72 +935,45 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
         try {
             String respuesta = "";
             DecimalFormat decimal = new DecimalFormat("###,###.00");
-            if(this.txtIdProveedor.getText()=="" || this.txtSerie.getText().equals("") || this.txtCorrelativo.getText().equals("")){
+            if(this.txtIdProveedor.getText().equals("") || this.txtSerie.getText().equals("") || this.txtCorrelativo.getText().equals("")){
                 mensajeError("Falta ingresar algunos datos");
                 this.txtProveedor.setFocusable(true);
             }else{
                 if(esNuevo){
+                    Ingreso ingreso2 = new Ingreso();
                     empleado.setIdEmpleado(idEmpleado);
-                    JOptionPane.showMessageDialog(null, idEmpleado+ " " + empleado.getIdEmpleado());
                     proveedor.setIdProveedor(Integer.parseInt(this.txtIdProveedor.getText().toString()));
-                    JOptionPane.showMessageDialog(null, proveedor.getIdProveedor());
-                    ingreso.setIdEmpleado(empleado);
-                    ingreso.setIdProveedor(proveedor);
+                    ingreso2.setIdEmpleado(empleado);
+                    ingreso2.setIdProveedor(proveedor);
                     Date date = dtFecha.getDate();
                     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
-                    ingreso.setFecha(sdf.format(date));
-                    ingreso.setTipoComprobante(this.cmbComprobante.getSelectedItem().toString());
-                    ingreso.setSerie(this.txtSerie.getText());
-                    ingreso.setCorrelativo(this.txtCorrelativo.getText());
-                    jpaIngreso.create(ingreso);
+                    ingreso2.setFecha(sdf.format(date));
+                    ingreso2.setTipoComprobante(this.cmbComprobante.getSelectedItem().toString());
+                    ingreso2.setSerie(this.txtSerie.getText());
+                    ingreso2.setCorrelativo(this.txtCorrelativo.getText());
+                    jpaIngreso.create(ingreso2);
                     for (int fila = 0; fila < tblDetalleIngreso.getRowCount(); fila++) {
-                        detalleIngreso.setIdIngreso(ingreso); //Prueba de ultimo dato ingresado
-                        articulo.setIdArticulo(Integer.parseInt(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 0)).toString()));
-                        detalleIngreso.setIdArticulo(articulo);
-                        detalleIngreso.setPrecioCompra(Double.parseDouble(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 2)).toString()));
-                        double iva=0, cesc=0;
-                        if (this.tblDetalleIngreso.getValueAt(fila, 3).equals("0")) {
-                            this.txtIva.setText("No");
-                        }else{
-                            this.txtIva.setText("Si");
-                            iva=Double.parseDouble(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 3)));
-                        }
-                        if (this.tblDetalleIngreso.getValueAt(fila, 4).equals("0")) {
-                            this.txtCesc.setText("No");
-                        }else{
-                            this.txtCesc.setText("Si");
-                            cesc=Double.parseDouble(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 4)));
-                        }
-                        if (this.tblDetalleIngreso.getValueAt(fila, 5).equals("0")) {
-                            this.txtDai.setText("0");
-                        }else{
-                            double dai=0, precioCompra=0, precioVenta=0;
-                            precioCompra=Double.parseDouble(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 2)));
-                            precioVenta=Double.parseDouble(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 6)));
-                            dai = Double.parseDouble(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 5)));
-                            //dai = (precioVenta-precioCompra*iva*cesc-(precioCompra+iva+cesc)*0.20)/1.20;
-                            dai = (precioVenta/1.2)-precioCompra-iva-cesc;
-                            this.txtDai.setText(String.valueOf(decimal.format(dai)));
-                        }
-                        detalleIngreso.setPrecioVenta(Double.parseDouble(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 2)).toString()));
-                        detalleIngreso.setStockInicial(Integer.parseInt(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 7)).toString()));
-                        detalleIngreso.setStockActual(Integer.parseInt(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 7)).toString()));
-                        date = dtFechaProduccion.getDate();
-                        ingreso.setFecha(sdf.format(date));
-                        date = dtFechaVencimiento.getDate();
-                        ingreso.setFecha(sdf.format(date));
-                        jpaDetalleIngreso.create(detalleIngreso);
+                        Detalleingreso detalleIngreso2 = new Detalleingreso();
+                        detalleIngreso2.setIdIngreso(ingreso2); //Prueba de ultimo dato ingresado
+                         articulo.setIdArticulo(Integer.parseInt(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 0)).toString()));
+                        detalleIngreso2.setIdArticulo(articulo);
+                        detalleIngreso2.setPrecioCompra(Double.parseDouble(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 2)).toString()));
+                         double iva=0, cesc=0;
+                        detalleIngreso2.setIva(Double.parseDouble(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 3))));
+                        detalleIngreso2.setCesc(Double.parseDouble(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 4))));
+                        detalleIngreso2.setDai(Double.parseDouble(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 5))));
+                        detalleIngreso2.setPrecioVenta(Double.parseDouble(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 6))));
+                        detalleIngreso2.setStockInicial(Integer.parseInt(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 7))));
+                        detalleIngreso2.setStockActual(Integer.parseInt(String.valueOf(this.tblDetalleIngreso.getValueAt(fila, 7))));
+                         date = dtFechaProduccion.getDate();
+                        detalleIngreso2.setFechaProduccion(sdf.format(date));
+                         date = dtFechaVencimiento.getDate();
+                        detalleIngreso2.setFechaVencimiento(sdf.format(date));
+                        jpaDetalleIngreso.create(detalleIngreso2);
                     }
                 }
-                if(respuesta.equals("Ok")){
-                    if (this.esNuevo) {
-                        this.mensajeOk("Se inserto de forma correcta el registro");
-                    }else{
-                        this.mensajeOk("Se edito de forma correcta el registro");
-                    }
-                }else{
-                    this.mensajeError(respuesta);
-                }
+                
+                JOptionPane.showMessageDialog(null, "Ingreso completado con exitó");
                 esNuevo=false;
                 this.botones();
                 this.limpiar();

@@ -45,7 +45,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Detalleingreso.findByEstado", query = "SELECT d FROM Detalleingreso d WHERE d.estado = :estado")
     , @NamedQuery(name = "Detalleingreso.findByDai", query = "SELECT d FROM Detalleingreso d WHERE d.dai = :dai")
     , @NamedQuery(name = "Detalleingreso.findByCesc", query = "SELECT d FROM Detalleingreso d WHERE d.cesc = :cesc")
-    , @NamedQuery(name = "Detalleingreso.findByIva", query = "SELECT d FROM Detalleingreso d WHERE d.iva = :iva")})
+    , @NamedQuery(name = "Detalleingreso.findByIva", query = "SELECT d FROM Detalleingreso d WHERE d.iva = :iva")
+    , @NamedQuery(name = "Detalleingreso.findByIdIngreso", query = "SELECT d FROM Ingreso i JOIN i.detalleingresoList d WHERE i.idIngreso = :idIngreso")
+})
 public class Detalleingreso implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -40,7 +40,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Ingreso.findByTipoComprobante", query = "SELECT i FROM Ingreso i WHERE i.tipoComprobante = :tipoComprobante")
     , @NamedQuery(name = "Ingreso.findBySerie", query = "SELECT i FROM Ingreso i WHERE i.serie = :serie")
     , @NamedQuery(name = "Ingreso.findByCorrelativo", query = "SELECT i FROM Ingreso i WHERE i.correlativo = :correlativo")
-    , @NamedQuery(name = "Ingreso.findByEstado", query = "SELECT i FROM Ingreso i WHERE i.estado = :estado")})
+    , @NamedQuery(name = "Ingreso.findByEstado", query = "SELECT i FROM Ingreso i WHERE i.estado = :estado")
+    , @NamedQuery(name = "Ingreso.findDetalle", query = "SELECT i FROM Ingreso i WHERE i.estado = :estado")
+})
 public class Ingreso implements Serializable {
 
     private static final long serialVersionUID = 1L;

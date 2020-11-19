@@ -255,4 +255,15 @@ public class DetalleingresoJpaController implements Serializable {
         }
     }
     
+    
+    //funcion filtrada
+    public List<Detalleingreso> buscarDetalleIngreso(int idIngreso){
+          EntityManagerFactory emfact = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
+          EntityManager em = emfact.createEntityManager();
+          Query query = em.createNamedQuery("Detalleingreso.findByIdIngreso");
+          query.setParameter("idIngreso",idIngreso);
+          List<Detalleingreso> result=query.getResultList();
+          em.close();
+          return result;
+    }
 }
