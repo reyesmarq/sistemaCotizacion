@@ -124,6 +124,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         reportesPresentaciones = new javax.swing.JMenuItem();
         reportesClientes = new javax.swing.JMenuItem();
         reporteProveedores = new javax.swing.JMenuItem();
+        mnuArticulos = new javax.swing.JMenuItem();
+        mnuProveedores = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(0, 0));
@@ -283,6 +285,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         reporteProveedores.setText("Proveedores");
         mnuConsultas.add(reporteProveedores);
+
+        mnuArticulos.setText("Articulos");
+        mnuConsultas.add(mnuArticulos);
+
+        mnuProveedores.setText("Proveedores");
+        mnuConsultas.add(mnuProveedores);
 
         menuBar.add(mnuConsultas);
 
@@ -486,10 +494,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu mnuAlmacen;
+    private javax.swing.JMenuItem mnuArticulos;
     private javax.swing.JMenu mnuCompras;
     private javax.swing.JMenu mnuConsultas;
     private javax.swing.JMenu mnuCotizaciones;
     private javax.swing.JMenu mnuMantenimiento;
+    private javax.swing.JMenuItem mnuProveedores;
     private javax.swing.JMenu mnuVentas;
     private javax.swing.JMenuItem preevodoresMenuItem;
     private javax.swing.JMenuItem presentacionMenuItem;
