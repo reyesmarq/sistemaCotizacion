@@ -21,10 +21,14 @@ import utilidades.ComboItem;
 import utilidades.Utilidades;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 /**
  *
- * @author Ulises
+ * @author Ulises Guzman, Mauricio Reyes, Manuel Moya
  */
 public class FrmArticulos extends javax.swing.JInternalFrame {
 
@@ -94,8 +98,17 @@ public class FrmArticulos extends javax.swing.JInternalFrame {
         tabla=new DefaultTableModel(null,encabezados);
         Object datos[]=new Object[9];
         try{
-            List lista;
-            lista=jpaArticulo.findArticuloEntities();
+            List<Articulo> lista = new ArrayList<>();
+            
+            if (txtBuscar.getText().trim().isEmpty()) {
+                lista=jpaArticulo.findArticuloEntities();
+            } else {
+                EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
+                EntityManager entitymanager = emfactory.createEntityManager();
+                Query query = entitymanager.createNamedQuery("Articulo.findByNombre");
+                query.setParameter("nombre", txtBuscar.getText());
+                lista = query.getResultList();
+            }
             
             for(int i=0;i<lista.size();i++){
                 articulo=(Articulo)lista.get(i);
@@ -171,7 +184,8 @@ public class FrmArticulos extends javax.swing.JInternalFrame {
     }
     
     public void buscarNombre(){
-        
+        // La logica de filtrado se trabajo en mostrar()
+        mostrar();
     }
     
     
