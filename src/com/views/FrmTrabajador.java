@@ -591,7 +591,10 @@ public class FrmTrabajador extends javax.swing.JInternalFrame {
                     empleado.setDireccion(this.txtDireccion.getText());
                     empleado.setUser(this.txtUsuario.getText());
                     empleado.setAcceso(this.cmbAcceso.getSelectedItem().toString());
-                    empleado.setPassword(this.txtContra.getText());
+                    String cryptPass;
+                    pass=this.txtContra.getText();
+                    cryptPass=encry.encrypt(pass);
+                    empleado.setPassword(cryptPass);
                     jpaEmpleado.create(empleado);
                     respuesta = "Ok";
                 }else{
@@ -607,7 +610,10 @@ public class FrmTrabajador extends javax.swing.JInternalFrame {
                     empleado.setDireccion(this.txtDireccion.getText());
                     empleado.setUser(this.txtUsuario.getText());
                     empleado.setAcceso(this.cmbAcceso.getSelectedItem().toString());
-                    empleado.setPassword(this.txtContra.getText());
+                    String cryptPass;
+                    pass=this.txtContra.getText();
+                    cryptPass=encry.encrypt(pass);
+                    empleado.setPassword(cryptPass);
                     jpaEmpleado.edit(empleado);
                     respuesta = "Ok";
                 }

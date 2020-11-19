@@ -129,10 +129,10 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
     //Mostrar al arrastar el id de ingreso.
     public void mostrarDetalleIngreso(int id){
         DefaultTableModel tabla;
-        DecimalFormat decimal = new DecimalFormat();
+        DecimalFormat decimal = new DecimalFormat("###.00");
         String encabezados[]={"Id","Articulo","Precio Compra","IVA","CESC","DAI","Precio Venta","Stock Inicial","Fecha Produccion","Fecha Vencimiento","Sub Total"};
         tabla=new DefaultTableModel(null,encabezados);
-        Object datos[]=new Object[9];
+        Object datos[]=new Object[11];
         try{
             List<Detalleingreso> lista;
             lista=jpaDetalleIngreso.buscarDetalleIngreso(id);
@@ -141,21 +141,23 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
                 datos[0]=detalleIngreso.getIdDetalleIngreso();
                 datos[1]=detalleIngreso.getIdArticulo().getNombre();
                 double precioCompra = detalleIngreso.getPrecioCompra();
-                datos[2]= decimal.format(precioCompra);
+                precioCompra = Double.parseDouble(decimal.format(precioCompra));
+                datos[2]=precioCompra;
                 datos[3]=detalleIngreso.getIva();
                 datos[4]=detalleIngreso.getCesc();
                 datos[5]=detalleIngreso.getDai();
-                datos[3]=detalleIngreso.getPrecioVenta();
+                datos[6]=detalleIngreso.getPrecioVenta();
                 double stockInicial = detalleIngreso.getStockInicial();
-                datos[4]= stockInicial;
-                datos[5]=detalleIngreso.getFechaProduccion();
-                datos[6]=detalleIngreso.getFechaVencimiento();
-                datos[7]= precioCompra*stockInicial;
-                datos[8]=detalleIngreso.getStockActual();
+                datos[7]= stockInicial;
+                datos[8]=detalleIngreso.getFechaProduccion();
+                datos[9]=detalleIngreso.getFechaVencimiento();
+                datos[10]= precioCompra*stockInicial;
                 tabla.addRow(datos);
             }
             this.tblDetalleIngreso.setModel(tabla);
-            
+            if(!chkEliminar.isSelected()){
+                jTabbedPane4.setSelectedIndex(1);
+            }
         }
         catch(Exception e)
         {
