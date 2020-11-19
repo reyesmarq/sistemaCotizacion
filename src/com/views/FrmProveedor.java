@@ -9,15 +9,20 @@ import com.controller.ProveedorJpaController;
 import com.entities.Proveedor;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import utilidades.Utilidades;
 
 /**
  *
- * @author Ulises
+ * @author Ulises Guzman, Mauricio Reyes, Manuel Moya
  */
 public class FrmProveedor extends javax.swing.JInternalFrame {
 
@@ -95,7 +100,8 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
     }
     
     public void buscarNombre(){
-        
+        // La logica de filtrado se trabajo en mostrar()
+        mostrar();
     }
     
     public void llenarFormulario(){
@@ -120,8 +126,23 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
         tabla=new DefaultTableModel(null,encabezados);
         Object datos[]=new Object[8];
         try{
-            List lista;
-            lista=jpaProveedor.findProveedorEntities();
+            List<Proveedor> lista = new ArrayList<>();
+            EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
+            EntityManager entitymanager = emfactory.createEntityManager();
+            
+            if (txtBuscar.getText().trim().isEmpty()) {
+                lista=jpaProveedor.findProveedorEntities();
+                System.out.println(cmbBusqueda.getSelectedItem());
+            } else if (!txtBuscar.getText().trim().isEmpty() && cmbBusqueda.getSelectedItem() == "Documento") {
+                Query query = entitymanager.createNamedQuery("Proveedor.findByNumeroDocumento");
+                query.setParameter("numeroDocumento", txtBuscar.getText());
+                lista = query.getResultList();
+            } else if (!txtBuscar.getText().trim().isEmpty() && cmbBusqueda.getSelectedItem() == "Razon social") {
+                Query query = entitymanager.createNamedQuery("Proveedor.findByRazonSocial");
+                query.setParameter("razonSocial", txtBuscar.getText());
+                lista = query.getResultList();
+            }
+            
             for(int i=0;i<lista.size();i++){
                 proveedor=(Proveedor)lista.get(i);
                 datos[0]=proveedor.getIdProveedor();
