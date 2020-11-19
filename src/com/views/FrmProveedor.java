@@ -185,7 +185,6 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
         txtBuscar = new javax.swing.JTextPane();
         btnBuscar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        btnImprimir = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblProveedor = new javax.swing.JTable();
         chkEliminar = new javax.swing.JCheckBox();
@@ -237,8 +236,6 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
             }
         });
 
-        btnImprimir.setText("Imprimir");
-
         tblProveedor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -285,8 +282,7 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
                                 .addComponent(btnBuscar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnEliminar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnImprimir))))
+                                .addGap(90, 90, 90))))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 735, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 18, Short.MAX_VALUE))
         );
@@ -298,8 +294,7 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnBuscar)
-                            .addComponent(btnEliminar)
-                            .addComponent(btnImprimir))
+                            .addComponent(btnEliminar))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(cmbBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -599,7 +594,6 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnImprimir;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JCheckBox chkEliminar;
     private javax.swing.JComboBox<String> cmbBusqueda;
