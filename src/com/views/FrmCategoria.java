@@ -110,8 +110,8 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
             } else {
                 EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
                 EntityManager entitymanager = emfactory.createEntityManager();
-                Query query = entitymanager.createNamedQuery("Categoria.findByNombre");
-                query.setParameter("nombre", txtBuscar.getText());
+                Query query = entitymanager.createQuery("SELECT c FROM Categoria c WHERE c.nombre LIKE :nombre");
+                query.setParameter("nombre", txtBuscar.getText() + "%");
                 lista = query.getResultList();
             }
             
