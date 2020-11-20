@@ -99,8 +99,8 @@ public class FrmPresentacion extends javax.swing.JInternalFrame {
             } else {
                 EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
                 EntityManager entitymanager = emfactory.createEntityManager();
-                Query query = entitymanager.createNamedQuery("Presentacion.findByNombre");
-                query.setParameter("nombre", txtBuscar.getText());
+                Query query = entitymanager.createQuery("SELECT p FROM Presentacion p WHERE p.nombre LIKE :nombre");
+                query.setParameter("nombre", txtBuscar.getText() + "%");
                 lista = query.getResultList();
             }
             
