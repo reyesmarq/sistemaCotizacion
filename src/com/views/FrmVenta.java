@@ -127,7 +127,7 @@ public class FrmVenta extends javax.swing.JInternalFrame {
     public void mostrar(){
         DefaultTableModel tabla;
         Utilidades utilidades = new Utilidades();
-        String encabezados[]={"Id cotizacion","Id Cliente","Cliente","Idempleado","Empleado","Fecha","Tipo comprobante","Serie","Correlativo","Eliminar"};
+        String encabezados[]={"Id cotizacion","Id Cliente","Cliente","Id empleado","Empleado","Fecha","Tipo comprobante","Serie","Correlativo","Eliminar"};
         tabla=new DefaultTableModel(null,encabezados);
         Object datos[]=new Object[9];
         try{
@@ -197,6 +197,7 @@ public class FrmVenta extends javax.swing.JInternalFrame {
     
     public FrmVenta(String nombre, String acceso, int id) {
         initComponents();
+        idEmpleado = id;
         mostrar();
         crearTabla();
         habilitar(false);
@@ -776,7 +777,7 @@ public class FrmVenta extends javax.swing.JInternalFrame {
                     try{
                         datos[0]=this.txtIdDetalleVentaArticulo.getText();
                         datos[1]=this.txtArticulo.getText();
-                        double cantidad = Double.parseDouble(this.txtCantidad.getText());
+                        int cantidad = Integer.parseInt(this.txtCantidad.getText());
                         datos[2]=cantidad;
                         Date dateVen = dtFechaVencimiento.getDate();
                         SimpleDateFormat sdfVen = new SimpleDateFormat("dd-MM-yyy");
@@ -802,7 +803,12 @@ public class FrmVenta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        esNuevo = true;
+        botones();
+        limpiar();
+        limpiarDetalle();
         habilitar(true);
+        txtSerie.isFocusable();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void tblDetalleVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDetalleVentaMouseClicked
@@ -862,9 +868,11 @@ public class FrmVenta extends javax.swing.JInternalFrame {
                         Detalleingreso detalleIngreso = new Detalleingreso();
                         detalleIngreso.setIdDetalleIngreso(Integer.parseInt(String.valueOf(this.tblDetalleVenta.getValueAt(fila, 0))));
                         detalleVenta2.setIdDetalleIngreso(detalleIngreso);
-//                        detalleVenta2.set();
-//                         date = dtFechaVencimiento.getDate();
-//                        detalleVenta2.setFechaVencimiento(sdf.format(date));
+                        detalleVenta2.setCantidad(Integer.parseInt(String.valueOf(this.tblDetalleVenta.getValueAt(fila, 2))));
+                        JOptionPane.showMessageDialog(null, "Ingreso cantidad");
+                        detalleVenta2.setPrecioVenta(Double.parseDouble(String.valueOf(this.tblDetalleVenta.getValueAt(fila, 7))));
+                        JOptionPane.showMessageDialog(null, "Ingreso venta");
+                        detalleVenta2.setDescuento(Double.parseDouble(String.valueOf(this.tblDetalleVenta.getValueAt(fila, 8))));
                         jpaDetalleVenta.create(detalleVenta2);
                     }
                 }
