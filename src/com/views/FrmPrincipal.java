@@ -37,7 +37,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private FrmCliente cliente = null;
     private FrmTrabajador trabajador = null;
     private FrmIngreso ingresos = null;
-    private FrmCotizacion cotizacion = null;
     private ComunicacionAcceso datos = new ComunicacionAcceso();
     Empleado temp = new Empleado();
     int idTrabajador=0;
@@ -51,21 +50,18 @@ public class FrmPrincipal extends javax.swing.JFrame {
             this.mnuAlmacen.setVisible(true);
             this.mnuCompras.setVisible(true);
             this.mnuVentas.setVisible(true);
-            this.mnuCotizaciones.setVisible(true);
             this.mnuConsultas.setVisible(true);
             this.mnuMantenimiento.setVisible(true);
         }else if(acceso.equals("Vendedor")){
             this.mnuAlmacen.setVisible(false);
             this.mnuCompras.setVisible(false);
             this.mnuVentas.setVisible(true);
-            this.mnuCotizaciones.setVisible(true);
             this.mnuConsultas.setVisible(false);
             this.mnuMantenimiento.setVisible(false);
         }else if(acceso.equals("Bodeguero")){
             this.mnuAlmacen.setVisible(true);
             this.mnuCompras.setVisible(true);
             this.mnuVentas.setVisible(false);
-            this.mnuCotizaciones.setVisible(false);
             this.mnuConsultas.setVisible(false);
             this.mnuMantenimiento.setVisible(false);
         }
@@ -115,17 +111,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
         mnuVentas = new javax.swing.JMenu();
         ventasMenuItem = new javax.swing.JMenuItem();
         clientesMenuItem = new javax.swing.JMenuItem();
-        mnuCotizaciones = new javax.swing.JMenu();
         mnuMantenimiento = new javax.swing.JMenu();
         empleado = new javax.swing.JMenuItem();
         mnuConsultas = new javax.swing.JMenu();
-        reporteArticulos = new javax.swing.JMenuItem();
-        reportesCategorias = new javax.swing.JMenuItem();
-        reportesPresentaciones = new javax.swing.JMenuItem();
         reportesClientes = new javax.swing.JMenuItem();
-        reporteProveedores = new javax.swing.JMenuItem();
-        mnuArticulos = new javax.swing.JMenuItem();
-        mnuProveedores = new javax.swing.JMenuItem();
+        reportesProveedores = new javax.swing.JMenuItem();
+        reportesArticulos = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(0, 0));
@@ -244,14 +235,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         menuBar.add(mnuVentas);
 
-        mnuCotizaciones.setText("Cotizaciones");
-        mnuCotizaciones.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuCotizacionesActionPerformed(evt);
-            }
-        });
-        menuBar.add(mnuCotizaciones);
-
         mnuMantenimiento.setText("Mantenimiento");
 
         empleado.setText("Empleados");
@@ -266,31 +249,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         mnuConsultas.setText("Consultas");
 
-        reporteArticulos.setText("Stock articulos");
-        reporteArticulos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reporteArticulosActionPerformed(evt);
-            }
-        });
-        mnuConsultas.add(reporteArticulos);
-
-        reportesCategorias.setText("Categorias");
-        mnuConsultas.add(reportesCategorias);
-
-        reportesPresentaciones.setText("Presentaciones");
-        mnuConsultas.add(reportesPresentaciones);
-
         reportesClientes.setText("Clientes");
         mnuConsultas.add(reportesClientes);
 
-        reporteProveedores.setText("Proveedores");
-        mnuConsultas.add(reporteProveedores);
+        reportesProveedores.setText("Proveedores");
+        mnuConsultas.add(reportesProveedores);
 
-        mnuArticulos.setText("Articulos");
-        mnuConsultas.add(mnuArticulos);
-
-        mnuProveedores.setText("Proveedores");
-        mnuConsultas.add(mnuProveedores);
+        reportesArticulos.setText("Articulos");
+        mnuConsultas.add(reportesArticulos);
 
         menuBar.add(mnuConsultas);
 
@@ -406,22 +372,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_clientesMenuItemActionPerformed
 
-    private void mnuCotizacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCotizacionesActionPerformed
-        try {
-            if(cotizacion==null || cotizacion.isClosed()){
-                cotizacion=new FrmCotizacion(nombre, acceso, idTrabajador);
-                this.jDesktopPane1.add(cotizacion);
-            }
-            cotizacion.setVisible(true);
-        } catch (Exception ex) {
-            Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_mnuCotizacionesActionPerformed
-
-    private void reporteArticulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reporteArticulosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_reporteArticulosActionPerformed
-
     private void salirMenuItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salirMenuItemMouseClicked
         System.exit(0);
     }//GEN-LAST:event_salirMenuItemMouseClicked
@@ -494,20 +444,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu mnuAlmacen;
-    private javax.swing.JMenuItem mnuArticulos;
     private javax.swing.JMenu mnuCompras;
     private javax.swing.JMenu mnuConsultas;
-    private javax.swing.JMenu mnuCotizaciones;
     private javax.swing.JMenu mnuMantenimiento;
-    private javax.swing.JMenuItem mnuProveedores;
     private javax.swing.JMenu mnuVentas;
     private javax.swing.JMenuItem preevodoresMenuItem;
     private javax.swing.JMenuItem presentacionMenuItem;
-    private javax.swing.JMenuItem reporteArticulos;
-    private javax.swing.JMenuItem reporteProveedores;
-    private javax.swing.JMenuItem reportesCategorias;
+    private javax.swing.JMenuItem reportesArticulos;
     private javax.swing.JMenuItem reportesClientes;
-    private javax.swing.JMenuItem reportesPresentaciones;
+    private javax.swing.JMenuItem reportesProveedores;
     private javax.swing.JMenuItem salirMenuItem;
     private javax.swing.JMenu sistemaMenu;
     private javax.swing.JMenuItem ventasMenuItem;

@@ -10,6 +10,7 @@ import com.controller.DetalleventaJpaController;
 import com.controller.EmpleadoJpaController;
 import com.controller.VentaJpaController;
 import com.entities.Cliente;
+import com.entities.Detalleingreso;
 import com.entities.Detalleventa;
 import com.entities.Empleado;
 import com.entities.Ingreso;
@@ -367,6 +368,11 @@ public class FrmVenta extends javax.swing.JInternalFrame {
         });
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -383,6 +389,12 @@ public class FrmVenta extends javax.swing.JInternalFrame {
         btnBuscarArticulo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarArticuloActionPerformed(evt);
+            }
+        });
+
+        txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantidadKeyTyped(evt);
             }
         });
 
@@ -417,6 +429,11 @@ public class FrmVenta extends javax.swing.JInternalFrame {
         txtStockInicialVenta.setEnabled(false);
 
         txtDescuento.setText("0");
+        txtDescuento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDescuentoKeyTyped(evt);
+            }
+        });
 
         txtCesc.setEnabled(false);
 
@@ -803,6 +820,64 @@ public class FrmVenta extends javax.swing.JInternalFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
+       Character s = evt.getKeyChar();
+       if(!Character.isDigit(s) && s !='.' ){
+           
+           evt.consume();
+       }
+    }//GEN-LAST:event_txtCantidadKeyTyped
+
+    private void txtDescuentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescuentoKeyTyped
+       Character s = evt.getKeyChar();
+       if(!Character.isDigit(s) && s !='.' ){
+           evt.consume();
+       }
+    }//GEN-LAST:event_txtDescuentoKeyTyped
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        try {
+            String respuesta = "";
+            DecimalFormat decimal = new DecimalFormat("###,###.00");
+            if(this.txtIdCliente.getText().equals("") || this.txtSerie.getText().equals("") || this.txtCorrelativo.getText().equals("")){
+                mensajeError("Falta ingresar algunos datos");
+            }else{
+                if(esNuevo){
+                    Venta venta2 = new Venta();
+                    empleado.setIdEmpleado(idEmpleado);
+                    cliente.setIdCliente(Integer.parseInt(this.txtIdCliente.getText().toString()));
+                    venta2.setIdEmpleado(empleado);
+                    venta2.setIdCliente(cliente);
+                    Date date = dtFecha.getDate();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy");
+                    venta2.setFecha(sdf.format(date));
+                    venta2.setTipoComprobante(this.cmbComprobante.getSelectedItem().toString());
+                    venta2.setSerie(this.txtSerie.getText());
+                    venta2.setCorrelativo(this.txtCorrelativo.getText());
+                    jpaVenta.create(venta2);
+                    for (int fila = 0; fila < tblDetalleVenta.getRowCount(); fila++) {
+                        Detalleventa detalleVenta2 = new Detalleventa();
+                        detalleVenta2.setIdVenta(venta2); //Prueba de ultimo dato ingresado
+                        Detalleingreso detalleIngreso = new Detalleingreso();
+                        detalleIngreso.setIdDetalleIngreso(Integer.parseInt(String.valueOf(this.tblDetalleVenta.getValueAt(fila, 0))));
+                        detalleVenta2.setIdDetalleIngreso(detalleIngreso);
+//                        detalleVenta2.set();
+//                         date = dtFechaVencimiento.getDate();
+//                        detalleVenta2.setFechaVencimiento(sdf.format(date));
+                        jpaDetalleVenta.create(detalleVenta2);
+                    }
+                }
+                JOptionPane.showMessageDialog(null, "Ingreso completado con exitó");
+                esNuevo=false;
+                this.botones();
+                this.limpiar();
+                this.mostrar();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Mensaje de error: "+e);
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

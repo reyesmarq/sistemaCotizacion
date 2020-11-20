@@ -7,6 +7,7 @@ package com.views;
 
 import com.controller.EmpleadoJpaController;
 import com.entities.Empleado;
+import java.awt.event.KeyEvent;
 import utilidades.Utilidades;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -328,6 +329,12 @@ public class FrmTrabajador extends javax.swing.JInternalFrame {
         txtIdTrabajador.setEditable(false);
         txtIdTrabajador.setEnabled(false);
 
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
+
         btnNuevo.setText("Nuevo");
         btnNuevo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -404,10 +411,10 @@ public class FrmTrabajador extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGap(94, 94, 94)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel2Layout.createSequentialGroup()
                                     .addGap(24, 24, 24)
@@ -654,6 +661,15 @@ public class FrmTrabajador extends javax.swing.JInternalFrame {
         this.limpiar();
         this.habilitar(false);
     }//GEN-LAST:event_btnCancelarMouseClicked
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        Character s = evt.getKeyChar();
+       
+       if(!Character.isLetter(s) && s !=KeyEvent.VK_SPACE){
+           
+           evt.consume();
+       }
+    }//GEN-LAST:event_txtNombreKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

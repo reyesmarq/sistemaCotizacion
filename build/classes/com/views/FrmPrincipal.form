@@ -114,14 +114,6 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="mnuCotizaciones">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Cotizaciones"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuCotizacionesActionPerformed"/>
-          </Events>
-        </Menu>
         <Menu class="javax.swing.JMenu" name="mnuMantenimiento">
           <Properties>
             <Property name="text" type="java.lang.String" value="Mantenimiento"/>
@@ -142,42 +134,19 @@
             <Property name="text" type="java.lang.String" value="Consultas"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="reporteArticulos">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Stock articulos"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="reporteArticulosActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="reportesCategorias">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Categorias"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="reportesPresentaciones">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Presentaciones"/>
-              </Properties>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="reportesClientes">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Clientes"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="reporteProveedores">
+            <MenuItem class="javax.swing.JMenuItem" name="reportesProveedores">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Proveedores"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mnuArticulos">
+            <MenuItem class="javax.swing.JMenuItem" name="reportesArticulos">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Articulos"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="mnuProveedores">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Proveedores"/>
               </Properties>
             </MenuItem>
           </SubComponents>

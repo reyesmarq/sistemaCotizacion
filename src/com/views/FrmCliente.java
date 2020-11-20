@@ -176,7 +176,6 @@ public class FrmCliente extends javax.swing.JInternalFrame {
         txtBuscar = new javax.swing.JTextPane();
         btnBuscar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        btnImprimir = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblCliente = new javax.swing.JTable();
         chkEliminar = new javax.swing.JCheckBox();
@@ -229,8 +228,6 @@ public class FrmCliente extends javax.swing.JInternalFrame {
             }
         });
 
-        btnImprimir.setText("Imprimir");
-
         tblCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -272,13 +269,11 @@ public class FrmCliente extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnBuscar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnEliminar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnImprimir))
+                                .addComponent(btnEliminar))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(chkEliminar)))
-                        .addGap(0, 184, Short.MAX_VALUE))
+                        .addGap(0, 274, Short.MAX_VALUE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
@@ -289,8 +284,7 @@ public class FrmCliente extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnBuscar)
-                        .addComponent(btnEliminar)
-                        .addComponent(btnImprimir))
+                        .addComponent(btnEliminar))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel1)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -645,7 +639,6 @@ public class FrmCliente extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnImprimir;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JCheckBox chkEliminar;
     private javax.swing.JComboBox<String> cmbSexo;
