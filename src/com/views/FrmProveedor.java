@@ -132,14 +132,13 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
             
             if (txtBuscar.getText().trim().isEmpty()) {
                 lista=jpaProveedor.findProveedorEntities();
-                System.out.println(cmbBusqueda.getSelectedItem());
             } else if (!txtBuscar.getText().trim().isEmpty() && cmbBusqueda.getSelectedItem() == "Documento") {
-                Query query = entitymanager.createNamedQuery("Proveedor.findByNumeroDocumento");
-                query.setParameter("numeroDocumento", txtBuscar.getText());
+                Query query = entitymanager.createQuery("SELECT p FROM Proveedor p WHERE p.numeroDocumento LIKE :numeroDocumento");
+                query.setParameter("numeroDocumento", txtBuscar.getText() + "%");
                 lista = query.getResultList();
             } else if (!txtBuscar.getText().trim().isEmpty() && cmbBusqueda.getSelectedItem() == "Razon social") {
-                Query query = entitymanager.createNamedQuery("Proveedor.findByRazonSocial");
-                query.setParameter("razonSocial", txtBuscar.getText());
+                Query query = entitymanager.createQuery("SELECT p FROM Proveedor p WHERE p.razonSocial LIKE :razonSocial");
+                query.setParameter("razonSocial", txtBuscar.getText() + "%");
                 lista = query.getResultList();
             }
             
