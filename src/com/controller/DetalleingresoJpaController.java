@@ -266,4 +266,13 @@ public class DetalleingresoJpaController implements Serializable {
           em.close();
           return result;
     }
+    
+    public List<Detalleingreso> listaArticulosAlmacen(){
+          EntityManagerFactory emfact = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
+          EntityManager em = emfact.createEntityManager();
+          Query query = em.createNamedQuery("Detalleingreso.findByIdExistencia");
+          List<Detalleingreso> result=query.getResultList();
+          em.close();
+          return result;
+    }
 }

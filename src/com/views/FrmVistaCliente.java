@@ -6,6 +6,13 @@
 
 package com.views;
 
+import com.controller.ClienteJpaController;
+import com.entities.Cliente;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import utilidades.Utilidades;
+
 /**
  *  Nombre de la clase: FrmVistaCliente
  *  Fecha: 11-18-2020 (m/d/a)
@@ -18,6 +25,37 @@ public class FrmVistaCliente extends javax.swing.JFrame {
     /** Creates new form FrmVistaCliente */
     public FrmVistaCliente() {
         initComponents();
+        mostrar();
+    }
+    
+    Cliente cliente = new Cliente();
+    ClienteJpaController jpaCliente = new ClienteJpaController();
+    
+    public void mostrar(){
+        DefaultTableModel tabla;
+        String encabezados[]={"Id","Nombre","Genero","F. nacimiento","Tipo documento","# documento","Telefono","Correo","Direccion","Eliminar"};
+        tabla=new DefaultTableModel(null,encabezados);
+        Object datos[]=new Object[9];
+        try{
+            List lista;
+            lista=jpaCliente.findClienteEntities();
+            for(int i=0;i<lista.size();i++){
+                cliente=(Cliente)lista.get(i);
+                datos[0]=cliente.getIdCliente();
+                datos[1]=cliente.getNombre();
+                datos[2]=cliente.getSexo();
+                datos[3]=cliente.getFechaNacimiento();
+                datos[4]=cliente.getTipoDocumento();
+                datos[5]=cliente.getNumeroDocumento();
+                datos[6]=cliente.getTelefono();
+                datos[7]=cliente.getEmail();
+                datos[8]=cliente.getDireccion();
+                tabla.addRow(datos);
+            }
+            this.tblCliente.setModel(tabla);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null,"Error al mostrar formulario : "+e);
+        }
     }
 
     /** This method is called from within the constructor to
@@ -134,7 +172,10 @@ public class FrmVistaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarMouseClicked
 
     private void tblClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClienteMouseClicked
-        
+        int fila = this.tblCliente.getSelectedRow();
+        FrmVenta.txtIdCliente.setText(String.valueOf(this.tblCliente.getValueAt(fila, 0)));
+        FrmVenta.txtCliente.setText(String.valueOf(this.tblCliente.getValueAt(fila, 1)));
+        this.dispose();
     }//GEN-LAST:event_tblClienteMouseClicked
 
     /**

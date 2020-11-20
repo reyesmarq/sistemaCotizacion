@@ -47,6 +47,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Detalleingreso.findByCesc", query = "SELECT d FROM Detalleingreso d WHERE d.cesc = :cesc")
     , @NamedQuery(name = "Detalleingreso.findByIva", query = "SELECT d FROM Detalleingreso d WHERE d.iva = :iva")
     , @NamedQuery(name = "Detalleingreso.findByIdIngreso", query = "SELECT d FROM Ingreso i JOIN i.detalleingresoList d WHERE i.idIngreso = :idIngreso")
+    , @NamedQuery(name = "Detalleingreso.findByIdExistencia", query = "SELECT d FROM Detalleingreso d WHERE d.stockActual <> 0")
 })
 public class Detalleingreso implements Serializable {
 

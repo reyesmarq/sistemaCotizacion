@@ -8,9 +8,11 @@ package com.views;
 
 import com.controller.ArticuloJpaController;
 import com.controller.CategoriaJpaController;
+import com.controller.DetalleingresoJpaController;
 import com.controller.PresentacionJpaController;
 import com.entities.Articulo;
 import com.entities.Categoria;
+import com.entities.Detalleingreso;
 import com.entities.Presentacion;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -118,8 +120,8 @@ public class FrmVistaArticulo extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel1)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(36, 36, 36)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -164,6 +166,7 @@ public class FrmVistaArticulo extends javax.swing.JFrame {
     public void buscarNombre(){
         
     }
+    
     public void mostrar(){
         DefaultTableModel tabla;
         String temp;
