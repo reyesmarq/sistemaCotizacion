@@ -59,7 +59,7 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
     private FrmVistaProveedor vistaProveedor=null;
     private FrmVistaArticulo vistaArticulo=null; 
     
-     private void mensajeOk(String mensaje){
+    private void mensajeOk(String mensaje){
         JOptionPane.showMessageDialog(null, mensaje + " sistema de cotización", "Respuesta", JOptionPane.INFORMATION_MESSAGE);
     }
     

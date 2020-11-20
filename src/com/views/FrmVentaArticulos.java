@@ -154,7 +154,7 @@ public class FrmVentaArticulos extends javax.swing.JFrame {
     private void tblArticuloBodegaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArticuloBodegaMouseClicked
         int fila = this.tblArticuloBodega.getSelectedRow();
         DecimalFormat decimal2 = new DecimalFormat ("##0.00");
-        FrmVenta.txtIdArticulo.setText(String.valueOf(this.tblArticuloBodega.getValueAt(fila, 0)));
+        FrmVenta.txtIdDetalleVentaArticulo.setText(String.valueOf(this.tblArticuloBodega.getValueAt(fila, 0)));
         FrmVenta.txtArticulo.setText(String.valueOf(this.tblArticuloBodega.getValueAt(fila, 3)));
         FrmVenta.txtStockInicialVenta.setText(String.valueOf(this.tblArticuloBodega.getValueAt(fila, 6)));
         double precioCompra=Double.parseDouble(String.valueOf(this.tblArticuloBodega.getValueAt(fila, 7)));
