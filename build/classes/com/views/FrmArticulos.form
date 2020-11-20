@@ -349,6 +349,9 @@
               </SubComponents>
             </Container>
             <Component class="javax.swing.JTextField" name="txtCategoria">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
               </AuxValues>
@@ -419,6 +422,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtPresentacion">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
               </AuxValues>

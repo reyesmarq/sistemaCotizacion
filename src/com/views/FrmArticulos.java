@@ -338,6 +338,8 @@ public class FrmArticulos extends javax.swing.JInternalFrame {
         txtDescripcion.setRows(5);
         jScrollPane3.setViewportView(txtDescripcion);
 
+        txtCategoria.setEnabled(false);
+
         jLabel6.setText("Categoria:");
 
         btnBuscarCategoria.setText("Buscar");
@@ -386,6 +388,8 @@ public class FrmArticulos extends javax.swing.JInternalFrame {
         });
 
         jLabel9.setText("Id Categoria:");
+
+        txtPresentacion.setEnabled(false);
 
         txtIdPresentacion.setEditable(false);
         txtIdPresentacion.setEnabled(false);

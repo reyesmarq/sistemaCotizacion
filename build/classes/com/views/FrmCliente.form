@@ -346,6 +346,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtNombre">
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtNombreKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnNuevo">
               <Properties>
@@ -465,6 +468,9 @@
               </SubComponents>
             </Container>
             <Component class="javax.swing.JTextField" name="txtTipoDocumento">
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTipoDocumentoKeyTyped"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

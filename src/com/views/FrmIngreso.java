@@ -378,6 +378,11 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
         jLabel1.setText("Id cotización:");
 
         btnBuscar1.setText("Buscar");
+        btnBuscar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscar1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -964,6 +969,10 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null,"Mensaje de error: "+e);
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscar1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

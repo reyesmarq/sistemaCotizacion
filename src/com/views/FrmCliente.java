@@ -7,6 +7,7 @@ package com.views;
 
 import com.controller.ClienteJpaController;
 import com.entities.Cliente;
+import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -309,6 +310,12 @@ public class FrmCliente extends javax.swing.JInternalFrame {
         txtIdCliente.setEditable(false);
         txtIdCliente.setEnabled(false);
 
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
+
         btnNuevo.setText("Nuevo");
         btnNuevo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -364,6 +371,12 @@ public class FrmCliente extends javax.swing.JInternalFrame {
         txtDireccion.setColumns(20);
         txtDireccion.setRows(5);
         jScrollPane3.setViewportView(txtDireccion);
+
+        txtTipoDocumento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTipoDocumentoKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -606,6 +619,24 @@ public class FrmCliente extends javax.swing.JInternalFrame {
         this.limpiar();
         this.habilitar(false);
     }//GEN-LAST:event_btnCancelarMouseClicked
+
+    private void txtTipoDocumentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTipoDocumentoKeyTyped
+       Character s = evt.getKeyChar();
+       
+       if(!Character.isDigit(s)){
+           
+           evt.consume();
+       }
+    }//GEN-LAST:event_txtTipoDocumentoKeyTyped
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        Character s = evt.getKeyChar();
+       
+       if(!Character.isLetter(s) && s !=KeyEvent.VK_SPACE){
+           
+           evt.consume();
+       }
+    }//GEN-LAST:event_txtNombreKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

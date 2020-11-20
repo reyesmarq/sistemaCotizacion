@@ -325,6 +325,8 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Descripción:");
 
+        txtIdCategoria.setEnabled(false);
+
         txtDescripcion.setColumns(20);
         txtDescripcion.setRows(5);
         jScrollPane3.setViewportView(txtDescripcion);
