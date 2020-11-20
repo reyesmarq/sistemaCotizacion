@@ -64,8 +64,8 @@ public class FrmVenta extends javax.swing.JInternalFrame {
         this.txtCesc.setText("");
         this.txtPrecioVenta.setText("");
         this.txtPrecioVentaTotal.setText("");
-        this.txtIva.setEnabled(false);
-        this.txtCesc.setEnabled(false);
+        //this.txtCantidad.setEnabled(false);
+        //this.txtDescuento.setEnabled(false);
     }
     
     /**
