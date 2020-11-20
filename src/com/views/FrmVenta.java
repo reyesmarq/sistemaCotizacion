@@ -220,11 +220,9 @@ public class FrmVenta extends javax.swing.JInternalFrame {
         btnEliminar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblListadoVentas = new javax.swing.JTable();
-        dtFechaInicio = new com.toedter.calendar.JDateChooser();
-        dtFechaFinal = new com.toedter.calendar.JDateChooser();
-        jLabel3 = new javax.swing.JLabel();
         btnComprobante = new javax.swing.JButton();
         chkEliminar = new javax.swing.JCheckBox();
+        txtBuscar = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -280,7 +278,7 @@ public class FrmVenta extends javax.swing.JInternalFrame {
         jLabel8.setForeground(new java.awt.Color(255, 0, 0));
         jLabel8.setText("Ventas");
 
-        jLabel1.setText("Fecha inicio:");
+        jLabel1.setText("Id cotización:");
 
         btnBuscar.setText("Buscar");
 
@@ -298,8 +296,6 @@ public class FrmVenta extends javax.swing.JInternalFrame {
             }
         ));
         jScrollPane2.setViewportView(tblListadoVentas);
-
-        jLabel3.setText("Fecha final:");
 
         btnComprobante.setText("Comprobante");
 
@@ -320,24 +316,20 @@ public class FrmVenta extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dtFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(dtFechaFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnBuscar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnComprobante)
                         .addGap(103, 103, 103))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(chkEliminar)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 904, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(15, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -345,17 +337,14 @@ public class FrmVenta extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnBuscar)
-                            .addComponent(btnEliminar)
-                            .addComponent(btnComprobante)))
+                        .addComponent(btnComprobante))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(dtFechaFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dtFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))))
+                        .addGap(19, 19, 19)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscar)
+                            .addComponent(btnEliminar))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(chkEliminar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -422,6 +411,8 @@ public class FrmVenta extends javax.swing.JInternalFrame {
         });
 
         txtStockInicialVenta.setEnabled(false);
+
+        txtDescuento.setText("0");
 
         txtCesc.setEnabled(false);
 
@@ -812,8 +803,6 @@ public class FrmVenta extends javax.swing.JInternalFrame {
     private javax.swing.JCheckBox chkEliminar;
     private javax.swing.JComboBox<String> cmbComprobante;
     private com.toedter.calendar.JDateChooser dtFecha;
-    private com.toedter.calendar.JDateChooser dtFechaFinal;
-    private com.toedter.calendar.JDateChooser dtFechaInicio;
     public static com.toedter.calendar.JDateChooser dtFechaVencimiento;
     private javax.swing.JLabel jLabel1;
     public static javax.swing.JLabel jLabel10;
@@ -827,7 +816,6 @@ public class FrmVenta extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -845,6 +833,7 @@ public class FrmVenta extends javax.swing.JInternalFrame {
     private javax.swing.JTable tblDetalleVenta;
     private javax.swing.JTable tblListadoVentas;
     public static javax.swing.JTextField txtArticulo;
+    private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCantidad;
     public static javax.swing.JTextField txtCesc;
     public static javax.swing.JTextField txtCliente;
