@@ -166,10 +166,10 @@ public class FrmVentaArticulos extends javax.swing.JFrame {
         FrmVenta.txtPrecioVenta.setText(String.valueOf(precioVenta));
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            String strFechaVencimiento = this.tblArticuloBodega.getValueAt(fila, 8).toString();
-            Date fechas;
-            fechas=sdf.parse(strFechaVencimiento);
-            FrmVenta.dtFechaVencimiento.setDate(fechas);
+            String strFechaVencimiento = this.tblArticuloBodega.getValueAt(fila, 9).toString();
+            Date fecha;
+            fecha=sdf.parse(strFechaVencimiento);
+            FrmVenta.dtFechaVencimiento.setDate(fecha);
         } catch (ParseException e) {}
         double precioIva = precioVenta*0.13;
         FrmVenta.txtIva.setText(String.valueOf(decimal2.format(precioIva)));

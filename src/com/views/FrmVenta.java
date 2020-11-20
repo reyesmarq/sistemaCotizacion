@@ -14,6 +14,10 @@ import com.entities.Detalleventa;
 import com.entities.Empleado;
 import com.entities.Ingreso;
 import com.entities.Venta;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,7 +62,7 @@ public class FrmVenta extends javax.swing.JInternalFrame {
     
     //Encabezado detalle venta
     public void crearTabla(){
-        String encabezados2[]={"Id","Articulo","Precio venta","IVA","CESC","DAI","Sub total","Fecha Vencimiento","Sub Total"};
+        String encabezados2[]={"Id","Articulo","Cantidad","Fecha vec.","Precio venta","IVA","CESC","Sub total","descuento","total"};
         tablaTemp = new DefaultTableModel(null, encabezados2);
         this.tblDetalleVenta.setModel(tablaTemp);
     }
@@ -97,7 +101,12 @@ public class FrmVenta extends javax.swing.JInternalFrame {
         this.txtSerie.setEnabled(valor);
         this.txtCorrelativo.setEnabled(valor);
         this.btnAgregar.setEnabled(valor);
+        this.txtCantidad.setEnabled(valor);
+        this.txtDescuento.setEnabled(valor);
         this.btnQuitar.setEnabled(valor);
+        this.btnGuardar.setEnabled(valor);
+        this.btnNuevo.setEnabled(!valor);
+        this.btnCancelar.setEnabled(valor);
     }
      
     public void botones(){
@@ -119,7 +128,7 @@ public class FrmVenta extends javax.swing.JInternalFrame {
         Utilidades utilidades = new Utilidades();
         String encabezados[]={"Id cotizacion","Id Cliente","Cliente","Idempleado","Empleado","Fecha","Tipo comprobante","Serie","Correlativo","Eliminar"};
         tabla=new DefaultTableModel(null,encabezados);
-        Object datos[]=new Object[7];
+        Object datos[]=new Object[9];
         try{
             List lista;
             lista=jpaVenta.findVentaEntities();
@@ -127,16 +136,18 @@ public class FrmVenta extends javax.swing.JInternalFrame {
                 venta=(Venta)lista.get(i);
                 datos[0]=venta.getIdVenta();
                 datos[1]=venta.getIdCliente().getIdCliente();
-                datos[2]=venta.getIdEmpleado().getIdEmpleado();
-                datos[3]=venta.getFecha();
-                datos[4]=venta.getTipoComprobante();
-                datos[5]=venta.getSerie();
-                datos[6]=venta.getCorrelativo();
+                datos[2]=venta.getIdCliente().getNombre();
+                datos[3]=venta.getIdEmpleado().getIdEmpleado();
+                datos[4]=venta.getIdEmpleado().getNombre();
+                datos[5]=venta.getFecha();
+                datos[6]=venta.getTipoComprobante();
+                datos[7]=venta.getSerie();
+                datos[8]=venta.getCorrelativo();
                 tabla.addRow(datos);
             }
             this.tblListadoVentas.setModel(tabla);
             if(chkEliminar.isSelected()){
-                utilidades.agregarCheckBox(7,tblListadoVentas);
+                utilidades.agregarCheckBox(9,tblListadoVentas);
             }else{
                 ocultarColumnas();
             }
@@ -147,8 +158,32 @@ public class FrmVenta extends javax.swing.JInternalFrame {
     }
     
     public void ocultarColumnas(){
-        tblListadoVentas.removeColumn(tblListadoVentas.getColumnModel().getColumn(7));
+        tblListadoVentas.removeColumn(tblListadoVentas.getColumnModel().getColumn(9));
     }
+    
+    //Para agregar de la tabla de detalle venta a los elementos eliminar/agregar elemento
+    public void llenarIngresoDetalleVenta(){
+        int fila = this.tblDetalleVenta.getSelectedRow();
+        DecimalFormat decimal = new DecimalFormat ("###.00");
+        DecimalFormat decimal2 = new DecimalFormat ("###.0");
+        this.txtIdDetalleVentaArticulo.setText(String.valueOf(this.tblDetalleVenta.getValueAt(fila, 0)));
+        this.txtArticulo.setText(String.valueOf(this.tblDetalleVenta.getValueAt(fila, 1)));
+        this.txtCantidad.setText(String.valueOf(this.tblDetalleVenta.getValueAt(fila, 2)));
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            String strFechaVencimiento = this.tblDetalleVenta.getValueAt(fila, 9).toString();
+            Date fechas;
+            fechas=sdf.parse(strFechaVencimiento);
+            this.dtFechaVencimiento.setDate(fechas);
+        } catch (ParseException e) {}
+        this.txtPrecioVenta.setText(String.valueOf(this.tblDetalleVenta.getValueAt(fila, 4)));
+        this.txtIva.setText(String.valueOf(this.tblDetalleVenta.getValueAt(fila, 5)));
+        this.txtCesc.setText(String.valueOf(this.tblDetalleVenta.getValueAt(fila, 6)));
+        this.txtPrecioVentaTotal.setText(String.valueOf(this.tblDetalleVenta.getValueAt(fila, 7)));
+        this.txtDescuento.setText(String.valueOf(this.tblDetalleVenta.getValueAt(fila, 8)));
+    }
+    
+    
     /**
      * Creates new form FrmVenta
      */
@@ -161,6 +196,9 @@ public class FrmVenta extends javax.swing.JInternalFrame {
     
     public FrmVenta(String nombre, String acceso, int id) {
         initComponents();
+        mostrar();
+        crearTabla();
+        habilitar(false);
     }
 
     /**
@@ -334,6 +372,11 @@ public class FrmVenta extends javax.swing.JInternalFrame {
         txtIdVenta.setEnabled(false);
 
         btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         btnGuardar.setText("Guardar");
 
@@ -360,13 +403,16 @@ public class FrmVenta extends javax.swing.JInternalFrame {
 
         jLabel10.setText("Precio venta:");
 
-        dtFechaVencimiento.setEnabled(false);
-
         jLabel5.setText("Fecha Venc.:");
 
         jLabel11.setText("Descuento:");
 
         btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnQuitar.setText("Quitar");
         btnQuitar.addActionListener(new java.awt.event.ActionListener() {
@@ -511,6 +557,11 @@ public class FrmVenta extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblDetalleVenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDetalleVentaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblDetalleVenta);
 
         cmbComprobante.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Factura", "Ticket" }));
@@ -653,7 +704,7 @@ public class FrmVenta extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void chkEliminarStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkEliminarStateChanged
-        
+        mostrar();
     }//GEN-LAST:event_chkEliminarStateChanged
 
     private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
@@ -691,6 +742,60 @@ public class FrmVenta extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Error al eliminar producto de la lista");
         }
     }//GEN-LAST:event_btnQuitarActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        try {
+            DecimalFormat decimal = new DecimalFormat ("##.00");
+            DecimalFormat entero = new DecimalFormat ("##");
+            if (this.txtIdDetalleVentaArticulo.getText().equals("") || this.txtArticulo.getText().equals("") || this.txtPrecioCompra.getText().equals("") ||
+                dtFechaVencimiento.getDate().equals("") || this.txtCantidad.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Error, datos de articulo incompletos");
+            }else{
+                boolean registrar = true;
+                for (int i=0; i < tblDetalleVenta.getRowCount(); i++) {
+                    String temp = tblDetalleVenta.getValueAt(i, 0).toString();
+                    if(temp.equals(this.txtIdDetalleVentaArticulo.getText())){
+                        registrar=false;
+                        JOptionPane.showMessageDialog(null, "Error, el articulo ya se encuentra en el listado");
+                     }
+                }
+                if (registrar) {
+                    Object datos[]=new Object[10];
+                    try{
+                        datos[0]=this.txtIdDetalleVentaArticulo.getText();
+                        datos[1]=this.txtArticulo.getText();
+                        double cantidad = Double.parseDouble(this.txtCantidad.getText());
+                        datos[2]=cantidad;
+                        Date dateVen = dtFechaVencimiento.getDate();
+                        SimpleDateFormat sdfVen = new SimpleDateFormat("dd-MM-yyy");
+                        datos[3]=sdfVen.format(dateVen);
+                        datos[4]=this.txtPrecioVenta.getText();
+                        datos[5]=this.txtIva.getText();
+                        datos[6]=this.txtCesc.getText();
+                        double precioVentaTotal = Double.parseDouble(txtPrecioVentaTotal.getText());
+                        datos[7]=precioVentaTotal;
+                        double descuento = Double.parseDouble(this.txtDescuento.getText());
+                        datos[8]=descuento;
+                        datos[9]=(precioVentaTotal-descuento)*cantidad;
+                        tablaTemp.addRow(datos);
+                        limpiarDetalle();
+                    }catch(Exception e){
+                        JOptionPane.showMessageDialog(null,"Error al mostrar formulario: "+e);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en agregar articulo a listado: "+e);
+        }
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        habilitar(true);
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void tblDetalleVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDetalleVentaMouseClicked
+        llenarIngresoDetalleVenta();
+    }//GEN-LAST:event_tblDetalleVentaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

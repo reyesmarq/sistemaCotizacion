@@ -203,7 +203,7 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
     }
     
     //doble clic en tblDetalleIngreso para editar en apartado articulos
-    public void llenarIngresoDetalle(){ 
+    public void llenarIngresoDetalle(){
         int fila = this.tblDetalleIngreso.getSelectedRow();
         DecimalFormat decimal = new DecimalFormat ("###.00");
         DecimalFormat decimal2 = new DecimalFormat ("###.0");
