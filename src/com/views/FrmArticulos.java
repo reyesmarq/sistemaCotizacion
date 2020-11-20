@@ -105,8 +105,8 @@ public class FrmArticulos extends javax.swing.JInternalFrame {
             } else {
                 EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
                 EntityManager entitymanager = emfactory.createEntityManager();
-                Query query = entitymanager.createNamedQuery("Articulo.findByNombre");
-                query.setParameter("nombre", txtBuscar.getText());
+                Query query = entitymanager.createQuery("SELECT a FROM Articulo a WHERE a.nombre LIKE :nombre");
+                query.setParameter("nombre", txtBuscar.getText() + "%");
                 lista = query.getResultList();
             }
             
