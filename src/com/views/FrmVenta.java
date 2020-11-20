@@ -5,10 +5,21 @@
  */
 package com.views;
 
+import com.controller.ClienteJpaController;
+import com.controller.DetalleventaJpaController;
+import com.controller.EmpleadoJpaController;
+import com.controller.VentaJpaController;
+import com.entities.Cliente;
+import com.entities.Detalleventa;
+import com.entities.Empleado;
+import com.entities.Ingreso;
+import com.entities.Venta;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import utilidades.Utilidades;
 
 /**
  *
@@ -21,6 +32,14 @@ public class FrmVenta extends javax.swing.JInternalFrame {
     
     FrmVistaCliente vistaCliente = new FrmVistaCliente();
     FrmVentaArticulos vistaVentaArticulo = new FrmVentaArticulos();
+    Venta venta = new Venta();
+    VentaJpaController jpaVenta = new VentaJpaController();
+    Detalleventa detalleVenta = new Detalleventa();
+    DetalleventaJpaController jpaDetalleVenta = new DetalleventaJpaController();
+    Empleado empleado = new Empleado();
+    EmpleadoJpaController jpaEmpleado = new EmpleadoJpaController();
+    Cliente cliente = new Cliente();
+    ClienteJpaController jpaCliente = new ClienteJpaController();
     
     String nombre;
     String acceso;
@@ -67,12 +86,77 @@ public class FrmVenta extends javax.swing.JInternalFrame {
         //this.txtCantidad.setEnabled(false);
         //this.txtDescuento.setEnabled(false);
     }
+     public void habilitar(boolean valor){
+        this.dtFecha.setEnabled(valor);
+        this.dtFechaVencimiento.setEnabled(valor);
+        this.cmbComprobante.setEnabled(valor);
+        this.txtStockInicialVenta.setEnabled(valor);
+        this.txtPrecioCompra.setEnabled(valor);
+        this.btnBuscarCliente.setEnabled(valor);
+        this.btnBuscarArticulo.setEnabled(valor);
+        this.txtSerie.setEnabled(valor);
+        this.txtCorrelativo.setEnabled(valor);
+        this.btnAgregar.setEnabled(valor);
+        this.btnQuitar.setEnabled(valor);
+    }
+     
+    public void botones(){
+        if(esNuevo){
+            habilitar(true);
+            btnNuevo.setEnabled(false);
+            btnGuardar.setEnabled(true);
+            btnCancelar.setEnabled(true);
+        }else{
+            habilitar(false);
+            btnNuevo.setEnabled(true);
+            btnGuardar.setEnabled(false);
+            btnCancelar.setEnabled(false);
+        }
+    }
+    //Mostrar lista de cotizaciones
+    public void mostrar(){
+        DefaultTableModel tabla;
+        Utilidades utilidades = new Utilidades();
+        String encabezados[]={"Id cotizacion","Id Cliente","Cliente","Idempleado","Empleado","Fecha","Tipo comprobante","Serie","Correlativo","Eliminar"};
+        tabla=new DefaultTableModel(null,encabezados);
+        Object datos[]=new Object[7];
+        try{
+            List lista;
+            lista=jpaVenta.findVentaEntities();
+            for(int i=0;i<lista.size();i++){
+                venta=(Venta)lista.get(i);
+                datos[0]=venta.getIdVenta();
+                datos[1]=venta.getIdCliente().getIdCliente();
+                datos[2]=venta.getIdEmpleado().getIdEmpleado();
+                datos[3]=venta.getFecha();
+                datos[4]=venta.getTipoComprobante();
+                datos[5]=venta.getSerie();
+                datos[6]=venta.getCorrelativo();
+                tabla.addRow(datos);
+            }
+            this.tblListadoVentas.setModel(tabla);
+            if(chkEliminar.isSelected()){
+                utilidades.agregarCheckBox(7,tblListadoVentas);
+            }else{
+                ocultarColumnas();
+            }
+        }catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null,"Error al mostrar formulario: "+e);
+        }
+    }
     
+    public void ocultarColumnas(){
+        tblListadoVentas.removeColumn(tblListadoVentas.getColumnModel().getColumn(7));
+    }
     /**
      * Creates new form FrmVenta
      */
     public FrmVenta() {
         initComponents();
+        mostrar();
+        crearTabla();
+        habilitar(false);
     }
     
     public FrmVenta(String nombre, String acceso, int id) {

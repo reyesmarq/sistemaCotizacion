@@ -354,6 +354,11 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
         jLabel1.setText("Fecha inicio:");
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         btnAnular.setText("Anular");
 
@@ -987,6 +992,10 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null,"Mensaje de error: "+e);
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
