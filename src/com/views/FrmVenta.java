@@ -747,10 +747,9 @@ public class FrmVenta extends javax.swing.JInternalFrame {
             for (int i=0; i < tblDetalleVenta.getRowCount(); i++) {
                 String temp = tblDetalleVenta.getValueAt(i, 0).toString();
                 if(temp.equals(this.txtIdDetalleVentaArticulo.getText())){
-                    tablaTemp.removeRow(i);
+                    tablaTemp.removeRow(i); //Elimina de la lista de productos a cotizar
                 }
             }
-           
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al eliminar producto de la lista");
         }
