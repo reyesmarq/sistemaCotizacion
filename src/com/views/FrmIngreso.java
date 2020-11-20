@@ -20,10 +20,15 @@ import com.entities.Proveedor;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -173,8 +178,18 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
         tabla=new DefaultTableModel(null,encabezados);
         Object datos[]=new Object[7];
         try{
-            List lista;
-            lista=jpaIngreso.findIngresoEntities();
+            List<Ingreso> lista = new ArrayList<>();
+            
+            if (txtBuscar.getText().trim().isEmpty()) {
+                lista=jpaIngreso.findIngresoEntities();
+            } else {
+                EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
+                EntityManager entitymanager = emfactory.createEntityManager();
+                Query query = entitymanager.createQuery("SELECT i FROM Ingreso i WHERE i.idIngreso = :idIngreso");
+                query.setParameter("idIngreso", Integer.parseInt(txtBuscar.getText()));
+                lista = query.getResultList();
+            }
+            
             for(int i=0;i<lista.size();i++){
                 ingreso=(Ingreso)lista.get(i);
                 datos[0]=ingreso.getIdIngreso();
@@ -971,7 +986,8 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscar1ActionPerformed
-        // TODO add your handling code here:
+        // Logica del filtrado se implemento en mostrar;
+        mostrar();
     }//GEN-LAST:event_btnBuscar1ActionPerformed
 
 
