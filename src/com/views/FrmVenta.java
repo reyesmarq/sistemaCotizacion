@@ -57,10 +57,10 @@ public class FrmVenta extends javax.swing.JInternalFrame {
     public void limpiarDetalle(){
         this.txtIdDetalleVentaArticulo.setText("");
         this.txtArticulo.setText("");
-        this.txtIdVenta.setText("");
+        this.txtCantidad.setText("");
+        this.txtStockInicialVenta.setText("");
         this.txtIva.setText("");
-        this.txtCesc.setText("");
-        this.txtStockInicial.setText("");
+        this.txtCesc.setText("");        
         this.txtPrecioCompra.setText("");
         this.txtPrecioVenta.setText("");
         this.txtIva.setEnabled(false);
@@ -113,7 +113,7 @@ public class FrmVenta extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         txtArticulo = new javax.swing.JTextField();
         btnBuscarArticulo = new javax.swing.JButton();
-        txtStockInicial = new javax.swing.JTextField();
+        txtCantidad = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         txtPrecioCompra = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -324,7 +324,7 @@ public class FrmVenta extends javax.swing.JInternalFrame {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtStockInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtStockInicialVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
@@ -393,7 +393,7 @@ public class FrmVenta extends javax.swing.JInternalFrame {
                         .addGap(5, 5, 5)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtStockInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel7)
                                 .addComponent(txtPrecioVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel10)
@@ -655,6 +655,7 @@ public class FrmVenta extends javax.swing.JInternalFrame {
     private javax.swing.JTable tblDetalleVenta;
     private javax.swing.JTable tblListadoVentas;
     public static javax.swing.JTextField txtArticulo;
+    private javax.swing.JTextField txtCantidad;
     public static javax.swing.JTextField txtCesc;
     public static javax.swing.JTextField txtCliente;
     private javax.swing.JTextField txtCorrelativo;
@@ -667,7 +668,6 @@ public class FrmVenta extends javax.swing.JInternalFrame {
     public static javax.swing.JTextField txtPrecioVenta;
     public static javax.swing.JTextField txtPrecioVentaTotal;
     private javax.swing.JTextField txtSerie;
-    private javax.swing.JTextField txtStockInicial;
     public static javax.swing.JTextField txtStockInicialVenta;
     // End of variables declaration//GEN-END:variables
 }
