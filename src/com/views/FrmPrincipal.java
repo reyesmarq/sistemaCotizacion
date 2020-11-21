@@ -8,6 +8,7 @@
 package com.views;
 
 
+import com.conexion.Conexion;
 import com.entities.Empleado;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -17,6 +18,11 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 import utilidades.ComunicacionAcceso;
 /**
  *
@@ -250,6 +256,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         mnuConsultas.setText("Consultas");
 
         reportesClientes.setText("Clientes");
+        reportesClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reportesClientesActionPerformed(evt);
+            }
+        });
         mnuConsultas.add(reportesClientes);
 
         reportesProveedores.setText("Proveedores");
@@ -391,6 +402,19 @@ public class FrmPrincipal extends javax.swing.JFrame {
             Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_empleadoActionPerformed
+
+    private void reportesClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportesClientesActionPerformed
+        Conexion con = new Conexion();
+        JasperReport reporte;
+        
+        try {
+            con.conectar();
+            reporte = JasperCompileManager.compileReport("src/reportes/clientes.jrxml");
+            JasperPrint jp = JasperFillManager.fillReport(reporte, null, con.getCon());
+            JasperViewer.viewReport(jp, false);
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_reportesClientesActionPerformed
 
     /**
      * @param args the command line arguments

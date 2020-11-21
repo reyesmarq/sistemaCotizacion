@@ -8,7 +8,6 @@ package com.views;
 
 import com.controller.DetalleingresoJpaController;
 import com.entities.Detalleingreso;
-import com.entities.Detalleingreso_;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
