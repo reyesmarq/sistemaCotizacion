@@ -3,7 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/E072894/Desktop/sistemaCotizacion/src/reportes/ofertas.jrxml</file>
+            <file>file:/C:/Users/E072894/Desktop/sistemaCotizacion/src/com/views/FrmVenta.java</file>
+            <file>file:/C:/Users/E072894/Desktop/sistemaCotizacion/src/com/views/FrmLogin.java</file>
+            <file>file:/C:/Users/E072894/Desktop/sistemaCotizacion/src/com/controller/EmpleadoJpaController.java</file>
+            <file>file:/C:/Users/E072894/Desktop/sistemaCotizacion/src/com/entities/Empleado.java</file>
+            <file>file:/C:/Users/E072894/Desktop/sistemaCotizacion/src/com/views/FrmTrabajador.java</file>
+            <file>file:/C:/Users/E072894/Desktop/sistemaCotizacion/src/com/views/FrmVistaProveedor.java</file>
+            <file>file:/C:/Users/E072894/Desktop/sistemaCotizacion/src/com/views/FrmPrincipal.java</file>
         </group>
     </open-files>
 </project-private>

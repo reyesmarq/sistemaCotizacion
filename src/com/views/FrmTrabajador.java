@@ -15,6 +15,10 @@ import utilidades.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -134,10 +138,6 @@ public class FrmTrabajador extends javax.swing.JInternalFrame {
         this.txtUsuario.setEnabled(valor);
         this.txtContra.setEnabled(valor);
     }
-    
-    public void buscarNombre(){
-        
-    }
 
     public void mostrar(){
         DefaultTableModel tabla;
@@ -145,8 +145,22 @@ public class FrmTrabajador extends javax.swing.JInternalFrame {
         tabla = new DefaultTableModel(null, encabezados);
         Object datos[] = new Object[10];
         try{
-            List lista;
-            lista = jpaEmpleado.findEmpleadoEntities();
+            List<Empleado> lista = new ArrayList<>();
+            EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
+            EntityManager entitymanager = emfactory.createEntityManager();
+            
+            if (txtBuscar.getText().trim().isEmpty()) {
+                lista = jpaEmpleado.findEmpleadoEntities();
+            } else if (!txtBuscar.getText().trim().isEmpty() && cmbBusqueda.getSelectedItem() == "Dui") {
+                Query query = entitymanager.createQuery("SELECT e FROM Empleado e WHERE e.dui LIKE :dui");
+                query.setParameter("dui", txtBuscar.getText() + "%");
+                lista = query.getResultList();
+            } else if (!txtBuscar.getText().trim().isEmpty() && cmbBusqueda.getSelectedItem() == "Nombres") {
+                Query query = entitymanager.createQuery("SELECT e FROM Empleado e WHERE e.nombre LIke :nombre");
+                query.setParameter("nombre", txtBuscar.getText() + "%");
+                lista = query.getResultList();
+            }
+            
             for (int i = 0; i < lista.size(); i++) 
             {
                 empleado=(Empleado)lista.get(i);
@@ -238,6 +252,11 @@ public class FrmTrabajador extends javax.swing.JInternalFrame {
                 btnBuscarMouseClicked(evt);
             }
         });
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -273,7 +292,7 @@ public class FrmTrabajador extends javax.swing.JInternalFrame {
             }
         });
 
-        cmbBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Documento", "Apellidos", "Nombres" }));
+        cmbBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dui", "Nombres" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -545,7 +564,8 @@ public class FrmTrabajador extends javax.swing.JInternalFrame {
 
     
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
-        buscarNombre();
+        // La parte de filtrado 
+        mostrar();
     }//GEN-LAST:event_btnBuscarMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
@@ -670,6 +690,11 @@ public class FrmTrabajador extends javax.swing.JInternalFrame {
            evt.consume();
        }
     }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // el filtrado se manejo en mostrar();
+        mostrar();
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
