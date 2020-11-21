@@ -264,6 +264,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         mnuConsultas.add(reportesClientes);
 
         reportesProveedores.setText("Proveedores");
+        reportesProveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reportesProveedoresActionPerformed(evt);
+            }
+        });
         mnuConsultas.add(reportesProveedores);
 
         reportesArticulos.setText("Articulos");
@@ -413,8 +418,23 @@ public class FrmPrincipal extends javax.swing.JFrame {
             JasperPrint jp = JasperFillManager.fillReport(reporte, null, con.getCon());
             JasperViewer.viewReport(jp, false);
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }//GEN-LAST:event_reportesClientesActionPerformed
+
+    private void reportesProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportesProveedoresActionPerformed
+        Conexion con = new Conexion();
+        JasperReport reporte;
+        
+        try {
+            con.conectar();
+            reporte = JasperCompileManager.compileReport("src/reportes/proveedores.jrxml");
+            JasperPrint jp = JasperFillManager.fillReport(reporte, null, con.getCon());
+            JasperViewer.viewReport(jp, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_reportesProveedoresActionPerformed
 
     /**
      * @param args the command line arguments
