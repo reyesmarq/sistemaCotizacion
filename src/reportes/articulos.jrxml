@@ -37,14 +37,14 @@ join categoria on articulo.idCategoria = categoria.idCategoria;]]>
 					<textElement>
 						<font size="34" isBold="true"/>
 					</textElement>
-					<text><![CDATA[TITLE]]></text>
+					<text><![CDATA[GRGS]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="7278bee1-d035-48a6-a806-8bf6e4285f70"/>
 					<textElement textAlignment="Right">
 						<font size="14" isBold="false"/>
 					</textElement>
-					<text><![CDATA[Add a description here]]></text>
+					<text><![CDATA[Articulos]]></text>
 				</staticText>
 			</frame>
 		</band>

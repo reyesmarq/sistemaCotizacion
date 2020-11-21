@@ -223,7 +223,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         mnuVentas.setText("Ventas");
 
-        ventasMenuItem.setText("Ventas");
+        ventasMenuItem.setText("Ofertas");
         ventasMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ventasMenuItemActionPerformed(evt);

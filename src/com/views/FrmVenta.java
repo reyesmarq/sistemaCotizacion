@@ -5,6 +5,7 @@
  */
 package com.views;
 
+import com.conexion.Conexion;
 import com.controller.ClienteJpaController;
 import com.controller.DetalleventaJpaController;
 import com.controller.EmpleadoJpaController;
@@ -18,12 +19,24 @@ import com.entities.Venta;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 import utilidades.Utilidades;
 
 /**
@@ -131,8 +144,18 @@ public class FrmVenta extends javax.swing.JInternalFrame {
         tabla=new DefaultTableModel(null,encabezados);
         Object datos[]=new Object[9];
         try{
-            List lista;
-            lista=jpaVenta.findVentaEntities();
+            List<Venta> lista = new ArrayList<>();
+            
+            if (txtBuscar.getText().trim().isEmpty()) {
+                lista=jpaVenta.findVentaEntities();
+            } else {
+                EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
+                EntityManager entitymanager = emfactory.createEntityManager();
+                Query query = entitymanager.createQuery("SELECT v FROM Venta v WHERE v.idVenta = :idVenta");
+                query.setParameter("idVenta", Integer.parseInt(txtBuscar.getText()));
+                lista = query.getResultList();
+            }
+            
             for(int i=0;i<lista.size();i++){
                 venta=(Venta)lista.get(i);
                 datos[0]=venta.getIdVenta();
@@ -277,7 +300,7 @@ public class FrmVenta extends javax.swing.JInternalFrame {
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 30)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel8.setText("Ventas");
+        jLabel8.setText("Ofertas");
 
         jLabel1.setText("Id cotización:");
 
@@ -302,6 +325,11 @@ public class FrmVenta extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(tblListadoVentas);
 
         btnComprobante.setText("Comprobante");
+        btnComprobante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnComprobanteActionPerformed(evt);
+            }
+        });
 
         chkEliminar.setText("Eliminar");
         chkEliminar.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -331,7 +359,7 @@ public class FrmVenta extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(chkEliminar)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 904, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(15, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -653,7 +681,7 @@ public class FrmVenta extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -823,7 +851,8 @@ public class FrmVenta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
+        // el filtrado de buscar se manejo en mostrar();
+        mostrar();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
@@ -868,9 +897,7 @@ public class FrmVenta extends javax.swing.JInternalFrame {
                         detalleIngreso.setIdDetalleIngreso(Integer.parseInt(String.valueOf(this.tblDetalleVenta.getValueAt(fila, 0))));
                         detalleVenta2.setIdDetalleIngreso(detalleIngreso);
                         detalleVenta2.setCantidad(Integer.parseInt(String.valueOf(this.tblDetalleVenta.getValueAt(fila, 2))));
-                        JOptionPane.showMessageDialog(null, "Ingreso cantidad");
                         detalleVenta2.setPrecioVenta(Double.parseDouble(String.valueOf(this.tblDetalleVenta.getValueAt(fila, 7))));
-                        JOptionPane.showMessageDialog(null, "Ingreso venta");
                         detalleVenta2.setDescuento(Double.parseDouble(String.valueOf(this.tblDetalleVenta.getValueAt(fila, 8))));
                         jpaDetalleVenta.create(detalleVenta2);
                     }
@@ -885,6 +912,45 @@ public class FrmVenta extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null,"Mensaje de error: "+e);
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnComprobanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprobanteActionPerformed
+        int fila = tblListadoVentas.getSelectedRow();
+        int idVenta = Integer.parseInt(tblListadoVentas.getValueAt(fila, 0).toString());
+        String fecha = String.valueOf(tblListadoVentas.getValueAt(fila, 5).toString());
+        String noCorrelativo = String.valueOf(tblListadoVentas.getValueAt(fila, 8).toString());
+        String nombreCliente = String.valueOf(tblListadoVentas.getValueAt(fila, 2).toString());
+        String nombreEmpleado = String.valueOf(tblListadoVentas.getValueAt(fila, 4).toString());
+        String noSerie = String.valueOf(tblListadoVentas.getValueAt(fila, 7).toString());
+        String tipoComprobante = String.valueOf(tblListadoVentas.getValueAt(fila, 6).toString());
+        Conexion con = new Conexion();
+        Map parametros = new HashMap();
+        JasperReport reporte;
+        
+//        String msg = "IdVenta" + idVenta +
+//                "\nfecha: " + fecha +
+//                "\nnoCorrelativo: " + noCorrelativo +
+//                "\nnombreCliente: " + nombreCliente +
+//                "\nnombreEmpleado: " + nombreEmpleado +
+//                "\nnoSerie: " + noSerie +
+//                "\ntipoComprobante: " + tipoComprobante;
+//
+//        JOptionPane.showMessageDialog(null, msg);
+        try {
+            con.conectar();
+            parametros.put("idVenta", idVenta);
+            parametros.put("fecha", fecha);
+            parametros.put("noCorrelativo", noCorrelativo);
+            parametros.put("nombreCliente", nombreCliente);
+            parametros.put("nombreEmpleado", nombreEmpleado);
+            parametros.put("noSerie", noSerie);
+            parametros.put("tipoComprobante", tipoComprobante);
+            reporte = JasperCompileManager.compileReport("src/reportes/ofertas.jrxml");
+            JasperPrint jp = JasperFillManager.fillReport(reporte, parametros, con.getCon());
+            JasperViewer.viewReport(jp, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnComprobanteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
