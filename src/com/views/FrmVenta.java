@@ -921,7 +921,7 @@ public class FrmVenta extends javax.swing.JInternalFrame {
         String nombreCliente = String.valueOf(tblListadoVentas.getValueAt(fila, 2).toString());
         String nombreEmpleado = String.valueOf(tblListadoVentas.getValueAt(fila, 4).toString());
         String noSerie = String.valueOf(tblListadoVentas.getValueAt(fila, 7).toString());
-        String tipoComprobante = String.valueOf(tblListadoVentas.getValueAt(fila, 6).toString());
+        String comprobante = tblListadoVentas.getValueAt(fila, 6).toString();
         Conexion con = new Conexion();
         Map parametros = new HashMap();
         JasperReport reporte;
@@ -932,8 +932,8 @@ public class FrmVenta extends javax.swing.JInternalFrame {
 //                "\nnombreCliente: " + nombreCliente +
 //                "\nnombreEmpleado: " + nombreEmpleado +
 //                "\nnoSerie: " + noSerie +
-//                "\ntipoComprobante: " + tipoComprobante;
-//
+//                "\ncomprobante: " + comprobante;
+
 //        JOptionPane.showMessageDialog(null, msg);
         try {
             con.conectar();
@@ -943,7 +943,6 @@ public class FrmVenta extends javax.swing.JInternalFrame {
             parametros.put("nombreCliente", nombreCliente);
             parametros.put("nombreEmpleado", nombreEmpleado);
             parametros.put("noSerie", noSerie);
-            parametros.put("tipoComprobante", tipoComprobante);
             reporte = JasperCompileManager.compileReport("src/reportes/ofertas.jrxml");
             JasperPrint jp = JasperFillManager.fillReport(reporte, parametros, con.getCon());
             JasperViewer.viewReport(jp, false);

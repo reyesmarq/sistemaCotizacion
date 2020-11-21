@@ -83,66 +83,69 @@ where
 		</band>
 	</title>
 	<pageHeader>
-		<band height="212">
+		<band height="186">
 			<textField>
-				<reportElement x="11" y="139" width="100" height="20" uuid="f513592f-c0e7-4b95-b0c0-e62664e4f10b"/>
-				<textElement>
-					<font size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[Cliente:]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="111" y="139" width="431" height="20" uuid="7f591f80-cc2e-4f53-ba91-cfa1d76d6988"/>
+				<reportElement x="111" y="118" width="431" height="20" uuid="7f591f80-cc2e-4f53-ba91-cfa1d76d6988"/>
 				<textFieldExpression><![CDATA[$P{nombreCliente}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="210" y="11" width="155" height="32" uuid="1efc2cb8-e899-4c80-b97a-cd3ef837869a"/>
-				<textElement>
-					<font size="16"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{tipoComprobante}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="375" y="23" width="74" height="20" uuid="c9de42f2-d662-44a9-8479-329f65fbbb51"/>
+				<reportElement x="321" y="10" width="110" height="20" uuid="c9de42f2-d662-44a9-8479-329f65fbbb51"/>
 				<textFieldExpression><![CDATA[$P{noSerie}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="455" y="23" width="100" height="20" uuid="52df8b2b-5f4c-44df-923c-78602333ba02"/>
+				<reportElement x="435" y="10" width="107" height="20" uuid="52df8b2b-5f4c-44df-923c-78602333ba02"/>
 				<textFieldExpression><![CDATA[$P{noCorrelativo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="11" y="169" width="100" height="20" uuid="e7eb975c-39ea-42c5-87f9-c1cb6eb02a7c"/>
-				<textElement>
-					<font size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[Empleado]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="111" y="169" width="431" height="20" uuid="dd45b03a-d71c-490f-9441-308ab65f0ca4"/>
+				<reportElement x="111" y="148" width="431" height="20" uuid="dd45b03a-d71c-490f-9441-308ab65f0ca4"/>
 				<textFieldExpression><![CDATA[$P{nombreEmpleado}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="11" y="106" width="100" height="20" uuid="5f94dfa6-9619-4d30-b56c-08fbb115be58"/>
-				<textElement>
-					<font size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[Fecha:]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="111" y="106" width="431" height="20" uuid="0a3fd671-ba27-4520-bf97-8dd5461341f5"/>
+				<reportElement x="111" y="85" width="431" height="20" uuid="0a3fd671-ba27-4520-bf97-8dd5461341f5"/>
 				<textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="11" y="69" width="100" height="20" uuid="1fada81c-458d-4856-a0c2-518e2f52ab4a"/>
-				<textElement>
-					<font size="14"/>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="85" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="34004295-23fe-4d33-be8b-dd93fc7d6510"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[Id Oferta:]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="111" y="69" width="431" height="20" uuid="0115d679-8668-4cd5-b304-8ae369aeb361"/>
-				<textFieldExpression><![CDATA[$P{idVenta}]]></textFieldExpression>
-			</textField>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="118" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="dc200f80-bf95-44ac-aa69-e015b8eb890a"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="148" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="6931d23a-db52-44cc-8272-bbc7514b4ac6"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Empleado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="320" y="30" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="84550029-3201-4baf-ae32-6e24ae7ff4d6"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Serie]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="431" y="30" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="0cda07dd-afb7-45e3-a9a6-ffa2a948ea64"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Correlativo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="320" y="50" width="222" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="a7990818-57ee-4e87-bb0d-fe8644462f29"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Factura]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -158,18 +161,18 @@ where
 				<text><![CDATA[nombre]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="333" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="5b308d37-a49a-48dd-862c-fc1eeafd77bd"/>
-				<textElement textAlignment="Center">
-					<font size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[cantidad]]></text>
-			</staticText>
-			<staticText>
 				<reportElement mode="Opaque" x="444" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="b90b0cc2-df98-45d9-8a67-404738fbed0c"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[precioVenta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="333" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="5b308d37-a49a-48dd-862c-fc1eeafd77bd"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[cantidad]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
