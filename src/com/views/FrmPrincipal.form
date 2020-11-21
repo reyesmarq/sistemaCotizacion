@@ -131,7 +131,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="mnuConsultas">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Consultas"/>
+            <Property name="text" type="java.lang.String" value="Reportes"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="reportesClientes">
@@ -154,6 +154,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Articulos"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="reportesArticulosActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

@@ -253,7 +253,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         menuBar.add(mnuMantenimiento);
 
-        mnuConsultas.setText("Consultas");
+        mnuConsultas.setText("Reportes");
 
         reportesClientes.setText("Clientes");
         reportesClientes.addActionListener(new java.awt.event.ActionListener() {
@@ -272,6 +272,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         mnuConsultas.add(reportesProveedores);
 
         reportesArticulos.setText("Articulos");
+        reportesArticulos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reportesArticulosActionPerformed(evt);
+            }
+        });
         mnuConsultas.add(reportesArticulos);
 
         menuBar.add(mnuConsultas);
@@ -435,6 +440,20 @@ public class FrmPrincipal extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_reportesProveedoresActionPerformed
+
+    private void reportesArticulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportesArticulosActionPerformed
+        Conexion con = new Conexion();
+        JasperReport reporte;
+        
+        try {
+            con.conectar();
+            reporte = JasperCompileManager.compileReport("src/reportes/articulos.jrxml");
+            JasperPrint jp = JasperFillManager.fillReport(reporte, null, con.getCon());
+            JasperViewer.viewReport(jp, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_reportesArticulosActionPerformed
 
     /**
      * @param args the command line arguments
