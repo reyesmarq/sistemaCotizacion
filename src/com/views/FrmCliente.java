@@ -10,8 +10,14 @@ import com.entities.Cliente;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.NamedQuery;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import utilidades.Utilidades;
@@ -122,7 +128,8 @@ public class FrmCliente extends javax.swing.JInternalFrame {
     }
     
     public void buscarNombre(){
-        
+        // el filtrado se agrego en la funcion mostrar()
+        mostrar();
     }
     
     public void mostrar(){
@@ -132,8 +139,18 @@ public class FrmCliente extends javax.swing.JInternalFrame {
         tabla=new DefaultTableModel(null,encabezados);
         Object datos[]=new Object[9];
         try{
-            List lista;
-            lista=jpaCliente.findClienteEntities();
+            List<Cliente> lista = new ArrayList<>();
+            EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("POE_Proyecto_finalPU");
+            EntityManager entitymanager = emfactory.createEntityManager();
+            
+            if (txtBuscar.getText().trim().isEmpty()) {
+                lista=jpaCliente.findClienteEntities();
+            } else {
+                Query query = entitymanager.createQuery("SELECT c FROM Cliente c WHERE c.nombre LIKE :nombre");
+                query.setParameter("nombre", txtBuscar.getText() + "%");
+                lista = query.getResultList();
+            }
+            
             for(int i=0;i<lista.size();i++){
                 cliente=(Cliente)lista.get(i);
                 datos[0]=cliente.getIdCliente();
@@ -540,7 +557,7 @@ public class FrmCliente extends javax.swing.JInternalFrame {
                 if(esNuevo){
                     cliente.setNombre(this.txtNombre.getText());
                     temp=this.cmbSexo.getSelectedItem().toString();
-                    if(temp.equals("masculino")){
+                    if(temp.equals("Masculino")){
                         cliente.setSexo("m");
                     }else{
                         cliente.setSexo("f");
@@ -560,7 +577,7 @@ public class FrmCliente extends javax.swing.JInternalFrame {
                     cliente.setIdCliente(Integer.parseInt(this.txtIdCliente.getText()));
                     cliente.setNombre(this.txtNombre.getText());
                     temp=this.cmbSexo.getSelectedItem().toString();
-                    if(temp.equals("masculino")){
+                    if(temp.equals("Masculino")){
                         cliente.setSexo("m");
                     }else{
                         cliente.setSexo("f");
